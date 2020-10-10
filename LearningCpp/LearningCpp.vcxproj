@@ -143,10 +143,12 @@
   <ItemGroup>
     <ClCompile Include="Cpp17.cpp" />
     <ClCompile Include="LearningCpp.cpp" />
+    <ClCompile Include="ThreadWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cpp17.h" />
     <ClInclude Include="LearningCpp.h" />
+    <ClInclude Include="ThreadWrapper.h" />
     <ClInclude Include="TimeLost.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
