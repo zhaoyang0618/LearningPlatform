@@ -1722,6 +1722,234 @@ void testAny()
     std::cout << "函数结束" << std::endl;
 }
 
+///std::string_view
+// string function:
+std::string StartFromWordStr(const std::string& strArg, const std::string& word)
+{
+    return strArg.substr(strArg.find(word)); // substr creates a new string
+}
+
+std::string_view StartFromWord(std::string_view str, std::string_view word)
+{
+    return str.substr(str.find(word)); // substr creates only a new view
+}
+
+std::vector<std::string_view>
+splitSV(std::string_view strv, std::string_view delims = " ")
+{
+    std::vector<std::string_view> output;
+    auto first = strv.begin();
+    while (first != strv.end())
+    {
+        const auto second = std::find_first_of(
+            first, std::cend(strv),
+            std::cbegin(delims), std::cend(delims));
+        if (first != second)
+        {
+            output.emplace_back(strv.substr(std::distance(strv.begin(), first),
+                std::distance(first, second)));
+        }
+        if (second == strv.end())
+            break;
+        first = std::next(second);
+    }
+    return output;
+}
+
+/// <summary>
+/// 
+/// </summary>
+void testStringView()
+{
+    std::cout << "测试std::string_view" << std::endl;
+    //几个字符串类型
+    char     ch1{ 'a' };  // or { u8'a' }
+    wchar_t  ch2{ L'a' };
+    char16_t ch3{ u'a' };
+    char32_t ch4{ U'a' };
+    std::cout << "首先搞懂几个内建类型: char - " << ch1 
+        << "; wchar_t - " << ch2 
+        << "; char16_t - " << ch3
+        << "; char32_t - " << ch4
+        << std::endl;
+
+    //下面的函数调用，
+    //How many string copies are created in the below example?
+    //根据不同编译器，有3次或者5次，一般来说是3次: 
+    //The answer is 3 or 5 depending on the compiler, but usually, it should be 3.
+    // call:
+    std::string str{ "Hello Amazing Programming Environment" };
+    auto subStr = StartFromWordStr(str, "Programming Environment");
+    std::cout << subStr << '\n';
+    //* The first one is for str.
+    //* The second one is for the second argument in StartFromWordStr - the argument is const
+    //  string & so since we pass const char* it will create a new string.
+    //* The third one comes from substr which returns a new string.
+    //* Then we might also have another copy or two - as the object is returned from the function.
+    //  But usually, the compiler can optimiseand elide the copies(especially since C++17 when Copy
+    //  Elision became mandatory in that case).
+    //* If the string is short, then there might be no heap allocation as Small String Optimisation.
+    //使用string_view可以进行一定的优化
+    //A much better pattern to solve the problem with temporary copies is to use std::string_view.
+    //As the name suggests, instead of using the original string, you’ll only get a non - owning view of it.
+    //Most of the time it will be a pointer to the contiguous character sequence and the length.You can
+    //pass it around and use most of the conventional string operations.
+    //Views work well with string operations like substring - substr. In a typical case, each substring
+    //operation creates another, smaller copy of the string. With string_view, substr will only map a
+    //different portion of the original buffer, without additional memory usage, or dynamic allocation.
+    // call:
+    std::string str1{ "Hello Amazing Programming Environment" };
+    auto subView = StartFromWord(str1, "Programming Environment");
+    std::cout << subView << '\n';
+    //In the above case, we have only one allocation - just for the main string - str.None of the string_ -
+    //view operations invoke copy or extra memory allocation for a new string.Of course, string_view
+    //is copied - but since it's only a pointer and a length, it's much more efficient than the copy of the
+    //whole string.
+
+    //何时使用
+    //When to Use
+    //    * Optimisation: you can carefully review your code and replace various string operations with
+    //      string_view.In most cases, you should end up with faster code and fewer memory allocations.
+    //    * As a possible replacement for const std::string& parameter - especially in functions that
+    //      don't need the ownership and don’t store the string.
+    //    * Handling strings coming from other API : QString, CString, const char*... everything that
+    //      is placed in a contiguous memory chunkand has a basic char - type.You can write a function
+    //      that accepts string_view and no conversion from that other implementation will happen.
+    //    In any case, it's important to remember that it's only a non - owning view, so if the original object
+    //    is gone, the view becomes rubbish and you might get into trouble.
+    //    Moreover, string_view might not contain null terminator so your code has to support that as
+    //    well.For example, it's never a good idea to pass string_view to a function that accepts nullterminated
+    //    strings.
+    //
+    std::cout << "create string_view" << std::endl;
+    const char* cstr = "Hello World";
+    // the whole string:
+    std::string_view sv1{ cstr };
+    std::cout << sv1 << ", len: " << sv1.size() << '\n';
+    // slice
+    std::string_view sv2{ cstr, 5 }; // not null-terminated!
+    std::cout << sv2 << ", len: " << sv2.size() << '\n';
+    // from string:
+    std::string str2 = "Hello String";
+    std::string_view sv3 = str2;
+    std::cout << sv3 << ", len: " << sv3.size() << '\n';
+    // ""sv literal
+    using namespace std::literals;
+    std::string_view sv4 = "Hello\0 Super World"sv;
+    std::cout << sv4 << ", len: " << sv4.size() << '\n';
+    std::cout << sv4.data() << " - till zero\n";
+    //Please notice the last two lines: sv4 contains '\0' in the middle, but std::cout can still print the
+    //whole sequence.In the last line, we try to print with.data() and we end up with a string pointer
+    //so the printing breaks at the null terminator.
+    //使用有风险，需要了解风险何在
+    //Risks Using string_view
+    //std::string_view was added into the Standard mostly to allow performance optimisations.
+    //Nevertheless, it's not a replacement for strings! That's why when you use views you have to
+    //remember about a few potentially risky things :
+    //Taking Care of Not Null - Terminated Strings
+    //string_view may not contain \0 at the end of the string.So you have to be prepared for that.
+    //  * string_view is problematic with all functions that accept traditional C - strings because
+    //    string_view breaks with C - string termination assumptions.If a function accepts only a const
+    //    char* parameter, it's probably a bad idea to pass string_view into it. On the other hand, it
+    //    might be safe when such a function accepts const char*and length parameters.
+    //  * Conversion into strings - you need to specify not only the pointer to the contiguous character
+    //    sequence but also the length.
+    //References and Temporary Objects
+    //string_view doesn't own the memory, so you have to be very careful when working with temporary objects.
+    //In general, the lifetime of a string_view must never exceed the lifetime of the string - owning object.
+    //That might be important when :
+    //  * Returning string_view from a function.
+    //  * Storing string_view in objects or containers.
+    auto str3 = "My Super"s;
+    auto sv = StartFromWord(str3 + " String", "Super");
+    // use `sv` later in the code...
+
+    //几个应用示例
+    //1: Working with Different String APIs; 用于不同的字符串实现的统一处理
+    //2: String Split
+    //https://marcoarena.wordpress.com/2017/01/03/string_view-odi-et-amo/
+    const std::string str4{ "Hello Extra,,, Super, Amazing World" };
+    for (const auto& word : splitSV(str4, " ,"))
+        std::cout << word << '\n';
+    //The algorithm iterates over the input string_view and finds breaks - characters that match
+    //delimiters.Then the code extracts part of that sequence - between the last and the new break.The
+    //sub - view is stored in the output vector.
+    //Some notes for the implementation :
+    //    * The string_view version of the algorithm assumes the input string is persistent and not a
+    //    temporary object.Be careful with the returned vector of string_view as it also points to the input string.
+    //    * The instruction if (first != second) - protects from adding empty “words”, in a case where
+    //    there are multiple delimiters next to each other(like double spaces).
+    //    * The algorithm uses std::find_first_of but it’s also possible to use string_view::find_first_of.
+    //    The member method doesn’t return an iterator, but the position in the string.The
+    //    member method showed to be slower than the std::version in some tests when the number of delimiters is small
+
+
+    std::cout << "string_view end" << std::endl;
+}
+
+void testStringConversion()
+{
+    std::cout << "字符串数字转换" << std::endl;
+    const std::string str{ "12345678901234" };
+    int value = 0;
+    const auto res = std::from_chars(str.data(),
+        str.data() + str.size(),
+        value);
+
+    if (res.ec == std::errc())
+    {
+        std::cout << "value: " << value
+            << ", distance: " << res.ptr - str.data() << '\n';
+    }
+    else if (res.ec == std::errc::invalid_argument)
+    {
+        std::cout << "invalid argument!\n";
+    }
+    else if (res.ec == std::errc::result_out_of_range)
+    {
+        std::cout << "out of range! res.ptr distance: "
+            << res.ptr - str.data() << '\n';
+    }
+
+    const std::string str1{ "16.78" };
+    double value1 = 0;
+    const auto format = std::chars_format::general;
+    const auto res1 = std::from_chars(str1.data(),
+        str1.data() + str1.size(),
+        value1,
+        format);
+    if (res1.ec == std::errc())
+    {
+        std::cout << "value: " << value1
+            << ", distance: " << res1.ptr - str1.data() << '\n';
+    }
+    else if (res1.ec == std::errc::invalid_argument)
+    {
+        std::cout << "invalid argument!\n";
+    }
+    else if (res1.ec == std::errc::result_out_of_range)
+    {
+        std::cout << "out of range! res.ptr distance: "
+            << res1.ptr - str1.data() << '\n';
+    }
+
+    //
+    std::string str2{ "xxxxxxxx" };
+    const int value2 = 1986;
+    const auto res2 = std::to_chars(str2.data(),
+        str2.data() + str2.size(),
+        value2);
+    if (res2.ec == std::errc())
+    {
+        std::cout << str2 << ", filled: "
+            << res2.ptr - str2.data() << " characters\n";
+    }
+    else
+    {
+        std::cout << "value too large!\n";
+    }
+}
+
 ///并行算法
 /// 
 void testParallel()

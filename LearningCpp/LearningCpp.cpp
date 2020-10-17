@@ -45,8 +45,12 @@ int main(int argc, char* argv[])
 	testOptional();
 	testVariant();
 	testAny();
+	testStringView();
+	testStringConversion();
 	//testThread();
 	testParallel();
+	testSTLCookbook();
+	testSTLContainers();
 	system("pause");
 	return 0;
 }

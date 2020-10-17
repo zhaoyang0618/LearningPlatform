@@ -11,6 +11,7 @@
 #include <map>
 #include <optional>
 #include <any>
+#include <string_view>
 
 /// <summary>
 /// 语法方面的一些内容
@@ -636,10 +637,82 @@ void testVariant();
 void testAny();
 
 
-///std::string_view
-/// 
-void testStringView();
+/// std::string_view
+/// string_view is modelled to be very similar to std::string. The view however, is non-owning, so
+/// any operation that modifies the data cannot go into the API.Here’s a brief list of methods that you can use with this new type:
+/// Iterators:
+/// *cbegin() / begin() / crbegin() / rbegin() - both are constand constexpr
+/// * cend() / end() / crend() / rend() - both are constand constexpr
+/// Accessing Elements :
+/// *operator[]
+/// * at
+/// * front
+/// * back
+/// * data
+/// Size & Capacity:
+/// *size / length
+/// * max_size
+/// * empty
+/// Modifiers :
+/// *remove_prefix
+/// * remove_suffix
+/// * swap
+/// Other :
+/// *copy(not constexpr)
+/// * substr - complexity O(1) and not O(n) as in std::string
+/// * compare
+/// * find
+/// * rfind
+/// * find_first_of
+/// * find_last_of
+/// * find_first_not_of
+/// * find_last_not_of
+/// * operators for lexicographical comparisons : == , != , <= , >= , <, >
+/// * operator << for ostream output
+/// * specialisation for std::hash
+/// Key things about the above operations :
+/// *All of the above methods(except for copy, operator <<and std::hash specialisation) are also
+/// constexpr!With this capability, you might now work with contiguous character sequences
+/// in constant expressions.
+/// * The above list is almost the same as all non - mutable string operations.However there are
+/// two new methods : remove_prefix and remove_suffix - they are not constand modify the
+/// string_view object.Note, that they still cannot modify the referenced data.
+/// * operator[], at, front, back, data - are also const - so you cannot change the underlying
+/// character sequence(it's only "read access"). In std::string there are overloads for those
+/// methods that return reference - so you get "write access".That's not possible with string_view.
+///
+/// Reference Lifetime Extension
+/// What happens in the following case:
+/// std::vector<int> GenerateVec()
+/// {
+/// 	return std::vector<int>(5, 1);
+/// }
+/// const std::vector<int>& refv = GenerateVec();
+/// Is the above code safe ?
+/// Yes - the C++ rules say that the lifetime of a temporary object bound to a const reference is
+/// prolonged to the lifetime of the reference itself
+/// 临时对象的生命周期被延长了
+/// Wrap up
+/// Here are the things to remember about std::string_view:
+/// * It's a specialisation of std::basic_string_view<charType, traits<charType>> - with charType equal to char.
+/// * It’s a non - owning view of a contiguous sequence of characters.
+/// * It might not include null terminator at the end.
+/// * It can be used to optimise code and limit the need for temporary copies of strings.
+/// * It contains most of std::string operations that don't change the underlying characters.
+/// * Its operations are also marked as constexpr.
+/// But:
+/// *Make sure the underlying sequence of characters is still present!
+/// *While std::string_view looks like a constant reference to the string, the language doesn't extend the lifetime of returned temporary objects that are bound to std::string_view.
+/// * Always remember to use stringView.size() when you build a string from string_view. The size() method properly marks the end of string_view.
+/// * Be careful when you pass string_view into functions that accept null - terminated strings unless you’re sure your string_view contains a null terminator.
 
+void testStringView();
+void testStringConversion();
+
+
+/// Searchers & String Matching
+/// std::search
+/// 
 
 
 ///并行算法
