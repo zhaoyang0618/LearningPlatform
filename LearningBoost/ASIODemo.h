@@ -114,7 +114,10 @@ struct CHelloWorld_Service {
     void accept_handler(boost::shared_ptr<tcp::socket> psocket, error_code ec)
     {
         std::cout << "CHelloWorld_Service::accept_handler" << std::endl;
-        if (ec) return;
+        if (ec) {
+            std::cout << "CHelloWorld_Service::accept_handler error: ec == true" << std::endl;
+            return;
+        }
         // 继续等待连接
         start();
         // 显示远程IP
@@ -124,6 +127,7 @@ struct CHelloWorld_Service {
         psocket->async_write_some(buffer(*pstr),
             boost::bind(&CHelloWorld_Service::write_handler, this, pstr, _1, _2)
         );
+        std::cout << "CHelloWorld_Service::accept_handler end" << std::endl;
     }
 
     // 异步写操作完成后write_handler触发

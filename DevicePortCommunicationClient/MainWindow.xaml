@@ -1,0 +1,81 @@
+﻿<Controls:MetroWindow x:Class="DevicePortCommunicationClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:DevicePortCommunicationClient"
+        mc:Ignorable="d"
+        Title="工业设备通信工具" Height="450" Width="800">
+    <Grid>
+        <Grid x:Name="gridMain">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Margin="8">设备列表</Label>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <Button Margin="4" x:Name="btnAddMachine">添加</Button>
+                </StackPanel>
+                <ListBox Grid.Row="1" Margin="8" BorderThickness="1" x:Name="listMachines"></ListBox>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Margin="8">设备详情</Label>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Margin="8">通讯设备</Label>
+                        <ListBox Grid.Row="1" Margin="8" BorderThickness="1" x:Name="listModules"></ListBox>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                            <Button Margin="4" x:Name="btnAddCommunication">添加</Button>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Margin="8">设备指令</Label>
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Margin="8">指令列表</Label>
+                            <ListBox Grid.Row="1" Margin="8" BorderThickness="1" x:Name="listCommands"></ListBox>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <Button Margin="4" x:Name="btnAddCommand">添加</Button>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Margin="8">输出</Label>
+                <ListBox Grid.Row="1" Margin="8" BorderThickness="1"></ListBox>
+            </Grid>
+        </Grid>
+        <Grid x:Name="gridDialog" Visibility="Collapsed"></Grid>
+    </Grid>
+</Controls:MetroWindow>
