@@ -21,7 +21,7 @@
                     <ColumnDefinition Width="480"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Margin="10" VerticalAlignment="Center">指令</TextBlock>
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="10" VerticalAlignment="Center" Text="{Binding Name}"></TextBox>
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="10" VerticalAlignment="Center" Text="{Binding Command}"></TextBox>
                 <TextBlock Grid.Row="1" Grid.Column="0" Margin="10" VerticalAlignment="Center">协议类型</TextBlock>
                 <ComboBox Grid.Row="1" Grid.Column="1" Margin="10" VerticalAlignment="Center" Text="{Binding IPAddress}"></ComboBox>
                 <TextBlock Grid.Row="2" Grid.Column="0" Margin="10" VerticalAlignment="Center">处理</TextBlock>

@@ -15,24 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LearningNetwork.cpp">
+    <ClCompile Include="LearningASIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client1.cpp">
+    <ClCompile Include="testTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ASIO2Exam.cpp">
+    <ClCompile Include="testTCP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="client1.h">
+    <ClInclude Include="testTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ASIO2Exam.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\LearningCpp\TimeLost.h">
+    <ClInclude Include="testTCP.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

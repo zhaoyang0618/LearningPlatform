@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Taiji.Utils;
 
 namespace DevicePortCommunicationClient.Device
 {
@@ -126,7 +127,7 @@ namespace DevicePortCommunicationClient.Device
                         //发送
                         if (dataTransfer != null)
                         {
-                            dataTransfer.SendData(cmd.Command);
+                            dataTransfer.SendData(cmd.Command.ToHexBytes());
                             //等待接收数据
                         }
                     }

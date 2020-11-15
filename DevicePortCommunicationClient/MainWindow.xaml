@@ -23,7 +23,13 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <Button Margin="4" x:Name="btnAddMachine">添加</Button>
                 </StackPanel>
-                <ListBox Grid.Row="1" Margin="8" BorderThickness="1" x:Name="listMachines"></ListBox>
+                <ListBox Grid.Row="1" Margin="8" BorderThickness="1" x:Name="listMachines">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -42,7 +48,13 @@
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0" Margin="8">通讯设备</Label>
-                        <ListBox Grid.Row="1" Margin="8" BorderThickness="1" x:Name="listModules"></ListBox>
+                        <ListBox Grid.Row="1" Margin="8" BorderThickness="1" x:Name="listModules">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"></TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                             <Button Margin="4" x:Name="btnAddCommunication">添加</Button>
                         </StackPanel>
@@ -59,7 +71,13 @@
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0" Margin="8">指令列表</Label>
-                            <ListBox Grid.Row="1" Margin="8" BorderThickness="1" x:Name="listCommands"></ListBox>
+                            <ListBox Grid.Row="1" Margin="8" BorderThickness="1" x:Name="listCommands">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Command}"></TextBlock>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                                 <Button Margin="4" x:Name="btnAddCommand">添加</Button>
                             </StackPanel>

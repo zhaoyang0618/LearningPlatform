@@ -4,11 +4,12 @@
 /// 
 
 #include <iostream>
-#include <asio.hpp>
+#include "ASIO2Exam.h"
 
 int main()
 {
 	//
-	asio::io_context io;
+	testASIO2Client();
+	system("pause");
 	return 0;
 }

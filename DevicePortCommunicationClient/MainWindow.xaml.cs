@@ -154,7 +154,23 @@ namespace DevicePortCommunicationClient
 
         void InitUI()
         {
-
+            try
+            {
+                var context = DAL.IoTDbContext.Context;
+                var m = new DAL.DBMachineDevice()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = "印刷机",
+                    DBCommModules = new List<DAL.DBCommModule>(),
+                };
+                context.DBMachineDevices.Add(m);
+                context.SaveChanges();
+            }
+            catch (Exception exp)
+            {
+                System.Diagnostics.Debug.WriteLine(exp);
+                logger.Error(exp, "数据库存储");
+            }
         }
 
         void BindEvents()

@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DevicePortCommunicationClient.Device
+namespace DevicePortCommunicationClient.DAL
 {
-    /// <summary>
-    /// 物联网指令
-    /// </summary>
-    public class IoTCommand
+    public class DBIoTCommand
     {
         public string Id
         {
@@ -15,8 +12,7 @@ namespace DevicePortCommunicationClient.Device
         }
 
         /// <summary>
-        /// 需要传输的指令:16进制表示, 类似如下所示
-        /// 01 02 02 02 d0
+        /// 需要传输的指令
         /// </summary>
         public string Command
         {
@@ -26,11 +22,14 @@ namespace DevicePortCommunicationClient.Device
         /// <summary>
         /// 协议类型
         /// </summary>
-        public int CommandData
+        public int Protocol
         {
-            get;set;
+            get; set;
         }
 
+        /// <summary>
+        /// 用途
+        /// </summary>
         public int Usage
         {
             get;set;

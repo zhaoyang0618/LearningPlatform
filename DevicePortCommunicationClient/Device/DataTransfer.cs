@@ -92,29 +92,10 @@ namespace DevicePortCommunicationClient.Device
         public void StartConnect()
         {
             client.Connect(IpAddress, Port);
-            _task = Task.Run(()=> {
-                TickThread();
-            });
         }
 
         public void StopConnect()
         {
-            cancellationTokenSource.Cancel();
-            //等待一会儿
-            //最多等待1秒钟
-            if (_task != null)
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    if (_task.IsCompleted)
-                    {
-                        break;
-                    }
-
-                    System.Threading.Thread.Sleep(100);
-                }
-            }
-
             client.Close();
         }
 
@@ -128,8 +109,6 @@ namespace DevicePortCommunicationClient.Device
 
         object _lastTimeLock = new object();
         DateTime _lastTime = DateTime.Now;
-        Task _task = null;
-        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         public DateTime LastTime
         {
             get
@@ -145,49 +124,6 @@ namespace DevicePortCommunicationClient.Device
                 {
                     _lastTime = value;
                 }
-            }
-        }
-        /// <summary>
-        /// 心跳: 保持一个时间
-        /// </summary>
-        void TickThread()
-        {
-            //默认是30秒
-            if (IntervalTime <= 0)
-                IntervalTime = 30 * 1000;
-
-            var token = cancellationTokenSource.Token;
-            while (true)
-            {
-                if (token.IsCancellationRequested)
-                {
-                    break;
-                }
-
-                //
-                var delta = DateTime.Now - LastTime;
-                if(delta >= TimeSpan.FromMilliseconds(IntervalTime))
-                {
-                    //发送数据
-                    if(client.Connected)
-                    {
-                    }
-                    else
-                    {
-                        logger.Trace("没有连接");
-
-                        //告诉客户端连接断开了
-                        OnDisconnected?.Invoke();
-
-                        //重新连接
-                        client.Connect(IpAddress, Port);
-                    }
-
-                    OnTick?.Invoke();
-                }
-
-                //
-                System.Threading.Thread.Sleep(100);
             }
         }
     }
