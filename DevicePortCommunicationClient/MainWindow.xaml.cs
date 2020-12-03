@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -147,6 +148,85 @@ namespace DevicePortCommunicationClient
             gridDialog.Visibility = Visibility.Visible;
         }
 
+        private void OnButtonPrintClick(object sender, RoutedEventArgs e)
+        {
+            //喷码打印
+            var client = new TcpClient();
+            try
+            {
+                string ip = "192.168.1.100";
+                int port = 1000;
+                client.Connect(ip, port);
+                NetworkStream ns = client.GetStream();
+
+                string cmd = "^0*BEGINLJSCRIPT\r\n";
+                cmd += "BEGINLJSCRIPT [(V1.1.0.0)]\r\n";
+                cmd += "JLPAR [85 0 0 0 2 0 0 25000 00:00 0]\r\n";
+                cmd += "BEGINJOB [ 0 () ]\r\n";
+                cmd += "JOBPAR [ 20000 0 0 350 0 0 0 1 1 0]\r\n";
+                cmd += "OBJ [0 1 0 0 (ISO7_24x18) (Text) 1 0 0 0 0 1 0 0 0 0]\r\n";
+                cmd += "OBJ [0 62 0 0 (ISO7_12X8) ({c}) 1 0 0 0 0 0 0 0 0 0]\r\n";
+                cmd += "CNT [ 4 1000 0 8000 1 1 1 1 10 0 1]\r\n";
+                cmd += "OBJ [0 99 0 0 (ISO7_7X5) ({t}) 1 0 0 0 0 0 0 0 0 0]\r\n";
+                cmd += "TIME [ (dd.mm.yyyy) 0]\r\n";
+                cmd += "RPLDAY [ (MON) (TUE) (WED) (THU) (FRI) (SAT) (SUN) ]\r\n";
+                cmd += "RPLMON [ (JAN) (FEB) (MAR) (APR) (MAY) (JUN) (JUL) (AUG) (SEP) (OCT)\r\n";
+                cmd += "(NOV) (DEC) ]\r\n";
+                cmd += "ENDJOB []\r\n";
+                cmd += "ENDLJSCRIPT []\r\n";
+                cmd += "^0*ENDLJSCRIPT\r\n";
+                byte[] data = Encoding.ASCII.GetBytes(cmd);
+                //发送数据
+                ns.Write(data, 0, data.Length);
+                ns.Close();
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                client.Close();
+            }
+        }
+
+        private void OnButtonQueryClick(object sender, RoutedEventArgs e)
+        {
+            //查询
+            var client = new TcpClient();
+            try
+            {
+                string ip = "192.168.1.100";
+                int port = 1000;
+                client.Connect(ip, port);
+                NetworkStream ns = client.GetStream();
+
+                string cmd = "^?EX\r\n";
+                byte[] data = Encoding.ASCII.GetBytes(cmd);
+                //发送数据
+                ns.Write(data, 0, data.Length);
+
+                //接收数据
+                while(ns.DataAvailable)
+                {
+                    var d = new byte[256];
+                    var len = ns.Read(d, 0, 256);
+                    //
+                    string message = Encoding.ASCII.GetString(data, 0, len);//只将接收到的数据进行转化
+                }
+                //
+                ns.Close();
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                client.Close();
+            }
+        }
+
         #endregion
 
         #region 辅助函数
@@ -180,6 +260,8 @@ namespace DevicePortCommunicationClient
             btnAddMachine.Click += OnButtonAddMachineClick;
             btnAddCommunication.Click += OnButtonAddCommunicationClick;
             btnAddCommand.Click += OnButtonAddCommandClick;
+            btnPrint.Click += OnButtonPrintClick;
+            btnQuery.Click += OnButtonQueryClick;
         }
 
         #endregion

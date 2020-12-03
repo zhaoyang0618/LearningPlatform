@@ -80,8 +80,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\3party\opencv440\build16\install\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\3party\opencv440\build16\install\x64\vc16\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\3party\opencv450\build\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\3party\opencv450\build\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -122,11 +122,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opencv_core440d.lib;opencv_features2d440d.lib;opencv_highgui440d.lib;opencv_imgcodecs440d.lib;opencv_imgproc440d.lib;opencv_objdetect440d.lib;opencv_video440d.lib;opencv_videoio440d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_core450d.lib;opencv_features2d450d.lib;opencv_highgui450d.lib;opencv_imgcodecs450d.lib;opencv_imgproc450d.lib;opencv_objdetect450d.lib;opencv_video450d.lib;opencv_videoio450d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -148,10 +149,13 @@
   <ItemGroup>
     <ClCompile Include="ImageStudio.cpp" />
     <ClCompile Include="TestCoreFunctionality.cpp" />
+    <ClCompile Include="TestImgProcFunctionality.cpp" />
     <ClCompile Include="TestVideoAnalysis.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileHelper.h" />
     <ClInclude Include="TestCoreFunctionality.h" />
+    <ClInclude Include="TestImgProcFunctionality.h" />
     <ClInclude Include="TestVideoAnalysis.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

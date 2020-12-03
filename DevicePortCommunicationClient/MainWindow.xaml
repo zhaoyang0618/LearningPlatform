@@ -92,6 +92,10 @@
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Margin="8">输出</Label>
                 <ListBox Grid.Row="1" Margin="8" BorderThickness="1"></ListBox>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <Button Margin="4" x:Name="btnPrint">打印</Button>
+                    <Button Margin="4" x:Name="btnQuery">查询</Button>
+                </StackPanel>
             </Grid>
         </Grid>
         <Grid x:Name="gridDialog" Visibility="Collapsed"></Grid>
