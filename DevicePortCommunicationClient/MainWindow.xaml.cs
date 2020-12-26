@@ -32,6 +32,24 @@ namespace DevicePortCommunicationClient
         }
 
         #region 事件处理
+
+        private void OnWindowUnloaded(object sender, RoutedEventArgs e)
+        {
+            client.Stop();
+        }
+
+        private void OnWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                client.Start("10.10.10.10", 3010);
+            }
+            catch (Exception exp)
+            {
+                logger.Error(exp, "连接莱宾格喷码机异常");
+            }
+        }
+
         private void OnListMachinesSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(e.AddedItems != null && e.AddedItems.Count> 0)
@@ -190,41 +208,47 @@ namespace DevicePortCommunicationClient
             }
         }
 
+        Client.MobusClient client = new Client.MobusClient();
         private void OnButtonQueryClick(object sender, RoutedEventArgs e)
         {
             //查询
-            var client = new TcpClient();
-            try
-            {
-                string ip = "192.168.1.100";
-                int port = 1000;
-                client.Connect(ip, port);
-                NetworkStream ns = client.GetStream();
+            //var client = new TcpClient();
+            //try
+            //{
+            //    //string ip = "192.168.1.100";
+            //    //莱宾格喷码机
+            //    string ip = "10.10.10.10";
+            //    int port = 3010;
+            //    client.Connect(ip, port);
+            //    NetworkStream ns = client.GetStream();
 
-                string cmd = "^?EX\r\n";
-                byte[] data = Encoding.ASCII.GetBytes(cmd);
-                //发送数据
-                ns.Write(data, 0, data.Length);
+            //    string cmd = "^?EX\r\n";
+            //    byte[] data = Encoding.ASCII.GetBytes(cmd);
+            //    //发送数据
+            //    ns.Write(data, 0, data.Length);
 
-                //接收数据
-                while(ns.DataAvailable)
-                {
-                    var d = new byte[256];
-                    var len = ns.Read(d, 0, 256);
-                    //
-                    string message = Encoding.ASCII.GetString(data, 0, len);//只将接收到的数据进行转化
-                }
-                //
-                ns.Close();
-            }
-            catch
-            {
+            //    //接收数据
+            //    while(ns.DataAvailable)
+            //    {
+            //        var d = new byte[256];
+            //        var len = ns.Read(d, 0, 256);
+            //        //
+            //        string message = Encoding.ASCII.GetString(data, 0, len);//只将接收到的数据进行转化
+            //    }
+            //    //
+            //    ns.Close();
+            //}
+            //catch
+            //{
 
-            }
-            finally
-            {
-                client.Close();
-            }
+            //}
+            //finally
+            //{
+            //    client.Close();
+            //}
+
+            string cmd = "^0?EL\r\n";
+            client.Send(cmd);
         }
 
         #endregion
@@ -255,6 +279,8 @@ namespace DevicePortCommunicationClient
 
         void BindEvents()
         {
+            this.Loaded += OnWindowLoaded;
+            this.Unloaded += OnWindowUnloaded;
             listMachines.SelectionChanged += OnListMachinesSelectionChanged;
             listModules.SelectionChanged += OnListModulesSelectionChanged;
             btnAddMachine.Click += OnButtonAddMachineClick;
