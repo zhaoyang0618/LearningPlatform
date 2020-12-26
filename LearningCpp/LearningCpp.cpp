@@ -36,6 +36,12 @@ int main(int argc, char* argv[])
 	{
 		std::cerr << " ...err: " << err.what() << '\n';
 	}	//
+
+	//
+	auto p = std::make_unique<int>(10);
+	auto x(std::move(p));
+
+	//
 	testSample();
 	testMap();
 	testPrinting();
