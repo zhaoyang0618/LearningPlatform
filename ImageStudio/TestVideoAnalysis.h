@@ -9,5 +9,6 @@ public:
 	static void TestCamShift(const char* filename);
 	static void TestOpticalFlow(const char* filename);
 	static void TestDenseOpticalFlow(const char* filename);
+	static void TestReadVideo(const char* filename);
 };
 

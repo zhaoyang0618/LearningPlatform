@@ -285,3 +285,34 @@ void TestVideoAnalysis::TestDenseOpticalFlow(const char* filename)
         prvs = next;
     }
 }
+
+void TestVideoAnalysis::TestReadVideo(const char* filename)
+{
+    cv::VideoCapture capture(0);
+    if (!capture.isOpened())
+    {
+        std::cout << "Read video failed!" << std::endl;
+        return ;
+    }
+
+    std::cout << "begin read!" << std::endl;
+    cv::Mat frame;
+    //int m_frameNum = capture.get(cv::CAP_PROP_FRAME_COUNT);
+    bool stop = false;
+    int count = 0;
+    while (!stop)
+    {
+        if (!capture.read(frame)) //当视频帧数很多，循环读数据 会导致内存泄漏  
+        {
+            std::cout << "Read frame failed!" << std::endl;
+            break;
+        }
+
+        auto a = cv::waitKey(30);
+        std::cout << a << std::endl;
+        if (a == 27)
+            break;
+        count++;
+    }
+    std::cout << "stopped!" << std::endl;
+}

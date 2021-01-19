@@ -17,6 +17,8 @@ const char* params = "{ help h         |           | Print usage }"
 
 int main()
 {
+	TestVideoAnalysis::TestReadVideo("D:\\1.avi");
+	return 0;
 	//TestImgProcFunctionality::testHoughLine("E:\\Images\\airport\\001.JPG");
 
 	//
