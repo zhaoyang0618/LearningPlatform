@@ -127,7 +127,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opencv_core450d.lib;opencv_features2d450d.lib;opencv_highgui450d.lib;opencv_imgcodecs450d.lib;opencv_imgproc450d.lib;opencv_objdetect450d.lib;opencv_video450d.lib;opencv_videoio450d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_core450d.lib;opencv_features2d450d.lib;opencv_highgui450d.lib;opencv_imgcodecs450d.lib;opencv_imgproc450d.lib;opencv_objdetect450d.lib;opencv_video450d.lib;opencv_videoio450d.lib;opencv_dnn450d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -148,14 +148,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ImageStudio.cpp" />
+    <ClCompile Include="MyCropLayer.cpp" />
     <ClCompile Include="TestCoreFunctionality.cpp" />
+    <ClCompile Include="TestDNN.cpp" />
     <ClCompile Include="TestImgProcFunctionality.cpp" />
     <ClCompile Include="TestPCA.cpp" />
     <ClCompile Include="TestVideoAnalysis.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileHelper.h" />
+    <ClInclude Include="MyCropLayer.h" />
     <ClInclude Include="TestCoreFunctionality.h" />
+    <ClInclude Include="TestDNN.h" />
     <ClInclude Include="TestImgProcFunctionality.h" />
     <ClInclude Include="TestPCA.h" />
     <ClInclude Include="TestVideoAnalysis.h" />
