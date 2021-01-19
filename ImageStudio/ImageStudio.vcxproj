@@ -150,12 +150,14 @@
     <ClCompile Include="ImageStudio.cpp" />
     <ClCompile Include="TestCoreFunctionality.cpp" />
     <ClCompile Include="TestImgProcFunctionality.cpp" />
+    <ClCompile Include="TestPCA.cpp" />
     <ClCompile Include="TestVideoAnalysis.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileHelper.h" />
     <ClInclude Include="TestCoreFunctionality.h" />
     <ClInclude Include="TestImgProcFunctionality.h" />
+    <ClInclude Include="TestPCA.h" />
     <ClInclude Include="TestVideoAnalysis.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
