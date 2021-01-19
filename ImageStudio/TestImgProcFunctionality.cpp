@@ -316,6 +316,9 @@ void TestImgProcFunctionality::testNoise(const char* filename, const char* outfi
 }
 
 void show_wait_destroy(const char* winname, cv::Mat img) {
+    char file[1024] = { 0 };
+    sprintf_s(file, 1024, "E:\\Images\\airport\\%s.jpg", winname);
+    cv::imwrite(file, img);
     cv::imshow(winname, img);
     cv::moveWindow(winname, 500, 0);
     cv::waitKey(0);
