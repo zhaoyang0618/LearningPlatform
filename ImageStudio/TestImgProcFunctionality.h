@@ -36,6 +36,8 @@ public:
 	static void testSharpen(const char* filename, const char* outfilename);
 	static void testNoise(const char* filename, const char* outfilename);
 
+	static void testMorph(const char* filepath);
+
 	/// <summary>
 	/// 从一张图片生成一批图片用于机器学习(包括深度学习)
 	/// </summary>
