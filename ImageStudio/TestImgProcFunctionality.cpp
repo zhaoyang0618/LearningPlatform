@@ -339,6 +339,76 @@ void TestImgProcFunctionality::testMorph(const char* filepath)
 
     // Show source image
     imshow("src", src);
+    findHorizontalAndVerticalLine(src, show_wait_destroy);
+    //// Transform source image to gray if it is not already
+    //Mat gray;
+    //if (src.channels() == 3)
+    //{
+    //    cvtColor(src, gray, COLOR_BGR2GRAY);
+    //}
+    //else
+    //{
+    //    gray = src;
+    //}
+    //// Show gray image
+    //show_wait_destroy("gray", gray);
+    //// Apply adaptiveThreshold at the bitwise_not of gray, notice the ~ symbol
+    //Mat bw;
+    //adaptiveThreshold(~gray, bw, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, 15, -2);
+    //// Show binary image
+    //show_wait_destroy("binary", bw);
+    //// Create the images that will use to extract the horizontal and vertical lines
+    //Mat horizontal = bw.clone();
+    //Mat vertical = bw.clone();
+    //// Specify size on horizontal axis
+    //int horizontal_size = horizontal.cols / 30;
+    //// Create structure element for extracting horizontal lines through morphology operations
+    //Mat horizontalStructure = getStructuringElement(MORPH_RECT, Size(horizontal_size, 1));
+    //// Apply morphology operations
+    //erode(horizontal, horizontal, horizontalStructure, Point(-1, -1));
+    //dilate(horizontal, horizontal, horizontalStructure, Point(-1, -1));
+    //// Show extracted horizontal lines
+    //show_wait_destroy("horizontal", horizontal);
+    //// Specify size on vertical axis
+    //int vertical_size = vertical.rows / 30;
+    //// Create structure element for extracting vertical lines through morphology operations
+    //Mat verticalStructure = getStructuringElement(MORPH_RECT, Size(1, vertical_size));
+    //// Apply morphology operations
+    //erode(vertical, vertical, verticalStructure, Point(-1, -1));
+    //dilate(vertical, vertical, verticalStructure, Point(-1, -1));
+    //// Show extracted vertical lines
+    //show_wait_destroy("vertical", vertical);
+    //// Inverse vertical image
+    //bitwise_not(vertical, vertical);
+    //show_wait_destroy("vertical_bit", vertical);
+    //// Extract edges and smooth image according to the logic
+    //// 1. extract edges
+    //// 2. dilate(edges)
+    //// 3. src.copyTo(smooth)
+    //// 4. blur smooth img
+    //// 5. smooth.copyTo(src, edges)
+    //// Step 1
+    //Mat edges;
+    //adaptiveThreshold(vertical, edges, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, 3, -2);
+    //show_wait_destroy("edges", edges);
+    //// Step 2
+    //Mat kernel = Mat::ones(2, 2, CV_8UC1);
+    //dilate(edges, edges, kernel);
+    //show_wait_destroy("dilate", edges);
+    //// Step 3
+    //Mat smooth;
+    //vertical.copyTo(smooth);
+    //// Step 4
+    //blur(smooth, smooth, Size(2, 2));
+    //// Step 5
+    //smooth.copyTo(vertical, edges);
+    //// Show final result
+    //show_wait_destroy("smooth - final", vertical);
+}
+
+template<typename FUNC>
+void TestImgProcFunctionality::findHorizontalAndVerticalLine(cv::Mat& src, FUNC output)
+{
     // Transform source image to gray if it is not already
     Mat gray;
     if (src.channels() == 3)
@@ -349,13 +419,14 @@ void TestImgProcFunctionality::testMorph(const char* filepath)
     {
         gray = src;
     }
+
     // Show gray image
-    show_wait_destroy("gray", gray);
+    output("1_gray", gray);
     // Apply adaptiveThreshold at the bitwise_not of gray, notice the ~ symbol
     Mat bw;
     adaptiveThreshold(~gray, bw, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, 15, -2);
     // Show binary image
-    show_wait_destroy("binary", bw);
+    output("2_binary", bw);
     // Create the images that will use to extract the horizontal and vertical lines
     Mat horizontal = bw.clone();
     Mat vertical = bw.clone();
@@ -367,7 +438,7 @@ void TestImgProcFunctionality::testMorph(const char* filepath)
     erode(horizontal, horizontal, horizontalStructure, Point(-1, -1));
     dilate(horizontal, horizontal, horizontalStructure, Point(-1, -1));
     // Show extracted horizontal lines
-    show_wait_destroy("horizontal", horizontal);
+    output("3_horizontal", horizontal);
     // Specify size on vertical axis
     int vertical_size = vertical.rows / 30;
     // Create structure element for extracting vertical lines through morphology operations
@@ -376,10 +447,10 @@ void TestImgProcFunctionality::testMorph(const char* filepath)
     erode(vertical, vertical, verticalStructure, Point(-1, -1));
     dilate(vertical, vertical, verticalStructure, Point(-1, -1));
     // Show extracted vertical lines
-    show_wait_destroy("vertical", vertical);
+    output("4_vertical", vertical);
     // Inverse vertical image
     bitwise_not(vertical, vertical);
-    show_wait_destroy("vertical_bit", vertical);
+    output("5_vertical_bit", vertical);
     // Extract edges and smooth image according to the logic
     // 1. extract edges
     // 2. dilate(edges)
@@ -389,11 +460,11 @@ void TestImgProcFunctionality::testMorph(const char* filepath)
     // Step 1
     Mat edges;
     adaptiveThreshold(vertical, edges, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, 3, -2);
-    show_wait_destroy("edges", edges);
+    output("6_edges", edges);
     // Step 2
     Mat kernel = Mat::ones(2, 2, CV_8UC1);
     dilate(edges, edges, kernel);
-    show_wait_destroy("dilate", edges);
+    output("7_dilate", edges);
     // Step 3
     Mat smooth;
     vertical.copyTo(smooth);
@@ -402,7 +473,53 @@ void TestImgProcFunctionality::testMorph(const char* filepath)
     // Step 5
     smooth.copyTo(vertical, edges);
     // Show final result
-    show_wait_destroy("smooth - final", vertical);
+    output("8_smooth - final", vertical);
+}
+
+void TestImgProcFunctionality::findHorizontalAndVerticalLine(const char* filepath, const char* outDir, int index)
+{
+    //读取文件
+    cv::Mat src = cv::imread(filepath, IMREAD_COLOR);
+    if (src.empty())
+        return;
+    findHorizontalAndVerticalLine(src, 
+        [&](const char* name, cv::Mat& img) {
+            //构建输出路径
+            std::filesystem::path path(filepath);
+            auto extension = path.extension();
+
+            std::stringstream ss;
+            ss << name << "_" << std::setw(5) << std::setfill('0') << index;
+
+            //需要输出文件夹
+            std::filesystem::path dst(outDir);
+            std::string filename = ss.str() + path.extension().string();
+            auto& out = dst.append(filename);
+            std::string outfilepath = out.string();
+            cv::imwrite(outfilepath, img);
+        });
+}
+
+void TestImgProcFunctionality::throughoutFolder(const char* dir, const char* outDir)
+{
+    std::string str(dir);
+    std::filesystem::path p(str);
+    int index = 0;
+    processPath(p, [&](const std::filesystem::directory_entry& entry) {
+        auto path = entry.path();
+        auto dir = path.parent_path();
+        auto extension = path.extension();
+        auto ext = extension.string();
+        if (ext == ".jpg" || ext == ".jpeg" || ext == ".png" || ext == ".bmp" || ext == ".tif" || ext == ".tiff")
+        {
+            findHorizontalAndVerticalLine(path.string().c_str(), outDir, index);
+            index++;
+        }
+        else
+        {
+            //不是图片; 不做处理
+        }
+        });
 }
 
 //生成高斯噪声

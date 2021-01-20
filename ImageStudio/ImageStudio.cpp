@@ -19,7 +19,8 @@ int main()
 {
 	//TestVideoAnalysis::TestReadVideo("D:\\1.avi");
 	//TestDNN::TestHED("E:/images/1.jpeg");
-	TestImgProcFunctionality::testMorph("E:/images/1.jpeg");
+	//TestImgProcFunctionality::testMorph("E:/images/1.jpeg");
+	TestImgProcFunctionality::throughoutFolder("E:\\Images\\MV", "E:\\Images\\MV_output");
 	return 0;
 	//TestImgProcFunctionality::testHoughLine("E:\\Images\\airport\\001.JPG");
 

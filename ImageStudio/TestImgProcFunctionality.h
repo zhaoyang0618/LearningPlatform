@@ -37,6 +37,16 @@ public:
 	static void testNoise(const char* filename, const char* outfilename);
 
 	static void testMorph(const char* filepath);
+	template<typename FUNC>
+	static void findHorizontalAndVerticalLine(cv::Mat& src, FUNC output);
+
+	static void findHorizontalAndVerticalLine(const char* filepath, const char* outDir, int index);
+
+	/// <summary>
+	/// 遍历文件夹下的图片，做一次上面的操作
+	/// </summary>
+	/// <param name="dir"></param>
+	static void throughoutFolder(const char* dir, const char* outDir);
 
 	/// <summary>
 	/// 从一张图片生成一批图片用于机器学习(包括深度学习)
