@@ -1,5 +1,5 @@
 #include "ASIO2Exam.h"
-#include "../LearningCpp/TimeLost.h"
+#include "../Common/TimeLost.h"
 #include <ctime>
 #include <chrono>
 

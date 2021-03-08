@@ -57,6 +57,8 @@ int main(int argc, char* argv[])
 	testParallel();
 	testSTLCookbook();
 	testSTLContainers();
+
+	ThreadDemo::TestPackagedTask();
 	system("pause");
 	return 0;
 }

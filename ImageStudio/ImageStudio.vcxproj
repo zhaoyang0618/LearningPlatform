@@ -80,8 +80,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\3party\opencv450\build\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\3party\opencv450\build\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\3party\opencv450\build\include;E:\3party\glog-0.4.0\output;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\3party\opencv450\build\lib;E:\3party\glog-0.4.0\output\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -120,14 +120,14 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;GOOGLE_GLOG_DLL_DECL=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opencv_core450d.lib;opencv_features2d450d.lib;opencv_highgui450d.lib;opencv_imgcodecs450d.lib;opencv_imgproc450d.lib;opencv_objdetect450d.lib;opencv_video450d.lib;opencv_videoio450d.lib;opencv_dnn450d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_core450d.lib;opencv_features2d450d.lib;opencv_highgui450d.lib;opencv_imgcodecs450d.lib;opencv_imgproc450d.lib;opencv_objdetect450d.lib;opencv_video450d.lib;opencv_videoio450d.lib;opencv_dnn450d.lib;glogd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -149,20 +149,24 @@
   <ItemGroup>
     <ClCompile Include="ImageStudio.cpp" />
     <ClCompile Include="MyCropLayer.cpp" />
+    <ClCompile Include="PlateReconize.cpp" />
     <ClCompile Include="TestCoreFunctionality.cpp" />
     <ClCompile Include="TestDNN.cpp" />
     <ClCompile Include="TestImgProcFunctionality.cpp" />
     <ClCompile Include="TestPCA.cpp" />
     <ClCompile Include="TestVideoAnalysis.cpp" />
+    <ClCompile Include="VideoAnalysisThread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileHelper.h" />
     <ClInclude Include="MyCropLayer.h" />
+    <ClInclude Include="PlateReconize.h" />
     <ClInclude Include="TestCoreFunctionality.h" />
     <ClInclude Include="TestDNN.h" />
     <ClInclude Include="TestImgProcFunctionality.h" />
     <ClInclude Include="TestPCA.h" />
     <ClInclude Include="TestVideoAnalysis.h" />
+    <ClInclude Include="VideoAnalysisThread.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,5 +10,8 @@ public:
 	static void TestOpticalFlow(const char* filename);
 	static void TestDenseOpticalFlow(const char* filename);
 	static void TestReadVideo(const char* filename);
+	static int InitAI();
+	static int ReleaseAI();
+	static void TestPlateRecognitionVideo(const char* filename);
 };
 

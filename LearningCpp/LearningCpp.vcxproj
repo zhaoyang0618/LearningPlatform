@@ -145,6 +145,7 @@
     <ClCompile Include="LearningCpp.cpp" />
     <ClCompile Include="STLContainersDemo.cpp" />
     <ClCompile Include="STLCookbookDemos.cpp" />
+    <ClCompile Include="ThreadDemo.cpp" />
     <ClCompile Include="ThreadWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,8 +153,8 @@
     <ClInclude Include="LearningCpp.h" />
     <ClInclude Include="STLContainersDemo.h" />
     <ClInclude Include="STLCookbookDemos.h" />
+    <ClInclude Include="ThreadDemo.h" />
     <ClInclude Include="ThreadWrapper.h" />
-    <ClInclude Include="TimeLost.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

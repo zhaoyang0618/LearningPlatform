@@ -253,6 +253,62 @@ namespace DevicePortCommunicationClient
 
         #endregion
 
+        #region 一些测试函数
+        byte[] TestByte
+        {
+            get;set;
+        }
+        byte[] TestByte2
+        {
+            get; set;
+        }
+        private void OnButtonTestAwait1Click(object sender, RoutedEventArgs e)
+        {
+            //
+            var source = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+            var spanSource = new ReadOnlySpan<byte>(source, 0, 6);
+            TestByte = new byte[3];
+            CopyData(spanSource, 1, TestByte, 3);
+            TestByte2 = new byte[2];
+            CopyData(spanSource, 3, TestByte2, 2);
+            //测试await的用法
+            TestAwait1();
+            logger.Debug("测试异步await1");
+        }
+        private async void OnButtonTestAwait2Click(object sender, RoutedEventArgs e)
+        {
+            //测试await的用法
+            await TestAwait2();
+            logger.Debug("测试异步await2");
+        }
+
+        async void TestAwait1()
+        {
+            logger.Debug("TestAwait1开始");
+            await Task.Run(()=> {
+                System.Threading.Thread.Sleep(1000);
+            });
+            logger.Debug("TestAwait1结束");
+        }
+
+        async Task TestAwait2()
+        {
+            logger.Debug("TestAwait2开始");
+            await Task.Run(() => {
+                System.Threading.Thread.Sleep(1000);
+            });
+            logger.Debug("TestAwait2结束");
+        }
+
+        void CopyData(ReadOnlySpan<byte> src, int offset, byte[] dst, int length)
+        {
+            Span<byte> target = new Span<byte>(dst);
+            var source = src.Slice(offset, length);
+            source.CopyTo(target);
+        }
+
+        #endregion
+
         #region 辅助函数
         NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -291,5 +347,6 @@ namespace DevicePortCommunicationClient
         }
 
         #endregion
+
     }
 }

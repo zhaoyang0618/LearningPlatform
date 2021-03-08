@@ -3,4 +3,5 @@
 #include "ThreadWrapper.h"
 #include "STLCookbookDemos.h"
 #include "STLContainersDemo.h"
+#include "ThreadDemo.h"
 

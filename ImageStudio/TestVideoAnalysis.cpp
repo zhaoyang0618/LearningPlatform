@@ -1,6 +1,8 @@
 #include "TestVideoAnalysis.h"
 #include <iostream>
 #include <sstream>
+#include <glog/logging.h>
+#include "PlateReconize.h"
 
 using namespace std;
 using namespace cv;
@@ -315,4 +317,64 @@ void TestVideoAnalysis::TestReadVideo(const char* filename)
         count++;
     }
     std::cout << "stopped!" << std::endl;
+}
+
+int TestVideoAnalysis::InitAI()
+{
+    int ret = PLATE_InitmnReco(
+        "obj_plate_region1226.cfg", 
+        "obj_plate_region1226_last.weights", 
+        "obj_plate_1225.cfg", 
+        "obj_plate_1225_last.weights");
+    return ret;
+}
+
+int TestVideoAnalysis::ReleaseAI()
+{
+    int ret = PLATE_DisposemnReco();
+    return ret;
+}
+
+void TestVideoAnalysis::TestPlateRecognitionVideo(const char* filename)
+{
+    VideoCapture	cap;
+    cap.open(filename);
+    if (!cap.isOpened())
+    {
+        LOG(INFO) << "´ò¿ªurlÊ§°Ü: " << filename << std::endl;
+        return;
+    }
+
+    int interval = 5;
+    int framenum = 0;
+    Mat frame;
+    while (cap.read(frame)) {
+        framenum++;
+        if (frame.empty())
+        {
+            //ÐÝÏ¢20ºÁÃë
+            continue;
+        }
+
+        // reco every 5 frames
+        if (framenum % interval == 1)
+        {
+            MNPlateInfoStruct	info;
+            int cnt = PLATE_ForwardmnRecoMat((unsigned char*)frame.data, frame.cols, frame.rows, info);
+            if (cnt >= 7)
+            {
+                // display result;
+                LOG(INFO) << "³µÅÆ: " << info.plate_code << "; X=" << info.x << "; Y=" << info.y << "; W=" << info.w << "; H=" << info.h << std::endl;
+                cv::rectangle(frame, cv::Rect(info.x, info.y, info.w, info.h), cv::Scalar(0, 0, 255));
+                char outfile[1024] = { 0 };
+                sprintf_s(outfile, 1023, "D:/images/AI/%08d.jpg", framenum);
+                cv::imwrite(outfile, frame);
+            }
+        }
+
+        //imshow("video", frame);
+        //ÐÝÏ¢10ºÁÃë
+
+        waitKey(10);
+    }
 }

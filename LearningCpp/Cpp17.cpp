@@ -15,7 +15,7 @@
 #include <charconv>
 #include <assert.h>
 
-#include "TimeLost.h"
+#include "../Common/TimeLost.h"
 
 /// <summary>
 /// ด๚ย๋ภดิด

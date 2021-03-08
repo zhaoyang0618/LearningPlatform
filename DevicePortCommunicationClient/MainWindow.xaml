@@ -7,6 +7,12 @@
         xmlns:local="clr-namespace:DevicePortCommunicationClient"
         mc:Ignorable="d"
         Title="工业设备通信工具" Height="450" Width="800">
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Click="OnButtonTestAwait1Click">测试异步await1</Button>
+            <Button Click="OnButtonTestAwait2Click">测试异步await2</Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
     <Grid>
         <Grid x:Name="gridMain">
             <Grid.ColumnDefinitions>

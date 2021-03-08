@@ -36,6 +36,12 @@
     <ClCompile Include="TestDNN.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VideoAnalysisThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlateReconize.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestVideoAnalysis.h">
@@ -57,6 +63,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TestDNN.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VideoAnalysisThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlateReconize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

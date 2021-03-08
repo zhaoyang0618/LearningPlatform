@@ -30,15 +30,15 @@
     <ClCompile Include="STLContainersDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ThreadDemo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LearningCpp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Cpp17.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TimeLost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ThreadWrapper.h">
@@ -48,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="STLContainersDemo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadDemo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
