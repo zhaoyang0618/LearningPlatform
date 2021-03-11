@@ -18,6 +18,8 @@ const char* params = "{ help h         |           | Print usage }"
 "{ input          | vtest.avi | Path to a video or a sequence of image }"
 "{ algo           | MOG2      | Background subtraction method (KNN, MOG2) }";
 
+int testVideoAnalysis();
+
 int main(int argc, char** argv)
 {
     //
@@ -75,8 +77,37 @@ int main(int argc, char** argv)
         return 0;
     }
 
-    //读取txt文件中的url
+    //视频质量分析
+    //testVideoAnalysis();
+
+    //图像拼接
+    //TestImgProcFunctionality::testStitcher();
+    //水印
+    TestImgProcFunctionality::testWatermark("E:/Images/testaa.jpg");
     //
+	//auto size = sizeof(bool);
+	//std::cout << size << std::endl;
+	//TestVideoAnalysis::TestPlateRecognitionVideo("rtsp://admin:hellosar0@192.168.1.108/cam/realmonitor?channel=1&subtype=0");
+
+	//TestVideoAnalysis::TestReadVideo("D:\\1.avi");
+	//TestDNN::TestHED("E:/images/1.jpeg");
+	//TestImgProcFunctionality::testMorph("E:/images/1.jpeg");
+	//TestImgProcFunctionality::throughoutFolder("E:\\Images\\MV", "E:\\Images\\MV_output");
+    google::ShutdownGoogleLogging();
+    return 0;
+	//TestImgProcFunctionality::testHoughLine("E:\\Images\\airport\\001.JPG");
+
+	//
+	//TestPCA::FirstTest();
+	TestPCA::SecondTest();
+
+	system("pause");
+	return 0;
+}
+
+int testVideoAnalysis()
+{
+    //读取txt文件中的url
     int ret = TestVideoAnalysis::InitAI();
     std::cout << "初始化AI库: " << ret << std::endl;
     if (ret < 0)
@@ -92,7 +123,7 @@ int main(int argc, char** argv)
         vec.push_back(v);
     }
 
-    for (auto& v:vec)
+    for (auto& v : vec)
     {
         v->Start("rtsp://admin:pushon123@192.168.225.114/cam/realmonitor?channel=1&subtype=0", "E:/Images/plates");
     }
@@ -110,24 +141,7 @@ int main(int argc, char** argv)
     {
         v->Stop();
     }
-    //
-	//auto size = sizeof(bool);
-	//std::cout << size << std::endl;
-	//TestVideoAnalysis::TestPlateRecognitionVideo("rtsp://admin:hellosar0@192.168.1.108/cam/realmonitor?channel=1&subtype=0");
-	TestVideoAnalysis::ReleaseAI();
 
-	//TestVideoAnalysis::TestReadVideo("D:\\1.avi");
-	//TestDNN::TestHED("E:/images/1.jpeg");
-	//TestImgProcFunctionality::testMorph("E:/images/1.jpeg");
-	//TestImgProcFunctionality::throughoutFolder("E:\\Images\\MV", "E:\\Images\\MV_output");
-    google::ShutdownGoogleLogging();
+    TestVideoAnalysis::ReleaseAI();
     return 0;
-	//TestImgProcFunctionality::testHoughLine("E:\\Images\\airport\\001.JPG");
-
-	//
-	//TestPCA::FirstTest();
-	TestPCA::SecondTest();
-
-	system("pause");
-	return 0;
 }

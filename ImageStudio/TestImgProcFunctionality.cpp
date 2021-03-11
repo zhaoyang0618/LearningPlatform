@@ -575,6 +575,10 @@ Mat addGaussianNoise(Mat& srcImag)
     return dstImage;
 }
 
+/// <summary>
+/// 代码来源
+/// https://www.sohu.com/a/342264044_100007727
+/// </summary>
 void TestImgProcFunctionality::GenerateMLImages()
 {
     //遍历文件夹
@@ -654,5 +658,77 @@ void TestImgProcFunctionality::GenerateMLImages()
     //关闭文本文件
     ofs.close();
 }
+
+void TestImgProcFunctionality::testStitcher()
+{
+    vector< string> files;
+    glob("E:/images/patrol/1", files);
+    vector<Mat> images;
+    for (int i = 0; i < files.size(); i++) {
+        printf("image file : %s n", files[i].c_str());
+        auto img = imread(files[i]);
+        cv::rotate(img, img, ROTATE_90_CLOCKWISE);
+        cv::imshow(files[i].c_str(), img);
+        cv::waitKey(0);
+        images.push_back(img);
+    }
+    // 设置拼接模式与参数
+    Mat result1, result2, result3;
+    Stitcher::Mode mode = Stitcher::PANORAMA;
+    Ptr<Stitcher> stitcher = Stitcher::create(mode);
+    // 拼接方式-多通道融合
+    auto blender = detail::Blender::createDefault(detail::Blender::MULTI_BAND);
+    stitcher->setBlender(blender);
+    // 拼接
+    Stitcher::Status status = stitcher->stitch(images, result1);
+    // 平面曲翘拼接
+    auto plane_warper = makePtr<cv::PlaneWarper>();
+    stitcher->setWarper(plane_warper);
+    status = stitcher->stitch(images, result2);
+    // 鱼眼拼接
+    auto fisheye_warper = makePtr<cv::FisheyeWarper>();
+    stitcher->setWarper(fisheye_warper);
+    status = stitcher->stitch(images, result3);
+    // 检查返回
+    if (status != Stitcher::OK)
+    {
+        cout << "Can't stitch images, error code = " << int(status) << endl;
+        return;
+    }
+    imwrite("E:/images/patrol/result1.png", result1);
+    imwrite("E:/images/patrol/result2.png", result2);
+    imwrite("E:/images/patrol/result3.png", result3);
+    waitKey(0);
+}
+
+void TestImgProcFunctionality::testWatermark(const char* filepath)
+{
+    //
+    cv::Mat src = cv::imread(filepath);
+    if (src.empty())
+        return;
+    cv::cvtColor(src, src, cv::COLOR_BGR2GRAY);
+    //
+    HiddenWatermark hw1;
+    cv::Mat temp = hw1.transformImageWithText(src, "Hello world", cv::Point(40, 80), 0.5, cv::Scalar(0, 0, 0));
+    //cv::Mat show;
+    //temp.convertTo(show, CV_8U);
+    //cv::imshow("Temp", show);
+    //cv::waitKey(0);
+    cv::Mat dst = hw1.antitransformImage(temp);
+    cv::imwrite("E:/Images/mark.jpg", dst);
+    cv::imshow("WaterMark", dst);
+    cv::waitKey(0);
+
+    cv::Mat src2 = cv::imread("E:/Images/mark.jpg");
+    if (src2.empty())
+        return;
+    cv::cvtColor(src2, src2, cv::COLOR_BGR2GRAY);
+    HiddenWatermark hw2;
+    cv::Mat dst2 = hw2.transformImage(src2);
+    cv::imshow("anti", dst2);
+    cv::waitKey(0);
+}
+
 
 
