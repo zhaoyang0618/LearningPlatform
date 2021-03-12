@@ -56,6 +56,20 @@ public:
 	static void testStitcher();
 
     static void testWatermark(const char* filepath);
+
+    /// <summary>
+    /// 90度旋转
+    /// </summary>
+    /// <param name="srcfilepath"></param>
+    /// <param name="dstfilepath"></param>
+    static void testRotate(const char* srcfilepath, const char* dstfilepath);
+    /// <summary>
+    /// 任意角度旋转
+    /// 使用仿射变换
+    /// </summary>
+    /// <param name="srcfilepath"></param>
+    /// <param name="dstfilepath"></param>
+    static void testRotateAngle(const char* srcfilepath, const char* dstfilepath, double angle);
 };
 
 /// <summary>

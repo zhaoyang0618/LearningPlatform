@@ -730,5 +730,34 @@ void TestImgProcFunctionality::testWatermark(const char* filepath)
     cv::waitKey(0);
 }
 
+void TestImgProcFunctionality::testRotate(const char* srcfilepath, const char* dstfilepath)
+{
+    auto src = cv::imread(srcfilepath);
+    if (src.empty())
+        return;
+
+    cv::Mat dst;
+    cv::rotate(src, dst, cv::ROTATE_90_COUNTERCLOCKWISE);
+    cv::imwrite(dstfilepath, dst);
+}
+
+void TestImgProcFunctionality::testRotateAngle(const char* srcfilepath, const char* dstfilepath, double angle)
+{
+    auto src = cv::imread(srcfilepath);
+    if (src.empty())
+        return;
+    //首先使用中心点作为旋转中心
+    cv::Point center(src.cols / 2, src.rows / 2);
+    //计算旋转矩阵
+    cv::Mat tm = cv::getRotationMatrix2D(center, angle, 1);//第三个参数为1说明不作缩放
+    //仿射变换
+    cv::Mat dst;
+    cv::warpAffine(src, dst, tm, cv::Size(src.cols, src.rows));
+
+    cv::imwrite(dstfilepath, dst);
+}
+
+
+
 
 

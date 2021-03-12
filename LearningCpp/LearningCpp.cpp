@@ -42,23 +42,24 @@ int main(int argc, char* argv[])
 	auto x(std::move(p));
 
 	//
-	testSample();
-	testMap();
-	testPrinting();
-	testStricterExpressionEvaluationOrder();
-	testGuaranteedCopyElision();
-	testTemplate();
-	testOptional();
-	testVariant();
-	testAny();
-	testStringView();
-	testStringConversion();
-	//testThread();
-	testParallel();
-	testSTLCookbook();
-	testSTLContainers();
+	//testSample();
+	//testMap();
+	//testPrinting();
+	//testStricterExpressionEvaluationOrder();
+	//testGuaranteedCopyElision();
+	//testTemplate();
+	//testOptional();
+	//testVariant();
+	//testAny();
+	//testStringView();
+	//testStringConversion();
+	////testThread();
+	//testParallel();
+	//testSTLCookbook();
+	//testSTLContainers();
 
-	ThreadDemo::TestPackagedTask();
+	//ThreadDemo::TestPackagedTask();
+	ThreadDemo::TestPackageTaskFuture();
 	system("pause");
 	return 0;
 }

@@ -1,0 +1,12 @@
+
+#pragma once
+/// <summary>
+/// ≤‚ ‘÷«ƒ‹÷∏’Î
+/// </summary>
+class SmartPointerDemo
+{
+public:
+	static void testUniquePtr();
+
+};
+

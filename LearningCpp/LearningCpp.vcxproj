@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="Cpp17.cpp" />
     <ClCompile Include="LearningCpp.cpp" />
+    <ClCompile Include="SmartPointerDemo.cpp" />
     <ClCompile Include="STLContainersDemo.cpp" />
     <ClCompile Include="STLCookbookDemos.cpp" />
     <ClCompile Include="ThreadDemo.cpp" />
@@ -151,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="Cpp17.h" />
     <ClInclude Include="LearningCpp.h" />
+    <ClInclude Include="SmartPointerDemo.h" />
     <ClInclude Include="STLContainersDemo.h" />
     <ClInclude Include="STLCookbookDemos.h" />
     <ClInclude Include="ThreadDemo.h" />
