@@ -144,4 +144,70 @@ void ThreadDemo::TestAsync()
 /// 
 
 
+/// <summary>
+/// https://www.cnblogs.com/bhlsheji/p/5035018.html
+/// </summary>
+std::mutex mtx; // 全局相互排斥锁.
+std::condition_variable cv; // 全局条件变量.
+bool ready = false; // 全局标志位
+void do_print_id(int id)
+{
+    std::unique_lock <std::mutex> lck(mtx);
+    while (!ready) // 假设标志位不为 true, 则等待...
+        cv.wait(lck); // 当前线程被堵塞, 当全局标志位变为 true 之后,
+    // 线程被唤醒, 继续往下运行打印线程编号id.
+    std::cout << "thread " << id << '\n';
+}
 
+void go()
+{
+    std::unique_lock <std::mutex> lck(mtx);
+    ready = true; // 设置全局标志位为 true.
+    cv.notify_all(); // 唤醒全部线程.
+}
+
+//另一个例子
+int cargo = 0;
+bool shipment_available()
+{
+    return cargo != 0;
+}
+
+// 消费者线程.
+void consume(int n)
+{
+    for (int i = 0; i < n; ++i) {
+        std::unique_lock <std::mutex> lck(mtx);
+        cv.wait(lck, shipment_available);
+        std::cout << cargo << '\n';
+        cargo = 0;
+    }
+}
+void ThreadDemo::testConditionVariable()
+{
+    //示例1
+    std::thread threads[10];
+    // spawn 10 threads:
+    for (int i = 0; i < 10; ++i)
+        threads[i] = std::thread(do_print_id, i);
+
+    std::cout << "10 threads ready to race...\n";
+    go(); // go!
+
+    for (auto& th : threads)
+        th.join();
+
+    //示例2
+    std::thread consumer_thread(consume, 10); // 消费者线程.
+
+    // 主线程为生产者线程, 生产 10 个物品.
+    for (int i = 0; i < 10; ++i) {
+        while (shipment_available())
+            std::this_thread::yield();
+        std::unique_lock <std::mutex> lck(mtx);
+        cargo = i + 1;
+        cv.notify_one();
+    }
+
+    consumer_thread.join();
+}

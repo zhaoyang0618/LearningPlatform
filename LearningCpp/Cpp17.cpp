@@ -17,6 +17,25 @@
 
 #include "../Common/TimeLost.h"
 
+//auto decltype用法
+//返回值是int
+inline auto getValue(int x)
+{
+    return x;
+}
+
+//返回值是int
+inline auto getValue2(int x)->decltype(x)
+{
+    return x;
+}
+
+//返回值是int&
+inline decltype(auto) getValue(int& x)
+{
+    return x;
+}
+
 /// <summary>
 /// 代码来源
 /// https://devblogs.microsoft.com/cppblog/category/general-cpp-series/

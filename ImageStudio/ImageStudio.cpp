@@ -79,11 +79,15 @@ int main(int argc, char** argv)
 
     //视频质量分析
     //testVideoAnalysis();
+    float f = 12345.678f;
+    std::cout << "float(12345.678): "  << f << std::endl;
+    //TestVideoAnalysis::TestReadVideo("http://113.246.250.245:10000/sms/43130000002020000002/flv/hls/43130000002000000002_1060001.flv");
 
     //图像拼接
     //TestImgProcFunctionality::testStitcher();
     //水印
-    TestImgProcFunctionality::testWatermark("E:/Images/testaa.jpg");
+    //TestImgProcFunctionality::testWatermark("E:/Images/testaa.jpg");
+
     //
 	//auto size = sizeof(bool);
 	//std::cout << size << std::endl;

@@ -7,7 +7,7 @@
 #include <iostream>
 #include <cstdio>
 #include "LearningCpp.h"
-
+#include "CppGrammer.h"
 
 int main(int argc, char* argv[])
 {
@@ -59,7 +59,10 @@ int main(int argc, char* argv[])
 	//testSTLContainers();
 
 	//ThreadDemo::TestPackagedTask();
-	ThreadDemo::TestPackageTaskFuture();
+	//ThreadDemo::TestPackageTaskFuture();
+
+	//
+	CppGrammerDemo();
 	system("pause");
 	return 0;
 }

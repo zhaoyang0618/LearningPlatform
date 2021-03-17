@@ -8,5 +8,6 @@ public:
 	static void TestPackageTaskFuture();
 	static void TestPackageTaskReset();
 	static void TestAsync();
+	static void testConditionVariable();
 };
 

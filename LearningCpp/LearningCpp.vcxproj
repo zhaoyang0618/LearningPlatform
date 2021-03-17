@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cpp17.cpp" />
+    <ClCompile Include="CppGrammer.cpp" />
     <ClCompile Include="LearningCpp.cpp" />
     <ClCompile Include="SmartPointerDemo.cpp" />
     <ClCompile Include="STLContainersDemo.cpp" />
@@ -151,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cpp17.h" />
+    <ClInclude Include="CppGrammer.h" />
     <ClInclude Include="LearningCpp.h" />
     <ClInclude Include="SmartPointerDemo.h" />
     <ClInclude Include="STLContainersDemo.h" />

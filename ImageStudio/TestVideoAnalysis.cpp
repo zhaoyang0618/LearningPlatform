@@ -290,7 +290,22 @@ void TestVideoAnalysis::TestDenseOpticalFlow(const char* filename)
 
 void TestVideoAnalysis::TestReadVideo(const char* filename)
 {
-    cv::VideoCapture capture(0);
+    cv::VideoCapture capture;
+    bool ret = false;
+    if (filename == nullptr)
+    {
+        ret = capture.open(0);
+    }
+    else
+    {
+        ret = capture.open(filename);
+    }
+
+    if (!ret)
+    {
+        std::cout << "Read video failed!" << std::endl;
+        return;
+    }
     if (!capture.isOpened())
     {
         std::cout << "Read video failed!" << std::endl;
@@ -307,7 +322,8 @@ void TestVideoAnalysis::TestReadVideo(const char* filename)
         if (!capture.read(frame)) //当视频帧数很多，循环读数据 会导致内存泄漏  
         {
             std::cout << "Read frame failed!" << std::endl;
-            break;
+            cv::waitKey(30);
+            continue;
         }
 
         auto a = cv::waitKey(30);
