@@ -7,7 +7,8 @@ public:
 	static void TestPackageTaskValid();
 	static void TestPackageTaskFuture();
 	static void TestPackageTaskReset();
-	static void TestAsync();
 	static void testConditionVariable();
+	static void TestAsync();
+	static void TestAsync2();
 };
 

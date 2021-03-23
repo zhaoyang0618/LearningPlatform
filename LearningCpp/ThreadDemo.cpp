@@ -211,3 +211,171 @@ void ThreadDemo::testConditionVariable()
 
     consumer_thread.join();
 }
+
+///
+///https://blog.csdn.net/Watson2016/article/details/52860797?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&spm=1001.2101.3001.4242
+/// 
+/// a non-optimized way of checking for prime numbers:
+bool is_prime(int x)
+{
+    //还可以检验更少的数据sqrt(x)即可。
+    auto threshold = x / 2;
+    for (int i = 2; i < threshold; ++i)
+        if (x % i == 0)
+            return false;
+    return true;
+}
+
+int do_get_value() { return 10; }
+
+void get_int(std::promise<int>& prom) {
+    int x;
+    std::cout << "Please, enter an integer value: ";
+    std::cin.exceptions(std::ios::failbit);   // throw on failbit
+    try {
+        std::cin >> x;                         // sets failbit if input is not int
+        prom.set_value(x);
+    }
+    catch (std::exception&) {
+        prom.set_exception(std::current_exception());
+    }
+}
+
+void print_int(std::future<int>& fut) {
+    try {
+        int x = fut.get();
+        std::cout << "value: " << x << '\n';
+    }
+    catch (std::exception& e) {
+        std::cout << "[exception caught: " << e.what() << "]\n";
+    }
+}
+
+double ThreadTask(int n) {
+    std::cout << std::this_thread::get_id()
+        << " start computing..." << std::endl;
+
+    double ret = 0;
+    for (int i = 0; i <= n; i++) {
+        ret += std::sin(i);
+    }
+
+    std::cout << std::this_thread::get_id()
+        << " finished computing..." << std::endl;
+    return ret;
+}
+
+void do_print_ten(char c, int ms)
+{
+    for (int i = 0; i < 10; ++i) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(ms));
+        std::cout << c;
+    }
+}
+void ThreadDemo::TestAsync2()
+{
+    // call function asynchronously:
+    std::future<bool> fut = std::async(is_prime, 444444443);
+
+    // do something while waiting for function to set future:
+    std::cout << "checking, please wait";
+    std::chrono::milliseconds span(100);
+    //wait_until() 可以设置一个系统绝对时间点 abs_time
+    while (fut.wait_for(span) == std::future_status::timeout)
+        std::cout << '.';
+
+    bool x = fut.get();         // retrieve return value
+
+    std::cout << "\n444444443 " << (x ? "is" : "is not") << " prime.\n";
+
+    //
+    std::future<int> fut2 = std::async(do_get_value);
+    //调用该函数之后，该 std::future 对象本身已经不和任何共享状态相关联，因此该 std::future 的状态不再是 valid 的了
+    std::cout << "fut2 is valid: " << fut2.valid() << std::endl;
+    std::shared_future<int> shared_fut = fut2.share();
+    std::cout << "fut2 is valid: " << fut2.valid() << std::endl;
+    // 共享的 future 对象可以被多次访问.
+    std::cout << "value: " << shared_fut.get() << '\n';
+    std::cout << "its double: " << shared_fut.get() * 2 << '\n';
+
+    //
+    std::promise<int> prom;
+    std::future<int> fut3 = prom.get_future();
+
+    std::thread th1(get_int, std::ref(prom));
+    std::thread th2(print_int, std::ref(fut3));
+
+    th1.join();
+    th2.join();
+
+    //
+    // 由默认构造函数创建的 std::future 对象,
+    // 初始化时该 std::future 对象处于为 invalid 状态.
+    std::future<int> foo, bar;
+    foo = std::async(do_get_value); // move 赋值, foo 变为 valid.
+    bar = std::move(foo); // move 赋值, bar 变为 valid, 而 move 赋值以后 foo 变为 invalid.
+
+    if (foo.valid())
+        std::cout << "foo's value: " << foo.get() << '\n';
+    else
+        std::cout << "foo is not valid\n";
+
+    if (bar.valid())
+        std::cout << "bar's value: " << bar.get() << '\n';
+    else
+        std::cout << "bar is not valid\n";
+
+    //wait的另一个用法，一直阻塞，知道ready
+    // call function asynchronously:
+    std::future <bool> fut4 = std::async(is_prime, 194232491);
+
+    std::cout << "Checking...\n";
+    fut4.wait();
+
+    std::cout << "\n194232491 ";
+    if (fut4.get()) // guaranteed to be ready (and not block) after wait returns
+        std::cout << "is prime.\n";
+    else
+        std::cout << "is not prime.\n";
+
+    //
+    std::future<double> f(std::async(std::launch::async, ThreadTask, 100000000));
+
+#if 0
+    while (f.wait_until(std::chrono::system_clock::now() + std::chrono::seconds(1))
+        != std::future_status::ready) {
+        std::cout << "task is running...\n";
+    }
+#else
+    while (f.wait_for(std::chrono::seconds(1))
+        != std::future_status::ready) {
+        std::cout << "task is running...\n";
+    }
+#endif
+
+    std::cout << f.get() << std::endl;
+
+    //
+    std::cout << "with launch::async:\n";
+    //Asynchronous: 异步任务会在另外一个线程中调用，并通过共享状态返回异步任务的结果（一般是调用 std::future::get() 获取异步任务的结果）。
+    std::future <void> foo1 =
+        std::async(std::launch::async, do_print_ten, '*', 100);
+    std::future <void> bar1 =
+        std::async(std::launch::async, do_print_ten, '@', 200);
+    // async "get" (wait for foo and bar to be ready):
+    foo1.get();
+    bar1.get();
+    std::cout << "\n\n";
+
+    std::cout << "with launch::deferred:\n";
+    //Deferred: 异步任务将会在共享状态被访问时调用，相当与按需调用（即延迟(deferred)调用）。
+    foo1 = std::async(std::launch::deferred, do_print_ten, '*', 100);
+    bar1 = std::async(std::launch::deferred, do_print_ten, '@', 200);
+    // deferred "get" (perform the actual calls):
+    foo1.get();
+    bar1.get();
+    std::cout << '\n';
+}
+
+
+

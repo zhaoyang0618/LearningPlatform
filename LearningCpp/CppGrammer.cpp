@@ -97,6 +97,51 @@ NewClass::NewClass(std::initializer_list<int> args)
 	std::cout << std::endl;
 }
 
+class TestClass
+{
+public:
+	int a = 1;
+	int b = 2;
+};
+
+//继承之间，如何借用构造函数
+class B1
+{
+public:
+	int x;
+	B1(int a) :x(a) {}
+};
+
+class D1 : public B1
+{
+public:
+	D1(int i) :B1(i) {}
+};
+
+//或者如下语法
+class D2 : public B1
+{
+public:
+	using B1::B1;//继承所有的B1构造函数
+	int y{ 0 };	//自己的成员初始化
+};
+
+//虚函数重载：overide; final
+//final还可以用于class
+class B3
+{
+	virtual void foo() {}
+	virtual void foo1() final {}
+};
+
+class D3 :public B3
+{
+	void foo() override { }
+	//void foo1() {}//这是不允许的
+};
+class B4 final {};	//此时B4不允许有子类
+//class D4 : B4 {};//也是不允许的
+
 void CppGrammerDemo()
 {
 	//访问tuple
@@ -199,6 +244,13 @@ void CppGrammerDemo()
 	NewClass n{ 1,2,3 };
 
 	//C++20引入新的初始化方式
+	//TestClass o1{ .a = 3, .b = 4};
+	//TestClass o2{ .a = 5 };
+	//TestClass o3{ .b = 6 };
+	//对顺序有要求,下面两种都是错误的
+	//TestClass o4{ .b = 0, .a = 1 };//out of order
+	//TestClass o5{ .a = 5, 3 };//不能混合使用
 
+	D2 dd(3);
 }
 

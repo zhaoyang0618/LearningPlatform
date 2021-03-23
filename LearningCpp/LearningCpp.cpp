@@ -62,7 +62,8 @@ int main(int argc, char* argv[])
 	//ThreadDemo::TestPackageTaskFuture();
 
 	//
-	CppGrammerDemo();
+	//CppGrammerDemo();
+	ThreadDemo::TestAsync2();
 	system("pause");
 	return 0;
 }
