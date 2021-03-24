@@ -10,5 +10,7 @@ public:
 	static void testConditionVariable();
 	static void TestAsync();
 	static void TestAsync2();
+	static void TestLock();
+	static void TestPackagedTask2();
 };
 
