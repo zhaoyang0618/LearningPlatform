@@ -8,6 +8,7 @@
 #include <cstdio>
 #include "LearningCpp.h"
 #include "CppGrammer.h"
+#include "inlinethreadlocal.h"
 
 int main(int argc, char* argv[])
 {
@@ -65,7 +66,8 @@ int main(int argc, char* argv[])
 	//CppGrammerDemo();
 	//ThreadDemo::TestAsync2();
 	//ThreadDemo::TestLock();
-	ThreadDemo::TestPackagedTask2();
+	//ThreadDemo::TestPackagedTask2();
+	testThreadLocal();
 	system("pause");
 	return 0;
 }

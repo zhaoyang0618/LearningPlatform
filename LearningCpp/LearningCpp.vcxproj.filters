@@ -39,6 +39,12 @@
     <ClCompile Include="CppGrammer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="inlinethreadlocal1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="inlinethreadlocal2.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LearningCpp.h">
@@ -63,6 +69,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CppGrammer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inlinethreadlocal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="factory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

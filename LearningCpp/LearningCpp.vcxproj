@@ -143,6 +143,8 @@
   <ItemGroup>
     <ClCompile Include="Cpp17.cpp" />
     <ClCompile Include="CppGrammer.cpp" />
+    <ClCompile Include="inlinethreadlocal1.cpp" />
+    <ClCompile Include="inlinethreadlocal2.cpp" />
     <ClCompile Include="LearningCpp.cpp" />
     <ClCompile Include="SmartPointerDemo.cpp" />
     <ClCompile Include="STLContainersDemo.cpp" />
@@ -153,6 +155,8 @@
   <ItemGroup>
     <ClInclude Include="Cpp17.h" />
     <ClInclude Include="CppGrammer.h" />
+    <ClInclude Include="factory.h" />
+    <ClInclude Include="inlinethreadlocal.h" />
     <ClInclude Include="LearningCpp.h" />
     <ClInclude Include="SmartPointerDemo.h" />
     <ClInclude Include="STLContainersDemo.h" />
