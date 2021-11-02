@@ -145,6 +145,7 @@
     <ClCompile Include="CppGrammer.cpp" />
     <ClCompile Include="inlinethreadlocal1.cpp" />
     <ClCompile Include="inlinethreadlocal2.cpp" />
+    <ClCompile Include="lambdathis.cpp" />
     <ClCompile Include="LearningCpp.cpp" />
     <ClCompile Include="SmartPointerDemo.cpp" />
     <ClCompile Include="STLContainersDemo.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="CppGrammer.h" />
     <ClInclude Include="factory.h" />
     <ClInclude Include="inlinethreadlocal.h" />
+    <ClInclude Include="lambdathis.h" />
     <ClInclude Include="LearningCpp.h" />
     <ClInclude Include="SmartPointerDemo.h" />
     <ClInclude Include="STLContainersDemo.h" />
