@@ -26,4 +26,5 @@ int testlambdathis()
 		t = d.startThreadWithCopyOfThis();
 	} // d is no longer valid
 	t.join();
+	return 0;
 }

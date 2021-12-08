@@ -3,6 +3,8 @@ using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -307,6 +309,63 @@ namespace DevicePortCommunicationClient
             source.CopyTo(target);
         }
 
+        #endregion
+
+        #region 其他
+        private void OnButtonTestCmdClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //https://www.cnblogs.com/arxive/p/6042918.html
+                string cmd = "";
+                var p = new Process();
+                p.StartInfo.FileName = "cmd";
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardInput = true;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.RedirectStandardError = true;
+                p.StartInfo.CreateNoWindow = true;
+                p.OutputDataReceived += new DataReceivedEventHandler(sortProcess_OutputDataReceived);
+                p.Start();
+                StreamWriter cmdWriter = p.StandardInput;
+                p.BeginOutputReadLine();
+                if (!String.IsNullOrEmpty(cmd))
+                {
+                    cmdWriter.WriteLine(cmd);
+                }
+                cmdWriter.Close();
+                p.WaitForExit();
+                p.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("执行命令失败，请检查输入的命令是否正确！");
+            }
+
+
+            //
+            //Process p = new Process();//设定调用的程序名，不是系统目录的需要完整路径 
+            //p.StartInfo.FileName = "cmd.bat";//传入执行参数 
+            //p.StartInfo.Arguments = "";
+            //p.StartInfo.UseShellExecute = false;//是否重定向标准输入 
+            //p.StartInfo.RedirectStandardInput = false;//是否重定向标准转出 
+            //p.StartInfo.RedirectStandardOutput = false;//是否重定向错误 
+            //p.StartInfo.RedirectStandardError = false;//执行时是不是显示窗口 
+            //p.StartInfo.CreateNoWindow = true;//启动 
+            //p.Start();
+            //p.WaitForExit();
+            //p.Close();
+            //
+        }
+        private void sortProcess_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(e.Data))
+            {
+                this.BeginInvoke(new Action(() => { 
+                    System.Diagnostics.Debug.WriteLine(e.Data); 
+                }));
+            }
+        }
         #endregion
 
         #region 辅助函数

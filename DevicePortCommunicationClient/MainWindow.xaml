@@ -11,6 +11,7 @@
         <Controls:WindowCommands>
             <Button Click="OnButtonTestAwait1Click">测试异步await1</Button>
             <Button Click="OnButtonTestAwait2Click">测试异步await2</Button>
+            <Button Click="OnButtonTestCmdClick">执行命令行</Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     <Grid>
