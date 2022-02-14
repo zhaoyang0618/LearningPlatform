@@ -228,7 +228,7 @@ Test Create()
 // based on P0135R0
 struct NonMoveable
 {
-    NonMoveable(int x) : v(x) { }
+    NonMoveable(int x) : v(x), arr() { }
     NonMoveable(const NonMoveable&) = delete;
     NonMoveable(NonMoveable&&) = delete;
     std::array<int, 1024> arr;
