@@ -78,5 +78,10 @@ namespace ArtificialIntelligenceStudioClient
 #pragma warning restore WPF0060
 
         #endregion
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            AI.TorchExample.Test();
+        }
     }
 }

@@ -8,9 +8,16 @@
 
   <ItemGroup>
     <PackageReference Include="Fluent.Ribbon" Version="9.0.3" />
+    <PackageReference Include="libtorch-cpu" Version="1.10.0.1" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="TorchSharp" Version="0.96.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UI\" />
   </ItemGroup>
 
 </Project>

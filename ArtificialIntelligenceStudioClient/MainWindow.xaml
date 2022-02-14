@@ -58,7 +58,7 @@
             <!--Tabs-->
             <Fluent:RibbonTabItem Header="选择模型">
                 <Fluent:RibbonGroupBox Header="Group">
-                    <Fluent:Button Header="Green" />
+                    <Fluent:Button Header="测试" Click="Button_Click" />
                     <Fluent:Button Header="Grey"   />
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
