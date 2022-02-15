@@ -6,7 +6,50 @@
              xmlns:local="clr-namespace:ArtificialIntelligenceStudioClient.UI"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="Ellipse" x:Key="PointEllipseStyle">
+            <Style.Setters>
+                <Setter Property="Width" Value="0"/>
+                <Setter Property="Height" Value="9"/>
+                <Setter Property="Fill" Value="Blue"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="Control.IsMouseOver" Value="True">
+                    <Setter Property="Fill" Value="Yellow"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Button Content="矩形标注" x:Name="button_rectangle"></Button>
+            <Button Content="取消选中"></Button>
+        </StackPanel>
+        <ListBox Grid.Row="2" Grid.Column="0" x:Name="labelbox">
             
+        </ListBox>
+        <Grid Grid.Row="2" Grid.Column="1" x:Name="workspace" Background="Black">
+            <ScrollViewer x:Name="BackFrame">
+                <ContentControl x:Name="imgcontrol">
+                    <Image x:Name="image"></Image>
+                </ContentControl>
+            </ScrollViewer>
+            <Path x:Name="crossline"></Path>
+            <Rectangle x:Name="rectanglebox"></Rectangle>
+            <Ellipse x:Name="c1"></Ellipse>
+            <Ellipse x:Name="c2"></Ellipse>
+            <Ellipse x:Name="c3"></Ellipse>
+            <Ellipse x:Name="c4"></Ellipse>
+        </Grid>
     </Grid>
 </UserControl>
