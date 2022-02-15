@@ -1,0 +1,20 @@
+﻿<Window x:Class="ArtificialIntelligenceStudioClient.UI.LabelPopupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ArtificialIntelligenceStudioClient.UI"
+        mc:Ignorable="d"
+        Title="LabelPopupWindow" Height="450" Width="800">
+    <Grid VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBox Margin="4" x:Name="label"></TextBox>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Margin="4" Click="Button_Click">确定</Button>
+            <Button IsCancel="True" Margin="4">取消</Button>
+        </StackPanel>
+    </Grid>
+</Window>

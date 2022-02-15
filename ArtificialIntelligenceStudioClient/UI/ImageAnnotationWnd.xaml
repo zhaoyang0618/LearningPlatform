@@ -22,34 +22,52 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel>
-            <Button Content="矩形标注" x:Name="button_rectangle"></Button>
-            <Button Content="取消选中"></Button>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Button Content="矩形标注" Click="LabelRectangle" Name="button_rectangle" Focusable="False"/>
+            <Button Content="取消选中" Click="SelectCancel" Focusable="False"/>
         </StackPanel>
-        <ListBox Grid.Row="2" Grid.Column="0" x:Name="labelbox">
-            
-        </ListBox>
-        <Grid Grid.Row="2" Grid.Column="1" x:Name="workspace" Background="Black">
-            <ScrollViewer x:Name="BackFrame">
-                <ContentControl x:Name="imgcontrol">
-                    <Image x:Name="image"></Image>
+        <ListBox Name="labelbox" Grid.Row="2" Grid.Column="0" 
+             SelectionChanged="SelectChange" KeyDown="LabelboxKeyResponse"/>
+        <Grid Name="workspace" Grid.Row="2" Grid.Column="1" Background="Black"
+          MouseLeftButtonDown="ImgMouseLeftButtonDown" 
+          MouseLeftButtonUp="ImgMouseLeftButtonUp"
+          MouseRightButtonDown="ImgMouseRightButtonDown" 
+          MouseRightButtonUp="ImgMouseRightButtonUp"
+          MouseMove="ImgMouseMove"
+          MouseWheel="ImgMouseWheel"
+          MouseLeave="ImgMouseLeave">
+            <Grid.Resources>
+                <TransformGroup x:Key="Imageview">
+                    <ScaleTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.Resources>
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled"
+                    Focusable="False" x:Name="BackFrame">
+                <ContentControl Name="imgcontrol">
+                    <Image Name="image" Source="D:\Images\1.jpg" Width="Auto" Height="Auto" RenderTransform="{StaticResource Imageview}" 
+                 Stretch="Uniform"  RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                 </ContentControl>
             </ScrollViewer>
-            <Path x:Name="crossline"></Path>
-            <Rectangle x:Name="rectanglebox"></Rectangle>
-            <Ellipse x:Name="c1"></Ellipse>
-            <Ellipse x:Name="c2"></Ellipse>
-            <Ellipse x:Name="c3"></Ellipse>
-            <Ellipse x:Name="c4"></Ellipse>
+            <Path Stroke="Blue" Name="crossline"></Path>
+            <Rectangle Name="rectanglebox" Stroke="#00ff00" Fill="#5588ffcc" Width="0" Height="0"/>
+            <Ellipse Name="c1" Tag="1" Style="{StaticResource PointEllipseStyle}"
+               MouseDown="PointMouseDown" MouseMove="PointMouseMove" MouseUp="PointMouseUp"/>
+            <Ellipse Name="c2" Tag="2" Style="{StaticResource PointEllipseStyle}"
+               MouseDown="PointMouseDown" MouseMove="PointMouseMove" MouseUp="PointMouseUp"/>
+            <Ellipse Name="c3" Tag="3" Style="{StaticResource PointEllipseStyle}"
+               MouseDown="PointMouseDown" MouseMove="PointMouseMove" MouseUp="PointMouseUp"/>
+            <Ellipse Name="c4" Tag="4" Style="{StaticResource PointEllipseStyle}"
+               MouseDown="PointMouseDown" MouseMove="PointMouseMove" MouseUp="PointMouseUp"/>
         </Grid>
     </Grid>
 </UserControl>

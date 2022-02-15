@@ -45,7 +45,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Fluent:Ribbon Grid.Row="0">
@@ -58,8 +58,8 @@
             <!--Tabs-->
             <Fluent:RibbonTabItem Header="选择模型">
                 <Fluent:RibbonGroupBox Header="Group">
-                    <Fluent:Button Header="测试" Click="Button_Click" />
-                    <Fluent:Button Header="Grey"   />
+                    <Fluent:Button Header="测试" Click="OnButtonTestClick" />
+                    <Fluent:Button Header="标注" Click="OnButtonAnnotationClick"   />
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
             <Fluent:RibbonTabItem Header="训练模型">
@@ -75,5 +75,6 @@
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
         </Fluent:Ribbon>
+        <Grid Grid.Row="1" x:Name="gridChild"></Grid>
     </Grid>
 </Metro:MetroWindow>

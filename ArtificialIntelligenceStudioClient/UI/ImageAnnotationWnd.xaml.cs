@@ -168,6 +168,7 @@ namespace ArtificialIntelligenceStudioClient.UI
             imageposition = e.GetPosition(image);
         }
         // 鼠标左键松开响应
+        int rectIndex = 0;
         private void ImgMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (!SelectRect) { return; }
@@ -177,7 +178,7 @@ namespace ArtificialIntelligenceStudioClient.UI
             image.ReleaseMouseCapture();
             lMouseDown = false;
             CROSSLINESHOW = true;
-            string label = PopupLabel();
+            string label = string.Format("测试{0:D3}",rectIndex++);// PopupLabel();
             double[] rect_roi = CreateRoi(imageposition, mouse);
             Rectangle rectangle = CreateRectangle(rect_roi);
             if (label != "" && rectangle != null)
@@ -382,28 +383,27 @@ namespace ArtificialIntelligenceStudioClient.UI
         // 打标签函数
         private string PopupLabel()
         {
-            //LabelPopupWindow labelpopupwindow = new LabelPopupWindow();
-            //if (screenSize == null)
-            //    InitScreenRadio();
-            //double[] win = { labelpopupwindow.Width, labelpopupwindow.Height };
-            //double mx = PointToScreen(Mouse.GetPosition(null)).X; //得到鼠标横坐标
-            //double my = PointToScreen(Mouse.GetPosition(null)).Y; //得到鼠标纵坐标
-            //double w = rectanglebox.Width;
-            //double h = rectanglebox.Height;
-            //double[] rect = { mx - w, my - h, w, h };
-            //double[] locate = CalculateWindowLocation(screenSize, rect, win);
-            //labelpopupwindow.Left = locate[0];
-            //labelpopupwindow.Top = locate[1];
-            //bool? result = labelpopupwindow.ShowDialog();
-            //if (result == true)
-            //{
-            //    return labelpopupwindow.label.Text;
-            //}
-            //else
-            //{
-            //    return "";
-            //}
-            throw new NotImplementedException();
+            var labelpopupwindow = new LabelPopupWindow();
+            if (screenSize == null)
+                InitScreenRadio();
+            double[] win = { labelpopupwindow.Width, labelpopupwindow.Height };
+            double mx = PointToScreen(Mouse.GetPosition(null)).X; //得到鼠标横坐标
+            double my = PointToScreen(Mouse.GetPosition(null)).Y; //得到鼠标纵坐标
+            double w = rectanglebox.Width;
+            double h = rectanglebox.Height;
+            double[] rect = { mx - w, my - h, w, h };
+            double[] locate = CalculateWindowLocation(screenSize, rect, win);
+            labelpopupwindow.Left = locate[0];
+            labelpopupwindow.Top = locate[1];
+            bool? result = labelpopupwindow.ShowDialog();
+            if (result == true)
+            {
+                return labelpopupwindow.label.Text;
+            }
+            else
+            {
+                return "";
+            }
         }
         // 顶点显示函数
         private void PointShow()

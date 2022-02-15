@@ -79,9 +79,18 @@ namespace ArtificialIntelligenceStudioClient
 
         #endregion
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        #region 事件处理
+        private void OnButtonTestClick(object sender, RoutedEventArgs e)
         {
             AI.TorchExample.Test();
         }
+
+        private void OnButtonAnnotationClick(object sender, RoutedEventArgs e)
+        {
+            var wnd = new UI.ImageAnnotationWnd();
+            gridChild.Children.Add(wnd);
+        }
+
+        #endregion
     }
 }
