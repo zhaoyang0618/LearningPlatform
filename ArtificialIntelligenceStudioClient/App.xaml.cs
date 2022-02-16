@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Prism.Ioc;
+using Prism.Modularity;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -11,7 +13,21 @@ namespace ArtificialIntelligenceStudioClient
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App 
     {
+        protected override Window CreateShell()
+        {
+            return Container.Resolve<MainWindow>();
+        }
+
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            //containerRegistry.RegisterSingleton<IMessageService, MessageService>();
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            //moduleCatalog.AddModule<ModuleNameModule>();
+        }
     }
 }
