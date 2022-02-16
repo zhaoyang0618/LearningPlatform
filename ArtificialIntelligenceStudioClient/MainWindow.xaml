@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ArtificialIntelligenceStudioClient"
         xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
         xmlns:Metro="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Metro:MetroWindow.LayoutTransform>
@@ -45,8 +46,9 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Fluent:Ribbon Grid.Row="0">
             <!--Backstage-->
@@ -56,25 +58,62 @@
             </Fluent:Ribbon.Menu>
 
             <!--Tabs-->
-            <Fluent:RibbonTabItem Header="选择模型">
-                <Fluent:RibbonGroupBox Header="Group">
-                    <Fluent:Button Header="测试" Click="OnButtonTestClick" />
+            <Fluent:RibbonTabItem Header="人工智能">
+                <Fluent:RibbonGroupBox Header="工具集">
                     <Fluent:Button Header="标注" Click="OnButtonAnnotationClick"   />
-                </Fluent:RibbonGroupBox>
-            </Fluent:RibbonTabItem>
-            <Fluent:RibbonTabItem Header="训练模型">
-                <Fluent:RibbonGroupBox Header="Group">
-                    <Fluent:Button Header="Green" />
-                    <Fluent:Button Header="Grey"   />
-                </Fluent:RibbonGroupBox>
-            </Fluent:RibbonTabItem>
-            <Fluent:RibbonTabItem Header="测试模型">
-                <Fluent:RibbonGroupBox Header="Group">
-                    <Fluent:Button Header="Green" />
-                    <Fluent:Button Header="Grey"   />
+                    <Fluent:Button Header="测试" Click="OnButtonTestClick" />
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
         </Fluent:Ribbon>
         <Grid Grid.Row="1" x:Name="gridChild"></Grid>
+        <Fluent:StatusBar Grid.Row="2"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Bottom"
+                          Visibility="{Binding IsChecked, ElementName=IsStatusBarVisibleCheckBox, Converter={StaticResource boolToVisibilityConverter}}">
+            <Fluent:StatusBarItem Title="Words Width"
+                                  HorizontalAlignment="Left"
+                                  IsEnabled="False"
+                                  Value="150">
+                <TextBlock Text="150 px" />
+            </Fluent:StatusBarItem>
+
+            <Separator HorizontalAlignment="Left" />
+
+            <Fluent:StatusBarItem Title="Selected Words"
+                                  HorizontalAlignment="Left"
+                                  Content="15 words"
+                                  ToolTip="This is Selected Words"
+                                  Value="15" />
+
+            <Separator HorizontalAlignment="Left" />
+
+            <Fluent:StatusBarItem Title="Used memory"
+                                  HorizontalAlignment="Right"
+                                  Value="{Binding UsedMemory, StringFormat={}{0:##\,000} KB}" />
+
+            <Separator HorizontalAlignment="Right" />
+
+            <Fluent:StatusBarItem Title="Zoom"
+                                  HorizontalAlignment="Right"
+                                  Value="{Binding Value, ElementName=zoomSlider, StringFormat={}{0:P}}" />
+
+            <Fluent:StatusBarItem Title="Test (no content, no value)"
+                                  HorizontalAlignment="Right" />
+
+            <Fluent:StatusBarItem Title="Zoom Slider"
+                                  HorizontalAlignment="Right">
+                <Slider x:Name="zoomSlider"
+                        IsDirectionReversed="False"
+                        IsSnapToTickEnabled="True"
+                        LargeChange="0.1"
+                        Maximum="2.0"
+                        Minimum="0.5"
+                        SmallChange="0.1"
+                        Style="{DynamicResource ZoomSliderStyle}"
+                        TickFrequency="0.1"
+                        Value="{Binding Zoom}" />
+            </Fluent:StatusBarItem>
+        </Fluent:StatusBar>
+
     </Grid>
 </Metro:MetroWindow>

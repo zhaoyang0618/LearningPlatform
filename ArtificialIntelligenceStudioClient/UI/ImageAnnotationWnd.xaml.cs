@@ -662,6 +662,12 @@ namespace ArtificialIntelligenceStudioClient.UI
             else if (input > Rborder) return Rborder;
             else return input;
         }
+
+        private void btnSelectFolder_Click(object sender, RoutedEventArgs e)
+        {
+            //选择文件夹:然后读取其中的文件
+        }
+
         // 初始化屏幕、像素比
         private void InitScreenRadio()
         {

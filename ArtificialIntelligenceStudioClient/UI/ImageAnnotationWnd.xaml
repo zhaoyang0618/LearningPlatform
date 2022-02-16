@@ -32,6 +32,7 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Button Content="选择文件夹" Click="btnSelectFolder_Click" Name="btnSelectFolder" Focusable="False"/>
             <Button Content="矩形标注" Click="LabelRectangle" Name="button_rectangle" Focusable="False"/>
             <Button Content="取消选中" Click="SelectCancel" Focusable="False"/>
         </StackPanel>
