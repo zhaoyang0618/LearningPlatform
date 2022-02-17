@@ -13,6 +13,7 @@ namespace ArtificialIntelligenceStudioClient
 {
     /// <summary>
     /// Interaction logic for App.xaml
+    /// https://blog.csdn.net/dxm809/article/details/121049754
     /// </summary>
     public partial class App 
     {
