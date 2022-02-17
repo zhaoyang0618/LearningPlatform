@@ -7,6 +7,8 @@
         xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
         xmlns:Metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:core="clr-namespace:ArtificialIntelligenceStudioClient.Core;assembly=ArtificialIntelligenceStudioClient.Core"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Metro:MetroWindow.LayoutTransform>
@@ -66,6 +68,7 @@
             </Fluent:RibbonTabItem>
         </Fluent:Ribbon>
         <Grid Grid.Row="1" x:Name="gridChild"></Grid>
+        <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
         <Fluent:StatusBar Grid.Row="2"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Bottom"
