@@ -1,4 +1,6 @@
 ﻿using ArtificialIntelligenceStudioClient.Modules.ImageAnnotation;
+using ArtificialIntelligenceStudioClient.Services;
+using Microsoft.Extensions.Logging;
 using Prism.Ioc;
 using Prism.Modularity;
 using System;
@@ -24,11 +26,17 @@ namespace ArtificialIntelligenceStudioClient
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //containerRegistry.RegisterSingleton<IMessageService, MessageService>();
+            //注入日志
+            var factory = new NLog.Extensions.Logging.NLogLoggerFactory();
+            ILogger logger = factory.CreateLogger("");
+            containerRegistry.RegisterInstance<ILogger>(logger);
+            //保存一些用户信息
+            containerRegistry.RegisterSingleton<LocalAppContext>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
+            //所有的模块通过modules注册，然后按需加载
             moduleCatalog.AddModule<ImageAnnotationModule>();
         }
     }

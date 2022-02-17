@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,15 @@ namespace ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.Views
     /// </summary>
     public partial class AnnotationWnd : UserControl
     {
-        public AnnotationWnd()
+        public AnnotationWnd(ILogger logger)
         {
             InitializeComponent();
+            _logger = logger;
         }
+
+        #region 辅助函数
+        ILogger _logger;
+
+        #endregion
     }
 }

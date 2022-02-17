@@ -1,0 +1,17 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ],
+  "modules": [
+    {
+      "name": "Í¼Ïñ±ê×¢",
+      "dll": "ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.dll"
+    },
+    { "name": "²âÊÔ¹¤¾ß" }
+  ]
+}

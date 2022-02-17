@@ -17,7 +17,7 @@
         <ScaleTransform ScaleX="{Binding DataContext.Zoom, ElementName=TestContent}" ScaleY="{Binding DataContext.Zoom, ElementName=TestContent}" />
     </Metro:MetroWindow.LayoutTransform>
 
-    <Metro:MetroWindow.Resources>
+    <!--<Metro:MetroWindow.Resources>
         <ResourceDictionary>
             <Style x:Key="{x:Type Fluent:BackstageTabControl}"
                    BasedOn="{StaticResource {x:Type Fluent:BackstageTabControl}}"
@@ -25,25 +25,24 @@
                 <Setter Property="SelectedContentMargin" Value="0" />
             </Style>
         </ResourceDictionary>
-    </Metro:MetroWindow.Resources>
+    </Metro:MetroWindow.Resources>-->
 
     <Metro:MetroWindow.TitleTemplate>
         <DataTemplate>
             <Fluent:RibbonTitleBar x:Name="RibbonTitleBar"
-                                   DataContext="{Binding ElementName=TestContent, Path=DataContext}"
-                                   Header="{Binding Path=Title, RelativeSource={RelativeSource AncestorType=Window}}" />
+                                   Header="人工智能学习平台" />
         </DataTemplate>
     </Metro:MetroWindow.TitleTemplate>
 
     <Metro:MetroWindow.LeftWindowCommands>
         <Metro:WindowCommands>
-            <Button>Left</Button>
+            <Button>首页</Button>
         </Metro:WindowCommands>
     </Metro:MetroWindow.LeftWindowCommands>
 
     <Metro:MetroWindow.RightWindowCommands>
         <Metro:WindowCommands>
-            <Button>Right</Button>
+            <Button>注销</Button>
         </Metro:WindowCommands>
     </Metro:MetroWindow.RightWindowCommands>
 
@@ -53,16 +52,35 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Fluent:Ribbon Grid.Row="0">
+        <Fluent:Ribbon Grid.Row="0" x:Name="ribbonMain">
             <!--Backstage-->
             <Fluent:Ribbon.Menu>
                 <Fluent:Backstage>
+                    <Fluent:BackstageTabControl>
+                        <Fluent:BackstageTabItem Header="首页">
+                            <Fluent:BackstageTabItem.Content>
+                                <Grid>
+                                    <TextBlock>Hello</TextBlock>
+                                </Grid>
+                            </Fluent:BackstageTabItem.Content>
+                        </Fluent:BackstageTabItem>
+                        <Fluent:BackstageTabItem Header="人工智能"/>
+                        <Fluent:Button Click="Button_Click"
+                                           Header="图像标注"
+                                           Icon="{iconPacks:Material Kind=Image}" />
+                        <Fluent:Button VerticalAlignment="Bottom"
+                                           Command="{Binding ExitCommand}"
+                                           DockPanel.Dock="Bottom"
+                                           Header="退出"
+                                           Icon="{iconPacks:Material Kind=ExitToApp}"
+                                           KeyTip="X" />
+                    </Fluent:BackstageTabControl>
                 </Fluent:Backstage>
             </Fluent:Ribbon.Menu>
 
             <!--Tabs-->
             <Fluent:RibbonTabItem Header="人工智能">
-                <Fluent:RibbonGroupBox Header="工具集">
+                <Fluent:RibbonGroupBox>
                     <Fluent:Button Header="标注" Click="OnButtonAnnotationClick"   />
                     <Fluent:Button Header="测试" Click="OnButtonTestClick" />
                 </Fluent:RibbonGroupBox>

@@ -27,8 +27,10 @@ namespace ArtificialIntelligenceStudioClient
         {
             InitializeComponent();
             //this.TestContent.Backstage.UseHighestAvailableAdornerLayer = false;
+            InitUI();
             this.Loaded += this.MahMetroWindow_Loaded;
             this.Closed += this.MahMetroWindow_Closed;
+
         }
 
         private void MahMetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -92,5 +94,68 @@ namespace ArtificialIntelligenceStudioClient
         }
 
         #endregion
+
+        #region 辅助函数
+        void InitUI()
+        {
+            //var item = new RibbonTabItem();
+            //item.Header = "图像标注";
+            //item.Tag = "图像标注";
+
+            //var group = new RibbonGroupBox();
+
+            //var btn = new Fluent.Button();
+            //btn.Header = "选择文件夹";
+            //group.Items.Add(btn);
+
+            //item.Groups.Add(group);
+
+            //ribbonMain.Tabs.Add(item);
+
+            ////ribbonMain.SelectedTabItem = item;
+            //ribbonMain.SelectedTabIndex = 1;
+            ////Prism.Regions.RegionManager.SetRegionName(item)
+            ////ribbonMain.Tabs.Add
+        }
+
+        void AddTabItem(string title)
+        {
+            RibbonTabItem cur = null;
+            foreach (var tab in ribbonMain.Tabs)
+            {
+                if(tab.Tag != null && tab.Tag.Equals(title))
+                {
+                    cur = tab;
+                    break;
+                }
+            }
+
+            if(cur == null)
+            {
+                cur = new RibbonTabItem();
+                cur.Header = title;
+                cur.Tag = title;
+
+                var group = new RibbonGroupBox();
+
+                var btn = new Fluent.Button();
+                btn.Header = "选择文件夹";
+                group.Items.Add(btn);
+
+                cur.Groups.Add(group);
+
+                ribbonMain.Tabs.Add(cur);
+            }
+
+            ribbonMain.SelectedTabItem = cur;
+        }
+
+        #endregion
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //首先查找是否已经存在,如果不存在，就添加
+            AddTabItem("图像标注");
+        }
     }
 }
