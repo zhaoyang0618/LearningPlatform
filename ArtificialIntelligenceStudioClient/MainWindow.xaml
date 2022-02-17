@@ -8,6 +8,7 @@
         xmlns:Metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:core="clr-namespace:ArtificialIntelligenceStudioClient.Core;assembly=ArtificialIntelligenceStudioClient.Core"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -67,8 +68,8 @@
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
         </Fluent:Ribbon>
-        <Grid Grid.Row="1" x:Name="gridChild"></Grid>
-        <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
+        <Grid Grid.Row="1" x:Name="gridChild" Visibility="Collapsed"></Grid>
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
         <Fluent:StatusBar Grid.Row="2"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Bottom"

@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ArtificialIntelligenceStudioClient.Core\ArtificialIntelligenceStudioClient.Core.csproj" />
+    <ProjectReference Include="..\ArtificialIntelligenceStudioClient.Modules.ImageAnnotation\ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.csproj" />
   </ItemGroup>
 
 </Project>

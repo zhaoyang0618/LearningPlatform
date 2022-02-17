@@ -1,4 +1,5 @@
-﻿using Prism.Ioc;
+﻿using ArtificialIntelligenceStudioClient.Modules.ImageAnnotation;
+using Prism.Ioc;
 using Prism.Modularity;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace ArtificialIntelligenceStudioClient
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            //moduleCatalog.AddModule<ModuleNameModule>();
+            moduleCatalog.AddModule<ImageAnnotationModule>();
         }
     }
 }
