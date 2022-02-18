@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtificialIntelligenceStudi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtificialIntelligenceStudioClient.Modules.ImageAnnotation", "ArtificialIntelligenceStudioClient.Modules.ImageAnnotation\ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.csproj", "{B77FAF2E-EB88-456B-9459-18B5DCD2830C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtificialIntelligenceStudioClient.Services", "ArtificialIntelligenceStudioClient.Services\ArtificialIntelligenceStudioClient.Services.csproj", "{D765B4CD-D9C7-4DC8-9E5C-8299B38993B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtificialIntelligenceStudioClient.Services", "ArtificialIntelligenceStudioClient.Services\ArtificialIntelligenceStudioClient.Services.csproj", "{D765B4CD-D9C7-4DC8-9E5C-8299B38993B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PythonExam", "PythonExam\PythonExam.csproj", "{85DA266D-0F27-4EAC-BC86-E6BBF6CB0CA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -143,6 +145,18 @@ Global
 		{D765B4CD-D9C7-4DC8-9E5C-8299B38993B0}.Release|x64.Build.0 = Release|Any CPU
 		{D765B4CD-D9C7-4DC8-9E5C-8299B38993B0}.Release|x86.ActiveCfg = Release|Any CPU
 		{D765B4CD-D9C7-4DC8-9E5C-8299B38993B0}.Release|x86.Build.0 = Release|Any CPU
+		{85DA266D-0F27-4EAC-BC86-E6BBF6CB0CA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85DA266D-0F27-4EAC-BC86-E6BBF6CB0CA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85DA266D-0F27-4EAC-BC86-E6BBF6CB0CA1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{85DA266D-0F27-4EAC-BC86-E6BBF6CB0CA1}.Debug|x64.Build.0 = Debug|Any CPU
+		{85DA266D-0F27-4EAC-BC86-E6BBF6CB0CA1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{85DA266D-0F27-4EAC-BC86-E6BBF6CB0CA1}.Debug|x86.Build.0 = Debug|Any CPU
+		{85DA266D-0F27-4EAC-BC86-E6BBF6CB0CA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85DA266D-0F27-4EAC-BC86-E6BBF6CB0CA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85DA266D-0F27-4EAC-BC86-E6BBF6CB0CA1}.Release|x64.ActiveCfg = Release|Any CPU
+		{85DA266D-0F27-4EAC-BC86-E6BBF6CB0CA1}.Release|x64.Build.0 = Release|Any CPU
+		{85DA266D-0F27-4EAC-BC86-E6BBF6CB0CA1}.Release|x86.ActiveCfg = Release|Any CPU
+		{85DA266D-0F27-4EAC-BC86-E6BBF6CB0CA1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
