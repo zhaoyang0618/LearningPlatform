@@ -22,6 +22,7 @@ namespace PythonExam
     /// Interaction logic for MainWindow.xaml
     /// https://www.codeproject.com/articles/21119/embedding-ironpython-in-wpf-using-c
     /// Python函数调用
+    /// https://www.cnblogs.com/wilber2013/p/4491297.html
     /// </summary>
     public partial class MainWindow : Window
     {
