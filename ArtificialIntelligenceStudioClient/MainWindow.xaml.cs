@@ -1,6 +1,7 @@
 ﻿using ControlzEx.Theming;
 using Fluent;
 using MahApps.Metro.Controls;
+using Prism.Modularity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,12 @@ namespace ArtificialIntelligenceStudioClient
     /// </summary>
     public partial class MainWindow : IRibbonWindow
     {
-        public MainWindow()
+        IModuleManager _moduleManager = null;
+        public MainWindow(IModuleManager moduleManager)
         {
             InitializeComponent();
             //this.TestContent.Backstage.UseHighestAvailableAdornerLayer = false;
+            _moduleManager = moduleManager;
             InitUI();
             this.Loaded += this.MahMetroWindow_Loaded;
             this.Closed += this.MahMetroWindow_Closed;

@@ -1,4 +1,4 @@
-{
+ï»¿{
   "exclude": [
     "**/bin",
     "**/bower_components",
@@ -9,9 +9,11 @@
   ],
   "modules": [
     {
-      "name": "Í¼Ïñ±ê×¢",
-      "dll": "ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.dll"
-    },
-    { "name": "²âÊÔ¹¤¾ß" }
+      "name": "å›¾åƒæ ‡æ³¨",
+      "assemblyFile": "ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.dll",
+      "moduleType": "ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.ImageAnnotationModule, ArtificialIntelligenceStudioClient.Modules.ImageAnnotation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "moduleName": "å›¾åƒæ ‡æ³¨",
+      "startupLoaded": true
+    }
   ]
 }

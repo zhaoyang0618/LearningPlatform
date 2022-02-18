@@ -17,5 +17,14 @@ namespace ArtificialIntelligenceStudioClient.ViewModels
         public string name { get; set; }
 
         public string description { get; set; }
+
+        public string assemblyFile { get; set; }
+
+        public string moduleType { get; set; }
+
+        public string moduleName { get; set; }
+
+        public bool startupLoaded { get; set; }
+
     }
 }
