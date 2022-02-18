@@ -20,6 +20,8 @@ namespace PythonExam
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// https://www.codeproject.com/articles/21119/embedding-ironpython-in-wpf-using-c
+    /// Python函数调用
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -28,13 +30,14 @@ namespace PythonExam
             InitializeComponent();
         }
 
+        LocalAppContext context = new LocalAppContext();
         private void OnButtonRunClick(object sender, RoutedEventArgs e)
         {
             //执行脚本
             try
             {
                 ScriptEngine engine = Python.CreateEngine();
-                ScriptScope scope = engine.CreateScope();
+
                 var scriptIO = engine.Runtime.IO;
 
                 //var ms = new System.IO.MemoryStream();
@@ -47,7 +50,7 @@ namespace PythonExam
                         var data = new byte[ee.Count];
                         Array.Copy(ee.Buffer, ee.Offset, data, 0, ee.Count);
                         var s = Encoding.Default.GetString(data);
-                        if (s != null)
+                        if (s != null && s.Length > 0)
                         {
                             this.Dispatcher.Invoke(new Action(() => {
                                 textMessage.AppendText(s);
@@ -65,9 +68,30 @@ namespace PythonExam
                 //ScriptSource script = engine.CreateScriptSourceFromFile(@"Script.py");
                 var script = engine.CreateScriptSourceFromString(textScript.Text);
 
+                ScriptScope scope = engine.CreateScope();
+                scope.SetVariable("localContext", context);
+                context.name = "YuZhaoyang";
+
                 var result = script.Execute(scope);
 
+                System.Diagnostics.Debug.WriteLine(context.name);
                 var names = scope.GetVariableNames();
+                //try
+                //{
+                //    var c = engine.Execute(textScript.Text);
+                //    var a = c.add(1, 2);
+                //    if(a != null)
+                //    {
+                //        textMessage.AppendText("1 + 2 = " + a.ToString());
+                //        textMessage.AppendText("\r\n");
+                //    }
+                //}
+                //catch (Exception ex)
+                //{
+                //    textMessage.AppendText(ex.Message);
+                //    textMessage.AppendText("\r\n");
+                //}
+
                 
 
                 if (result != null)
