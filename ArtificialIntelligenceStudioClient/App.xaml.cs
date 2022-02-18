@@ -1,4 +1,4 @@
-﻿using ArtificialIntelligenceStudioClient.Services;
+﻿using ArtificialIntelligenceStudioClient.Core;
 using ArtificialIntelligenceStudioClient.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -37,68 +37,76 @@ namespace ArtificialIntelligenceStudioClient
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            ////所有的模块通过modules注册，然后按需加载
-            ////moduleCatalog.AddModule<ImageAnnotationModule>();
-            ////读取配置文件:modules.json
-            ////获取当前app所在的目录
-            //var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            //var fi = new System.IO.FileInfo(assembly.Location);
-            //var builderModules = new ConfigurationBuilder().SetBasePath(fi.DirectoryName)
-            //    .AddJsonFile("modules.json", optional: false, reloadOnChange: true);
-            //var modulesConfig = builderModules.Build();
-            ////然后加载模块
-            //var list = new List<ModuleItem>();
-            //var modulesDir = System.IO.Path.Combine(fi.DirectoryName, "Modules");
-            //modulesConfig.GetSection("modules").Bind(list);
-            //foreach(var v in list)
-            //{
-            //    //
-            //    //string path = System.IO.Path.Combine(fi.DirectoryName, v.assemblyFile);
-            //    //var dll = System.Reflection.Assembly.LoadFile(path);
-            //    //var type = dll.GetType(v.moduleType);
-            //    //moduleCatalog.AddModule(new ModuleInfo
-            //    //{
-            //    //    ModuleName = type.Name,
-            //    //    ModuleType = type.AssemblyQualifiedName,
-            //    //    Ref = new Uri(path, UriKind.RelativeOrAbsolute).AbsoluteUri
-            //    //});
+            //所有的模块通过modules注册，然后按需加载
+            //moduleCatalog.AddModule<ImageAnnotationModule>();
+            //读取配置文件:modules.json
+            //获取当前app所在的目录
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var fi = new System.IO.FileInfo(assembly.Location);
+            var builderModules = new ConfigurationBuilder().SetBasePath(fi.DirectoryName)
+                .AddJsonFile("modules.json", optional: false, reloadOnChange: true);
+            var modulesConfig = builderModules.Build();
+            //然后加载模块
+            var list = new List<ModuleItem>();
+            var modulesDir = System.IO.Path.Combine(fi.DirectoryName, "Modules");
+            modulesConfig.GetSection("modules").Bind(list);
 
-            //    //
-            //    moduleCatalog.AddModule(new ModuleInfo()
-            //    {
-            //        ModuleName = v.moduleName,
-            //        ModuleType = v.moduleType,
-            //        Ref = String.Format("file://{0}/{1}", fi.DirectoryName, v.assemblyFile),
-            //        InitializationMode = v.startupLoaded ? InitializationMode.WhenAvailable : InitializationMode.OnDemand,
-            //    });
-            //}
+            //
+            var context = Container.Resolve<LocalAppContext>();
+            foreach (var v in list)
+            {
+                //
+                //string path = System.IO.Path.Combine(fi.DirectoryName, v.assemblyFile);
+                //var dll = System.Reflection.Assembly.LoadFile(path);
+                //var type = dll.GetType(v.moduleType);
+                //moduleCatalog.AddModule(new ModuleInfo
+                //{
+                //    ModuleName = type.Name,
+                //    ModuleType = type.AssemblyQualifiedName,
+                //    Ref = new Uri(path, UriKind.RelativeOrAbsolute).AbsoluteUri
+                //});
+                //
+                var m = new ModuleInfo()
+                {
+                    ModuleName = v.moduleName,
+                    ModuleType = v.moduleType,
+                    Ref = String.Format("file://{0}/{1}", fi.DirectoryName, v.assemblyFile),
+                    InitializationMode = v.startupLoaded ? InitializationMode.WhenAvailable : InitializationMode.OnDemand,
+                };
+                if (context != null)
+                {
+                    context.Modules.Add(m);
+                }
+                moduleCatalog.AddModule(m);
+
+            }
         }
 
-        protected override IModuleCatalog CreateModuleCatalog()
-        {
-            var path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            var directories = new string[] { "Modules"};//, "Services" 
+        //protected override IModuleCatalog CreateModuleCatalog()
+        //{
+        //    var path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        //    var directories = new string[] { "Modules"};//, "Services" 
 
-            List<IModuleCatalogItem> components = new List<IModuleCatalogItem>();
+        //    List<IModuleCatalogItem> components = new List<IModuleCatalogItem>();
 
-            foreach (var dir in directories)
-            {
-                var dirCatelog = new DirectoryModuleCatalog() { ModulePath = $"{path}\\{dir}" };
-                dirCatelog.Initialize();
+        //    foreach (var dir in directories)
+        //    {
+        //        var dirCatelog = new DirectoryModuleCatalog() { ModulePath = $"{path}\\{dir}" };
+        //        dirCatelog.Initialize();
 
-                components.AddRange(dirCatelog.Items);
-            }
+        //        components.AddRange(dirCatelog.Items);
+        //    }
 
-            var catelog = new ModuleCatalog();
+        //    var catelog = new ModuleCatalog();
 
-            foreach (var com in components)
-            {
-                catelog.Items.Add(com);
-            }
+        //    foreach (var com in components)
+        //    {
+        //        catelog.Items.Add(com);
+        //    }
 
-            return catelog;
-            //return new DirectoryModuleCatalog() { ModulePath = @".\modules" };
-            //return base.CreateModuleCatalog();
-        }
+        //    return catelog;
+        //    //return new DirectoryModuleCatalog() { ModulePath = @".\modules" };
+        //    //return base.CreateModuleCatalog();
+        //}
     }
 }

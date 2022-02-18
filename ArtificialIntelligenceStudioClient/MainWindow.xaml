@@ -56,7 +56,7 @@
             <!--Backstage-->
             <Fluent:Ribbon.Menu>
                 <Fluent:Backstage>
-                    <Fluent:BackstageTabControl>
+                    <Fluent:BackstageTabControl x:Name="menuMain">
                         <Fluent:BackstageTabItem Header="首页">
                             <Fluent:BackstageTabItem.Content>
                                 <Grid>
@@ -81,8 +81,8 @@
             <!--Tabs-->
             <Fluent:RibbonTabItem Header="人工智能">
                 <Fluent:RibbonGroupBox>
-                    <Fluent:Button Header="标注" Click="OnButtonAnnotationClick"   />
-                    <Fluent:Button Header="测试" Click="OnButtonTestClick" />
+                    <Fluent:Button Header="标注" Click="OnButtonAnnotationClick"  Icon="{Binding}" />
+                    <!--<Fluent:Button Header="测试" Command="{Binding}" Icon="{Binding}" LargeIcon="{Binding}" Click="OnButtonTestClick" />-->
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
         </Fluent:Ribbon>

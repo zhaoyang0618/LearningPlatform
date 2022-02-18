@@ -13,7 +13,7 @@
       "assemblyFile": "ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.dll",
       "moduleType": "ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.ImageAnnotationModule, ArtificialIntelligenceStudioClient.Modules.ImageAnnotation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "moduleName": "图像标注",
-      "startupLoaded": true
+      "startupLoaded": false
     }
   ]
 }

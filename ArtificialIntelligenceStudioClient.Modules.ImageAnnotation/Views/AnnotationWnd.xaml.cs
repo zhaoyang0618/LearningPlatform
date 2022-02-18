@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +22,37 @@ namespace ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.Views
     /// </summary>
     public partial class AnnotationWnd : UserControl
     {
-        public AnnotationWnd(ILogger logger)
+        IEventAggregator _eventAggregator;
+        public AnnotationWnd(ILogger logger, IEventAggregator eventAggregator)
         {
             InitializeComponent();
             _logger = logger;
+            _eventAggregator = eventAggregator;
         }
+
+        #region 事件处理
+        private void OnWndLoaded(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void OnWndUnloaded(object sender, RoutedEventArgs e)
+        {
+        }
+
+        #endregion
 
         #region 辅助函数
         ILogger _logger;
+        void InitUI()
+        {
+
+        }
+
+        void BindEvents()
+        {
+            this.Loaded += OnWndLoaded;
+            this.Unloaded += OnWndUnloaded;
+        }
 
         #endregion
     }

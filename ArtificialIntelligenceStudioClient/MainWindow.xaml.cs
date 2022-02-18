@@ -1,6 +1,8 @@
-﻿using ControlzEx.Theming;
+﻿using ArtificialIntelligenceStudioClient.Core;
+using ControlzEx.Theming;
 using Fluent;
 using MahApps.Metro.Controls;
+using Prism.Events;
 using Prism.Modularity;
 using System;
 using System.Collections.Generic;
@@ -25,12 +27,17 @@ namespace ArtificialIntelligenceStudioClient
     public partial class MainWindow : IRibbonWindow
     {
         IModuleManager _moduleManager = null;
-        public MainWindow(IModuleManager moduleManager)
+        LocalAppContext _localAppContext = null;
+        IEventAggregator _eventAggregator;
+        public MainWindow(IModuleManager moduleManager, LocalAppContext localAppContext, IEventAggregator eventAggregator)
         {
             InitializeComponent();
             //this.TestContent.Backstage.UseHighestAvailableAdornerLayer = false;
             _moduleManager = moduleManager;
+            _localAppContext = localAppContext;
+            _eventAggregator = eventAggregator;
             InitUI();
+            BindEvents();
             this.Loaded += this.MahMetroWindow_Loaded;
             this.Closed += this.MahMetroWindow_Closed;
 
@@ -85,6 +92,15 @@ namespace ArtificialIntelligenceStudioClient
         #endregion
 
         #region 事件处理
+        private void OnModuleLoadedEvent(ModuleLoadedEventArgs arg)
+        { 
+            //这个时候加载菜单
+        }
+        private void OnModuleUnloadEvent(ModuleUnloadEventArgs arg)
+        {
+            //这个时候删除菜单
+        }
+
         private void OnButtonTestClick(object sender, RoutedEventArgs e)
         {
             AI.TorchExample.Test();
@@ -119,6 +135,36 @@ namespace ArtificialIntelligenceStudioClient
             //ribbonMain.SelectedTabIndex = 1;
             ////Prism.Regions.RegionManager.SetRegionName(item)
             ////ribbonMain.Tabs.Add
+            ///
+
+            //动态创建菜单
+            if (_localAppContext != null && _localAppContext.Modules != null)
+            {
+                foreach (var module in _localAppContext.Modules)
+                {
+                    //最后一个位置需要留给“退出”按钮
+                    var btn = new Fluent.Button()
+                    {
+                        Header = module.ModuleName,
+                    };
+                    btn.Click += (s, e) => {
+                        //相应点击操作
+                        //首先查找是否已经存在,如果不存在，就添加
+                        AddTabItem("图像标注");
+                        //打开对应的内容
+                        _moduleManager.LoadModule(module.ModuleName);
+                    };
+
+                    menuMain.Items.Add(btn);
+                }
+            }    
+        }
+
+        void BindEvents()
+        {
+            _eventAggregator.GetEvent<ModuleLoadedEvent>().Subscribe(OnModuleLoadedEvent);
+            _eventAggregator.GetEvent<ModuleUnloadEvent>().Subscribe(OnModuleUnloadEvent);
+
         }
 
         void AddTabItem(string title)
@@ -139,15 +185,15 @@ namespace ArtificialIntelligenceStudioClient
                 cur.Header = title;
                 cur.Tag = title;
 
-                var group = new RibbonGroupBox();
+                //var group = new RibbonGroupBox();
+                ////var btn = new Fluent.Button();
+                ////btn.Header = "选择文件夹";
+                ////group.Items.Add(btn);
 
-                var btn = new Fluent.Button();
-                btn.Header = "选择文件夹";
-                group.Items.Add(btn);
-
-                cur.Groups.Add(group);
+                //cur.Groups.Add(group);
 
                 ribbonMain.Tabs.Add(cur);
+                Prism.Regions.RegionManager.SetRegionName(cur, title);
             }
 
             ribbonMain.SelectedTabItem = cur;
@@ -159,6 +205,8 @@ namespace ArtificialIntelligenceStudioClient
         {
             //首先查找是否已经存在,如果不存在，就添加
             AddTabItem("图像标注");
+            //打开对应的内容
+            //_moduleManager.LoadModule();
         }
     }
 }
