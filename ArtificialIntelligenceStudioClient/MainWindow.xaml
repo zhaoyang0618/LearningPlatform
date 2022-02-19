@@ -11,7 +11,7 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:core="clr-namespace:ArtificialIntelligenceStudioClient.Core;assembly=ArtificialIntelligenceStudioClient.Core"
         mc:Ignorable="d"
-        Title="人工智能学习平台" Height="450" Width="800">
+        Title="人工智能学习平台" Height="768" Width="1024" WindowState="Maximized">
     <Metro:MetroWindow.LayoutTransform>
         <!-- todo: netcore => was using x:Reference before -->
         <ScaleTransform ScaleX="{Binding DataContext.Zoom, ElementName=TestContent}" ScaleY="{Binding DataContext.Zoom, ElementName=TestContent}" />
@@ -36,13 +36,13 @@
 
     <Metro:MetroWindow.LeftWindowCommands>
         <Metro:WindowCommands>
-            <Button Click="OnButtonHomeClick">首页</Button>
+            <Button Click="OnButtonHomeClick" ToolTip="首页" Content="{iconPacks:Material Kind=Home}"></Button>
         </Metro:WindowCommands>
     </Metro:MetroWindow.LeftWindowCommands>
 
     <Metro:MetroWindow.RightWindowCommands>
         <Metro:WindowCommands>
-            <Button>注销</Button>
+            <Button Visibility="Collapsed">注销</Button>
         </Metro:WindowCommands>
     </Metro:MetroWindow.RightWindowCommands>
 
@@ -69,7 +69,7 @@
                                            Header="首页"
                                            Icon="{iconPacks:Material Kind=Home}" />
                         <Fluent:Button VerticalAlignment="Bottom"
-                                           Command="{Binding ExitCommand}"
+                                           Click="OnButtonExitClick"
                                            DockPanel.Dock="Bottom"
                                            Header="退出"
                                            Icon="{iconPacks:Material Kind=ExitToApp}"
@@ -85,8 +85,11 @@
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>-->
         </Fluent:Ribbon>
+
+        <Grid x:Name="panelLogon">
+        </Grid>
         
-        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" x:Name="panelContent"/>
         
         <Fluent:StatusBar Grid.Row="2"
                           HorizontalAlignment="Stretch"
@@ -96,16 +99,8 @@
                                   HorizontalAlignment="Left"
                                   IsEnabled="False"
                                   Value="150">
-                <TextBlock Text="150 px" />
+                <TextBlock Text="就绪" />
             </Fluent:StatusBarItem>
-
-            <Separator HorizontalAlignment="Left" />
-
-            <Fluent:StatusBarItem Title="Selected Words"
-                                  HorizontalAlignment="Left"
-                                  Content="就绪"
-                                  ToolTip="就绪"
-                                  Value="15" />
 
             <Separator HorizontalAlignment="Left" />
 
@@ -122,19 +117,6 @@
             <Fluent:StatusBarItem Title="Test (no content, no value)"
                                   HorizontalAlignment="Right" />
 
-            <Fluent:StatusBarItem Title="Zoom Slider"
-                                  HorizontalAlignment="Right">
-                <Slider x:Name="zoomSlider"
-                        IsDirectionReversed="False"
-                        IsSnapToTickEnabled="True"
-                        LargeChange="0.1"
-                        Maximum="2.0"
-                        Minimum="0.5"
-                        SmallChange="0.1"
-                        Style="{DynamicResource ZoomSliderStyle}"
-                        TickFrequency="0.1"
-                        Value="{Binding Zoom}" />
-            </Fluent:StatusBarItem>
         </Fluent:StatusBar>
     </Grid>
 </Metro:MetroWindow>

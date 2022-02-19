@@ -39,36 +39,9 @@ namespace ArtificialIntelligenceStudioClient
             _eventAggregator = eventAggregator;
             InitUI();
             BindEvents();
-            this.Loaded += this.MahMetroWindow_Loaded;
-            this.Closed += this.MahMetroWindow_Closed;
+            this.Loaded += this.MahMetroWindowLoaded;
+            this.Closed += this.MahMetroWindowClosed;
 
-        }
-
-        private void MahMetroWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.TitleBar = this.FindChild<RibbonTitleBar>("RibbonTitleBar");
-            this.TitleBar.InvalidateArrange();
-            this.TitleBar.UpdateLayout();
-
-            // We need this inside this window because MahApps.Metro is not loaded globally inside the Fluent.Ribbon Showcase application.
-            // This code is not required in an application that loads the MahApps.Metro styles globally.
-            ThemeManager.Current.ChangeTheme(this, ThemeManager.Current.DetectTheme(Application.Current));
-            ThemeManager.Current.ThemeChanged += this.SyncThemes;
-        }
-
-        private void SyncThemes(object sender, ThemeChangedEventArgs e)
-        {
-            if (e.Target == this)
-            {
-                return;
-            }
-
-            ThemeManager.Current.ChangeTheme(this, e.NewTheme);
-        }
-
-        private void MahMetroWindow_Closed(object sender, EventArgs e)
-        {
-            ThemeManager.Current.ThemeChanged -= this.SyncThemes;
         }
 
         #region TitelBar
@@ -93,11 +66,39 @@ namespace ArtificialIntelligenceStudioClient
         #endregion
 
         #region 事件处理
+        private void MahMetroWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            this.TitleBar = this.FindChild<RibbonTitleBar>("RibbonTitleBar");
+            this.TitleBar.InvalidateArrange();
+            this.TitleBar.UpdateLayout();
+
+            // We need this inside this window because MahApps.Metro is not loaded globally inside the Fluent.Ribbon Showcase application.
+            // This code is not required in an application that loads the MahApps.Metro styles globally.
+            ThemeManager.Current.ChangeTheme(this, ThemeManager.Current.DetectTheme(Application.Current));
+            ThemeManager.Current.ThemeChanged += this.OnSyncThemes;
+        }
+
+        private void MahMetroWindowClosed(object sender, EventArgs e)
+        {
+            ThemeManager.Current.ThemeChanged -= this.OnSyncThemes;
+        }
+
+        private void OnSyncThemes(object sender, ThemeChangedEventArgs e)
+        {
+            if (e.Target == this)
+            {
+                return;
+            }
+
+            ThemeManager.Current.ChangeTheme(this, e.NewTheme);
+        }
+
         private void OnModuleLoadedEvent(ModuleLoadedEventArgs arg)
         {
             //这个时候加载菜单
             AddTabItem(arg.Key, arg.Title, arg.Buttons);
         }
+
         private void OnModuleUnloadEvent(ModuleUnloadEventArgs arg)
         {
             //这个时候删除菜单
@@ -110,16 +111,10 @@ namespace ArtificialIntelligenceStudioClient
             _moduleManager.LoadModule<Modules.HomeModule>();
         }
 
-        //private void OnButtonTestClick(object sender, RoutedEventArgs e)
-        //{
-        //    AI.TorchExample.Test();
-        //}
-
-        //private void OnButtonAnnotationClick(object sender, RoutedEventArgs e)
-        //{
-        //    var wnd = new UI.ImageAnnotationWnd();
-        //    gridChild.Children.Add(wnd);
-        //}
+        private void OnButtonExitClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
 
         #endregion
 
@@ -137,9 +132,6 @@ namespace ArtificialIntelligenceStudioClient
                         Header = module.ModuleName,
                     };
                     btn.Click += (s, e) => {
-                        //相应点击操作
-                        //首先查找是否已经存在,如果不存在，就添加
-                        AddTabItem("图像标注");
                         //打开对应的内容
                         _moduleManager.LoadModule(module.ModuleName);
                     };
@@ -210,38 +202,6 @@ namespace ArtificialIntelligenceStudioClient
                 ribbonMain.Tabs.Remove(cur);
                 ribbonMain.SelectedTabItem = null;
             }
-        }
-
-        void AddTabItem(string title)
-        {
-            RibbonTabItem cur = null;
-            foreach (var tab in ribbonMain.Tabs)
-            {
-                if(tab.Tag != null && tab.Tag.Equals(title))
-                {
-                    cur = tab;
-                    break;
-                }
-            }
-
-            if(cur == null)
-            {
-                cur = new RibbonTabItem();
-                cur.Header = title;
-                cur.Tag = title;
-
-                //var group = new RibbonGroupBox();
-                ////var btn = new Fluent.Button();
-                ////btn.Header = "选择文件夹";
-                ////group.Items.Add(btn);
-
-                //cur.Groups.Add(group);
-
-                ribbonMain.Tabs.Add(cur);
-                Prism.Regions.RegionManager.SetRegionName(cur, title);
-            }
-
-            ribbonMain.SelectedTabItem = cur;
         }
 
         #endregion

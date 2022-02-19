@@ -7,6 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
         <TextBlock FontSize="36" FontWeight="Black" HorizontalAlignment="Center" VerticalAlignment="Center">欢迎进入学习平台!</TextBlock>
     </Grid>
 </UserControl>

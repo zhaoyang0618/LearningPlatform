@@ -39,8 +39,8 @@ namespace ArtificialIntelligenceStudioClient
         {
             //所有的模块通过modules注册，然后按需加载
             moduleCatalog.AddModule<Modules.HomeModule>();
-            moduleCatalog.AddModule<Modules.ImageAnnotation.ImageAnnotationModule>(InitializationMode.OnDemand);
-            return;
+            //moduleCatalog.AddModule<Modules.ImageAnnotation.ImageAnnotationModule>(InitializationMode.OnDemand);
+            //return;
             //读取配置文件:modules.json
             //获取当前app所在的目录
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
