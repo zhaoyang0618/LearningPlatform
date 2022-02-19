@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ArtificialIntelligenceStudioClient.Core\ArtificialIntelligenceStudioClient.Core.csproj" />
+    <ProjectReference Include="..\ArtificialIntelligenceStudioClient.Modules.ImageAnnotation\ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.csproj" />
     <ProjectReference Include="..\ArtificialIntelligenceStudioClient.Services\ArtificialIntelligenceStudioClient.Services.csproj" />
   </ItemGroup>
 
@@ -34,10 +36,6 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\" />
   </ItemGroup>
 
 </Project>

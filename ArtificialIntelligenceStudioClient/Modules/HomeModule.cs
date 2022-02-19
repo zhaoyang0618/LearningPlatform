@@ -1,14 +1,18 @@
-using ArtificialIntelligenceStudioClient.Core;
-using ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.Views;
+ï»¿using ArtificialIntelligenceStudioClient.Core;
+using ArtificialIntelligenceStudioClient.Views;
 using Microsoft.Extensions.Logging;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ArtificialIntelligenceStudioClient.Modules.ImageAnnotation
+namespace ArtificialIntelligenceStudioClient.Modules
 {
-    public class ImageAnnotationModule : IModule
+    internal class HomeModule : IModule
     {
         private readonly IRegionManager _regionManager;
         private readonly ILogger _logger;
@@ -19,22 +23,23 @@ namespace ArtificialIntelligenceStudioClient.Modules.ImageAnnotation
             private set;
         }
 
-        public ImageAnnotationModule(ILogger logger, IRegionManager regionManager)
+        public HomeModule(ILogger logger, IRegionManager regionManager)
         {
             _logger = logger;
             _regionManager = regionManager;
-            this.Title = "Í¼Ïñ±ê×¢";
+            this.Title = "é¦–é¡µ";
         }
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "AnnotationWnd");
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "HomeWnd");
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             _logger.LogInformation("ImageAnnotationModule.RegisterTypes");
-            containerRegistry.RegisterForNavigation<AnnotationWnd>();
+            containerRegistry.RegisterForNavigation<HomeWnd>();
         }
     }
+
 }

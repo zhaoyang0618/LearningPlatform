@@ -11,7 +11,7 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:core="clr-namespace:ArtificialIntelligenceStudioClient.Core;assembly=ArtificialIntelligenceStudioClient.Core"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="人工智能学习平台" Height="450" Width="800">
     <Metro:MetroWindow.LayoutTransform>
         <!-- todo: netcore => was using x:Reference before -->
         <ScaleTransform ScaleX="{Binding DataContext.Zoom, ElementName=TestContent}" ScaleY="{Binding DataContext.Zoom, ElementName=TestContent}" />
@@ -36,7 +36,7 @@
 
     <Metro:MetroWindow.LeftWindowCommands>
         <Metro:WindowCommands>
-            <Button>首页</Button>
+            <Button Click="OnButtonHomeClick">首页</Button>
         </Metro:WindowCommands>
     </Metro:MetroWindow.LeftWindowCommands>
 
@@ -57,17 +57,17 @@
             <Fluent:Ribbon.Menu>
                 <Fluent:Backstage>
                     <Fluent:BackstageTabControl x:Name="menuMain">
-                        <Fluent:BackstageTabItem Header="首页">
+                        <!--<Fluent:BackstageTabItem Header="首页">
                             <Fluent:BackstageTabItem.Content>
                                 <Grid>
                                     <TextBlock>Hello</TextBlock>
                                 </Grid>
                             </Fluent:BackstageTabItem.Content>
                         </Fluent:BackstageTabItem>
-                        <Fluent:BackstageTabItem Header="人工智能"/>
-                        <Fluent:Button Click="Button_Click"
-                                           Header="图像标注"
-                                           Icon="{iconPacks:Material Kind=Image}" />
+                        <Fluent:BackstageTabItem Header="人工智能"/>-->
+                        <Fluent:Button Click="OnButtonHomeClick"
+                                           Header="首页"
+                                           Icon="{iconPacks:Material Kind=Home}" />
                         <Fluent:Button VerticalAlignment="Bottom"
                                            Command="{Binding ExitCommand}"
                                            DockPanel.Dock="Bottom"
@@ -79,20 +79,20 @@
             </Fluent:Ribbon.Menu>
 
             <!--Tabs-->
-            <Fluent:RibbonTabItem Header="人工智能">
+            <!--<Fluent:RibbonTabItem Header="人工智能">
                 <Fluent:RibbonGroupBox>
                     <Fluent:Button Header="标注" Click="OnButtonAnnotationClick"  Icon="{Binding}" />
-                    <!--<Fluent:Button Header="测试" Command="{Binding}" Icon="{Binding}" LargeIcon="{Binding}" Click="OnButtonTestClick" />-->
                 </Fluent:RibbonGroupBox>
-            </Fluent:RibbonTabItem>
+            </Fluent:RibbonTabItem>-->
         </Fluent:Ribbon>
-        <Grid Grid.Row="1" x:Name="gridChild" Visibility="Collapsed"></Grid>
+        
         <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
+        
         <Fluent:StatusBar Grid.Row="2"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Bottom"
                           Visibility="{Binding IsChecked, ElementName=IsStatusBarVisibleCheckBox, Converter={StaticResource boolToVisibilityConverter}}">
-            <Fluent:StatusBarItem Title="Words Width"
+            <Fluent:StatusBarItem Title="就绪"
                                   HorizontalAlignment="Left"
                                   IsEnabled="False"
                                   Value="150">
@@ -103,8 +103,8 @@
 
             <Fluent:StatusBarItem Title="Selected Words"
                                   HorizontalAlignment="Left"
-                                  Content="15 words"
-                                  ToolTip="This is Selected Words"
+                                  Content="就绪"
+                                  ToolTip="就绪"
                                   Value="15" />
 
             <Separator HorizontalAlignment="Left" />
@@ -136,6 +136,5 @@
                         Value="{Binding Zoom}" />
             </Fluent:StatusBarItem>
         </Fluent:StatusBar>
-
     </Grid>
 </Metro:MetroWindow>

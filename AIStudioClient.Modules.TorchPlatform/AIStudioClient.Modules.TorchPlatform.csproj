@@ -7,12 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="libtorch-cpu" Version="1.10.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+    <PackageReference Include="TorchSharp" Version="0.96.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ArtificialIntelligenceStudioClient.Core\ArtificialIntelligenceStudioClient.Core.csproj" />
+    <ProjectReference Include="..\ArtificialIntelligenceStudioClient.Services\ArtificialIntelligenceStudioClient.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AI\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>

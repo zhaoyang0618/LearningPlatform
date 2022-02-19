@@ -1,4 +1,5 @@
 ﻿using ArtificialIntelligenceStudioClient.Core;
+using ArtificialIntelligenceStudioClient.Core.ViewModels;
 using ControlzEx.Theming;
 using Fluent;
 using MahApps.Metro.Controls;
@@ -93,50 +94,38 @@ namespace ArtificialIntelligenceStudioClient
 
         #region 事件处理
         private void OnModuleLoadedEvent(ModuleLoadedEventArgs arg)
-        { 
+        {
             //这个时候加载菜单
+            AddTabItem(arg.Key, arg.Title, arg.Buttons);
         }
         private void OnModuleUnloadEvent(ModuleUnloadEventArgs arg)
         {
             //这个时候删除菜单
+            RemoveTabItem(arg.Key);
         }
 
-        private void OnButtonTestClick(object sender, RoutedEventArgs e)
+        private void OnButtonHomeClick(object sender, RoutedEventArgs e)
         {
-            AI.TorchExample.Test();
+            //首页
+            _moduleManager.LoadModule<Modules.HomeModule>();
         }
 
-        private void OnButtonAnnotationClick(object sender, RoutedEventArgs e)
-        {
-            var wnd = new UI.ImageAnnotationWnd();
-            gridChild.Children.Add(wnd);
-        }
+        //private void OnButtonTestClick(object sender, RoutedEventArgs e)
+        //{
+        //    AI.TorchExample.Test();
+        //}
+
+        //private void OnButtonAnnotationClick(object sender, RoutedEventArgs e)
+        //{
+        //    var wnd = new UI.ImageAnnotationWnd();
+        //    gridChild.Children.Add(wnd);
+        //}
 
         #endregion
 
         #region 辅助函数
         void InitUI()
         {
-            //var item = new RibbonTabItem();
-            //item.Header = "图像标注";
-            //item.Tag = "图像标注";
-
-            //var group = new RibbonGroupBox();
-
-            //var btn = new Fluent.Button();
-            //btn.Header = "选择文件夹";
-            //group.Items.Add(btn);
-
-            //item.Groups.Add(group);
-
-            //ribbonMain.Tabs.Add(item);
-
-            ////ribbonMain.SelectedTabItem = item;
-            //ribbonMain.SelectedTabIndex = 1;
-            ////Prism.Regions.RegionManager.SetRegionName(item)
-            ////ribbonMain.Tabs.Add
-            ///
-
             //动态创建菜单
             if (_localAppContext != null && _localAppContext.Modules != null)
             {
@@ -165,6 +154,62 @@ namespace ArtificialIntelligenceStudioClient
             _eventAggregator.GetEvent<ModuleLoadedEvent>().Subscribe(OnModuleLoadedEvent);
             _eventAggregator.GetEvent<ModuleUnloadEvent>().Subscribe(OnModuleUnloadEvent);
 
+        }
+
+        void AddTabItem(string key, string title, List<RibbonButtonViewModel> buttons)
+        {
+            if (buttons == null || buttons.Count == 0) return;
+            RibbonTabItem cur = null;
+            foreach (var tab in ribbonMain.Tabs)
+            {
+                if (tab.Tag != null && tab.Tag.Equals(key))
+                {
+                    cur = tab;
+                    break;
+                }
+            }
+
+            if (cur == null)
+            {
+                cur = new RibbonTabItem();
+                cur.Header = title;
+                cur.Tag = key;
+
+                var group = new RibbonGroupBox();
+
+                foreach (var button in buttons)
+                {
+                    var btn = new Fluent.Button();
+                    btn.Header = button.Title;
+                    btn.Command = button.Command;
+                    group.Items.Add(btn);
+                }
+
+                cur.Groups.Add(group);
+
+                ribbonMain.Tabs.Add(cur);
+            }
+
+            ribbonMain.SelectedTabItem = cur;
+        }
+
+        void RemoveTabItem(string key)
+        {
+            RibbonTabItem cur = null;
+            foreach (var tab in ribbonMain.Tabs)
+            {
+                if (tab.Tag != null && tab.Tag.Equals(key))
+                {
+                    cur = tab;
+                    break;
+                }
+            }
+
+            if (cur != null)
+            {
+                ribbonMain.Tabs.Remove(cur);
+                ribbonMain.SelectedTabItem = null;
+            }
         }
 
         void AddTabItem(string title)
@@ -200,13 +245,5 @@ namespace ArtificialIntelligenceStudioClient
         }
 
         #endregion
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //首先查找是否已经存在,如果不存在，就添加
-            AddTabItem("图像标注");
-            //打开对应的内容
-            //_moduleManager.LoadModule();
-        }
     }
 }

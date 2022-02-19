@@ -1,14 +1,14 @@
+using AIStudioClient.Modules.TorchPlatform.Views;
 using ArtificialIntelligenceStudioClient.Core;
-using ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.Views;
 using Microsoft.Extensions.Logging;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 using System;
 
-namespace ArtificialIntelligenceStudioClient.Modules.ImageAnnotation
+namespace AIStudioClient.Modules.TorchPlatform
 {
-    public class ImageAnnotationModule : IModule
+    public class TorchPlatformModule : IModule
     {
         private readonly IRegionManager _regionManager;
         private readonly ILogger _logger;
@@ -19,22 +19,23 @@ namespace ArtificialIntelligenceStudioClient.Modules.ImageAnnotation
             private set;
         }
 
-        public ImageAnnotationModule(ILogger logger, IRegionManager regionManager)
+        public TorchPlatformModule(ILogger logger, IRegionManager regionManager)
         {
             _logger = logger;
             _regionManager = regionManager;
-            this.Title = "Í¼Ïñ±ê×¢";
+            this.Title = "TorchÑ§Ï°";
         }
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "AnnotationWnd");
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "TorchMainWnd");
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            _logger.LogInformation("ImageAnnotationModule.RegisterTypes");
-            containerRegistry.RegisterForNavigation<AnnotationWnd>();
+            _logger.LogInformation("TorchPlatformModule.RegisterTypes");
+            containerRegistry.RegisterForNavigation<TorchMainWnd>();
         }
     }
+
 }

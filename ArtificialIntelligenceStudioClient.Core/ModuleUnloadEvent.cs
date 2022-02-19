@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 namespace ArtificialIntelligenceStudioClient.Core
 {
     public class ModuleUnloadEventArgs : EventArgs
-    { 
+    {
+        public string Key { get; set; }
     }
 
     public class ModuleUnloadEvent : PubSubEvent<ModuleUnloadEventArgs>
