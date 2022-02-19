@@ -13,6 +13,15 @@
       "assemblyFile": "ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.dll",
       "moduleType": "ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.ImageAnnotationModule, ArtificialIntelligenceStudioClient.Modules.ImageAnnotation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "moduleName": "图像标注",
+      "viewName": "AnnotationWnd",
+      "startupLoaded": false
+    },
+    {
+      "name": "Torch学习",
+      "assemblyFile": "AIStudioClient.Modules.TorchPlatform.dll",
+      "moduleType": "AIStudioClient.Modules.TorchPlatform.TorchPlatformModule, AIStudioClient.Modules.TorchPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "moduleName": "Torch学习",
+      "viewName": "TorchMainWnd",
       "startupLoaded": false
     }
   ]

@@ -1,5 +1,5 @@
 ﻿using ArtificialIntelligenceStudioClient.Core;
-using ArtificialIntelligenceStudioClient.ViewModels;
+using ArtificialIntelligenceStudioClient.Core.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Prism.Ioc;
@@ -77,7 +77,7 @@ namespace ArtificialIntelligenceStudioClient
                 };
                 if (context != null)
                 {
-                    context.Modules.Add(m);
+                    context.Modules.Add(v);
                 }
                 moduleCatalog.AddModule(m);
 

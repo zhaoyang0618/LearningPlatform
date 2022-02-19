@@ -5,6 +5,7 @@ using Fluent;
 using MahApps.Metro.Controls;
 using Prism.Events;
 using Prism.Modularity;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,13 +29,15 @@ namespace ArtificialIntelligenceStudioClient
     public partial class MainWindow : IRibbonWindow
     {
         IModuleManager _moduleManager = null;
+        IRegionManager _regionManager = null;
         LocalAppContext _localAppContext = null;
         IEventAggregator _eventAggregator;
-        public MainWindow(IModuleManager moduleManager, LocalAppContext localAppContext, IEventAggregator eventAggregator)
+        public MainWindow(IModuleManager moduleManager, IRegionManager regionManager, LocalAppContext localAppContext, IEventAggregator eventAggregator)
         {
             InitializeComponent();
             //this.TestContent.Backstage.UseHighestAvailableAdornerLayer = false;
             _moduleManager = moduleManager;
+            _regionManager = regionManager;
             _localAppContext = localAppContext;
             _eventAggregator = eventAggregator;
             InitUI();
@@ -108,7 +111,8 @@ namespace ArtificialIntelligenceStudioClient
         private void OnButtonHomeClick(object sender, RoutedEventArgs e)
         {
             //首页
-            _moduleManager.LoadModule<Modules.HomeModule>();
+            //_moduleManager.LoadModule<Modules.HomeModule>();
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, "HomeWnd");
         }
 
         private void OnButtonExitClick(object sender, RoutedEventArgs e)
@@ -129,11 +133,15 @@ namespace ArtificialIntelligenceStudioClient
                     //最后一个位置需要留给“退出”按钮
                     var btn = new Fluent.Button()
                     {
-                        Header = module.ModuleName,
+                        Header = module.moduleName,
                     };
                     btn.Click += (s, e) => {
                         //打开对应的内容
-                        _moduleManager.LoadModule(module.ModuleName);
+                        if(!_moduleManager.IsModuleInitialized(module.moduleName))
+                        {
+                            _moduleManager.LoadModule(module.moduleName);
+                        }
+                        _regionManager.RequestNavigate(RegionNames.ContentRegion, module.viewName);
                     };
 
                     menuMain.Items.Add(btn);

@@ -28,7 +28,8 @@ namespace ArtificialIntelligenceStudioClient.Modules.ImageAnnotation
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "AnnotationWnd");
+            //_regionManager.RequestNavigate(RegionNames.ContentRegion, "AnnotationWnd");
+            //_regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(AnnotationWnd));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

@@ -23,12 +23,12 @@ namespace AIStudioClient.Modules.TorchPlatform
         {
             _logger = logger;
             _regionManager = regionManager;
-            this.Title = "Torchѧϰ";
+            this.Title = "Torch学习";
         }
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, "TorchMainWnd");
+            //_regionManager.RequestNavigate(RegionNames.ContentRegion, this.Title);
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

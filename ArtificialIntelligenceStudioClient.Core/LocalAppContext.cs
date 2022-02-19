@@ -1,4 +1,5 @@
-﻿using Prism.Modularity;
+﻿using ArtificialIntelligenceStudioClient.Core.ViewModels;
+using Prism.Modularity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,13 +23,13 @@ namespace ArtificialIntelligenceStudioClient.Core
         /// </summary>
         public DateTime ExpiredTime { get; set; }
 
-        public List<ModuleInfo> Modules { get; set; }
+        public List<ModuleItem> Modules { get; set; }
 
         public LocalAppContext()
         {
             this.UserName = String.Empty;
             this.Token = String.Empty;
-            this.Modules = new List<ModuleInfo>();
+            this.Modules = new List<ModuleItem>();
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArtificialIntelligenceStudioClient.ViewModels
+namespace ArtificialIntelligenceStudioClient.Core.ViewModels
 {
     /// <summary>
     /// 模块配置
@@ -12,7 +12,7 @@ namespace ArtificialIntelligenceStudioClient.ViewModels
     /// 配置文件中只需要放入对应的dll文件
     /// 不过目前不知道该dll依赖的dll应该放在哪里
     /// </summary>
-    internal class ModuleItem
+    public class ModuleItem
     {
         public string name { get; set; }
 
@@ -23,6 +23,11 @@ namespace ArtificialIntelligenceStudioClient.ViewModels
         public string moduleType { get; set; }
 
         public string moduleName { get; set; }
+
+        /// <summary>
+        /// 需要这个名称进行视图的切换
+        /// </summary>
+        public string viewName { get; set; }
 
         public bool startupLoaded { get; set; }
 
