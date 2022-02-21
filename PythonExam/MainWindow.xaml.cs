@@ -69,14 +69,31 @@ namespace PythonExam
                 //ScriptSource script = engine.CreateScriptSourceFromFile(@"Script.py");
                 var script = engine.CreateScriptSourceFromString(textScript.Text);
 
-                ScriptScope scope = engine.CreateScope();
+                dynamic scope = engine.CreateScope();
+                //var sum = scope.add(1, 2);
+
                 scope.SetVariable("localContext", context);
                 context.name = "YuZhaoyang";
 
+                dynamic obj = engine.Runtime.UseFile(@"E:\add.py");
+                var sum = obj.add(11, 22);
+                if(sum != null)
+                {
+                    textMessage.AppendText("11 + 22 = " + sum.ToString());
+                    textMessage.AppendText("\r\n");
+                }
+
                 var result = script.Execute(scope);
+                sum = scope.add(1, 2);
+                if (sum != null)
+                {
+                    textMessage.AppendText("1 + 2 = " + sum.ToString());
+                    textMessage.AppendText("\r\n");
+                }
 
                 System.Diagnostics.Debug.WriteLine(context.name);
                 var names = scope.GetVariableNames();
+
                 //try
                 //{
                 //    var c = engine.Execute(textScript.Text);
