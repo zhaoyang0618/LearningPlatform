@@ -736,6 +736,13 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             //打开图像文件
             //_logger.LogTrace("OnCommandSelectImageFolder");
             //var dlg = new FolderBrowserDialog();
+            var dlg = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
+            var ret = dlg.ShowDialog();
+            if(ret == true)
+            {
+                //遍历图像文件
+                var folder = dlg.SelectedPath;
+            }
         }
 
         #endregion
