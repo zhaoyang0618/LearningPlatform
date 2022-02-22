@@ -22,9 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AIStudioClient.Modules.ImageAnnotation\AIStudioClient.Modules.ImageAnnotation.csproj" />
     <ProjectReference Include="..\AIStudioClient.Modules.TorchPlatform\AIStudioClient.Modules.TorchPlatform.csproj" />
     <ProjectReference Include="..\ArtificialIntelligenceStudioClient.Core\ArtificialIntelligenceStudioClient.Core.csproj" />
-    <ProjectReference Include="..\ArtificialIntelligenceStudioClient.Modules.ImageAnnotation\ArtificialIntelligenceStudioClient.Modules.ImageAnnotation.csproj" />
     <ProjectReference Include="..\ArtificialIntelligenceStudioClient.Services\ArtificialIntelligenceStudioClient.Services.csproj" />
   </ItemGroup>
 
