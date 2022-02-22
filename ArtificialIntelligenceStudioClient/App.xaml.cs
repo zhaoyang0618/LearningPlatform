@@ -1,5 +1,6 @@
 ﻿using ArtificialIntelligenceStudioClient.Core;
 using ArtificialIntelligenceStudioClient.Core.ViewModels;
+using ArtificialIntelligenceStudioClient.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Prism.Ioc;
@@ -33,6 +34,7 @@ namespace ArtificialIntelligenceStudioClient
             containerRegistry.RegisterInstance<ILogger>(logger);
             //保存一些用户信息
             containerRegistry.RegisterSingleton<LocalAppContext>();
+            containerRegistry.RegisterSingleton<PythonService>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
