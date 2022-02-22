@@ -1,4 +1,5 @@
-﻿using ArtificialIntelligenceStudioClient.Core;
+﻿using AIStudioClient.Modules.ImageAnnotation.ViewModels;
+using ArtificialIntelligenceStudioClient.Core;
 using ArtificialIntelligenceStudioClient.Core.ViewModels;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -27,12 +28,13 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
     {
         IEventAggregator _eventAggregator;
         ImageAnnotationModule _module;
-        public AnnotationWnd(ILogger logger, IEventAggregator eventAggregator, ImageAnnotationModule module)
+        public AnnotationWnd(ILogger logger, IEventAggregator eventAggregator, ImageAnnotationModule module, AnnotationWndViewModel vm)
         {
             InitializeComponent();
             _logger = logger;
             _eventAggregator = eventAggregator;
             _module = module;
+            _viewModel = vm;
             CROSSLINESHOW = false;
             SelectRect = false;
             // 初始化十字交叉线
@@ -738,10 +740,15 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             //var dlg = new FolderBrowserDialog();
             var dlg = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
             var ret = dlg.ShowDialog();
-            if(ret == true)
+            if (ret == true)
             {
                 //遍历图像文件
                 var folder = dlg.SelectedPath;
+                if (_viewModel != null)
+                {
+                    //获取所有的图像文件
+                    _viewModel.ImageFolder = folder;
+                }
             }
         }
 
@@ -751,8 +758,10 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
         ILogger _logger;
         DelegateCommand? _delegateCommandSelectImageFolder;
         List<RibbonButtonViewModel> _buttons = new List<RibbonButtonViewModel>();
+        AnnotationWndViewModel _viewModel = null;
         void InitUI()
         {
+            this.DataContext = _viewModel;
             _delegateCommandSelectImageFolder = new DelegateCommand(OnCommandSelectImageFolder);
             var btn = new RibbonButtonViewModel()
             {
