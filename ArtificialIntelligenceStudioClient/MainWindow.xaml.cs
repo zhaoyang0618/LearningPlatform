@@ -179,10 +179,25 @@ namespace ArtificialIntelligenceStudioClient
 
                 foreach (var button in buttons)
                 {
-                    var btn = new Fluent.Button();
-                    btn.Header = button.Title;
-                    btn.Command = button.Command;
-                    group.Items.Add(btn);
+                    if(button.ButtonType == 0)
+                    {
+                        var btn = new Fluent.Button();
+                        btn.DataContext = button;
+                        btn.Header = button.Title;
+                        btn.Command = button.Command;
+                        group.Items.Add(btn);
+                    }
+                    else
+                    {
+                        var btn = new Fluent.ToggleButton();
+                        btn.DataContext = button;
+                        btn.Header = button.Title;
+                        Binding myBinding = new Binding("IsChecked");
+                        myBinding.Source = button;
+                        BindingOperations.SetBinding(btn, Fluent.ToggleButton.IsCheckedProperty, myBinding);
+                        btn.Command = button.Command;
+                        group.Items.Add(btn);
+                    }
                 }
 
                 cur.Groups.Add(group);

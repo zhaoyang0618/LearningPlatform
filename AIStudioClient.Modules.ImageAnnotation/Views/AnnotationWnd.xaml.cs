@@ -711,6 +711,7 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
                 locate[1] = (rect[1] + rect[3]) * heightRatio + 20;
             return locate;
         }
+
         #region 事件处理
         private void OnWndLoaded(object sender, RoutedEventArgs e)
         {
@@ -752,24 +753,87 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             }
         }
 
+        private void OnCommandModeRect()
+        {
+            if(_buttonModeRect != null)
+            {
+                _buttonModeRect.IsChecked = true;
+            }
+            if(_buttonModeSelect != null)
+            {
+                _buttonModeSelect.IsChecked = false;
+            }
+        }
+
+        private void OnCommandModeSelect()
+        {
+            if (_buttonModeRect != null)
+            {
+                _buttonModeRect.IsChecked = false;
+            }
+            if (_buttonModeSelect != null)
+            {
+                _buttonModeSelect.IsChecked = true;
+            }
+        }
+
+        private void OnCommandClear()
+        {
+        }
+
         #endregion
 
         #region 辅助函数
         ILogger _logger;
+        RibbonButtonViewModel? _buttonSelectImageFolder = null;
+        RibbonButtonViewModel? _buttonModeRect = null;
+        RibbonButtonViewModel? _buttonModeSelect = null;
+        RibbonButtonViewModel? _buttonClear = null;
         DelegateCommand? _delegateCommandSelectImageFolder;
+        DelegateCommand? _delegateCommandModeRect;      //用于标注
+        DelegateCommand? _delegateCommandModeSelect;    //选择
+        DelegateCommand? _delegateCommandClear;         //清空
         List<RibbonButtonViewModel> _buttons = new List<RibbonButtonViewModel>();
-        AnnotationWndViewModel _viewModel = null;
+        AnnotationWndViewModel? _viewModel = null;
         void InitUI()
         {
             this.DataContext = _viewModel;
             _delegateCommandSelectImageFolder = new DelegateCommand(OnCommandSelectImageFolder);
-            var btn = new RibbonButtonViewModel()
+            _delegateCommandModeRect = new DelegateCommand(OnCommandModeRect);
+            _delegateCommandModeSelect = new DelegateCommand(OnCommandModeSelect);
+            _delegateCommandClear = new DelegateCommand(OnCommandClear);
+            _buttonSelectImageFolder = new RibbonButtonViewModel()
             {
                 Title = "选择文件夹",
                 Description = "选择图片所在的文件夹",
                 Command = _delegateCommandSelectImageFolder,
             };
-            _buttons.Add(btn);
+            _buttons.Add(_buttonSelectImageFolder);
+            _buttonModeSelect = new RibbonButtonViewModel()
+            {
+                Title = "选择模式",
+                Description = "用于选择已经标注的对象",
+                ButtonType = 1,
+                IsChecked = true,
+                Command = _delegateCommandModeSelect,
+            };
+            _buttons.Add(_buttonModeSelect);
+            _buttonModeRect = new RibbonButtonViewModel()
+            {
+                Title = "标注模式",
+                Description = "标注模式，可以进行标注",
+                ButtonType = 1,
+                IsChecked = false,
+                Command = _delegateCommandModeRect,
+            };
+            _buttons.Add(_buttonModeRect);
+            _buttonClear = new RibbonButtonViewModel()
+            {
+                Title = "清空",
+                Description = "清除图片中所有的标注",
+                Command = _delegateCommandClear,
+            };
+            _buttons.Add(_buttonClear);
         }
 
         void BindEvents()
