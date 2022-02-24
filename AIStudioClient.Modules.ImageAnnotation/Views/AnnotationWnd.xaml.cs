@@ -858,11 +858,4 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
 
         #endregion
     }
-
-    class ImageLabelStruct
-    {
-        public string Name { get; set; }
-        public string ImageFilePath { get; set; }
-        public string LabelFilePath { get; set; }
-    }
 }
