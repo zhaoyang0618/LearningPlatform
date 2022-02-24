@@ -73,21 +73,6 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
         // 矩形标注按钮
         private void LabelRectangle(object sender, RoutedEventArgs e)
         {
-            SelectRect = !SelectRect;
-            if (SelectRect)
-            {
-                CROSSLINESHOW = true;
-                button_rectangle.Foreground = new SolidColorBrush(Colors.LightYellow);
-                image.Cursor = Cursors.Cross;
-                crossline.Cursor = Cursors.Cross;
-            }
-            else
-            {
-                CROSSLINESHOW = false;
-                button_rectangle.Foreground = new SolidColorBrush(Colors.Black);
-                image.Cursor = Cursors.Arrow;
-                crossline.Cursor = Cursors.Arrow;
-            }
         }
         // 取消选中按钮
         private const int ROIStart = 7;  // 定义ROI开始索引
@@ -763,6 +748,30 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             {
                 _buttonModeSelect.IsChecked = false;
             }
+
+            //
+            SelectRect = true;
+            CROSSLINESHOW = true;
+            button_rectangle.Foreground = new SolidColorBrush(Colors.LightYellow);
+            image.Cursor = Cursors.Cross;
+            crossline.Cursor = Cursors.Cross;
+
+            //SelectRect = !SelectRect;
+            //if (SelectRect)
+            //{
+            //    CROSSLINESHOW = true;
+            //    button_rectangle.Foreground = new SolidColorBrush(Colors.LightYellow);
+            //    image.Cursor = Cursors.Cross;
+            //    crossline.Cursor = Cursors.Cross;
+            //}
+            //else
+            //{
+            //    CROSSLINESHOW = false;
+            //    button_rectangle.Foreground = new SolidColorBrush(Colors.Black);
+            //    image.Cursor = Cursors.Arrow;
+            //    crossline.Cursor = Cursors.Arrow;
+            //}
+
         }
 
         private void OnCommandModeSelect()
@@ -775,6 +784,11 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             {
                 _buttonModeSelect.IsChecked = true;
             }
+            SelectRect = false;
+            CROSSLINESHOW = false;
+            button_rectangle.Foreground = new SolidColorBrush(Colors.Black);
+            image.Cursor = Cursors.Arrow;
+            crossline.Cursor = Cursors.Arrow;
         }
 
         private void OnCommandClear()
@@ -843,5 +857,12 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
         }
 
         #endregion
+    }
+
+    class ImageLabelStruct
+    {
+        public string Name { get; set; }
+        public string ImageFilePath { get; set; }
+        public string LabelFilePath { get; set; }
     }
 }
