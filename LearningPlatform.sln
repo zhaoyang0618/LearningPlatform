@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PythonExam", "PythonExam\Py
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIStudioClient.Modules.TorchPlatform", "AIStudioClient.Modules.TorchPlatform\AIStudioClient.Modules.TorchPlatform.csproj", "{2651D9E8-9C18-43FB-850D-422406C6046B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIStudioClient.Modules.ImageAnnotation", "AIStudioClient.Modules.ImageAnnotation\AIStudioClient.Modules.ImageAnnotation.csproj", "{3A769AC6-DCEB-4FBD-8BFE-06142C22CC4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIStudioClient.Modules.ImageAnnotation", "AIStudioClient.Modules.ImageAnnotation\AIStudioClient.Modules.ImageAnnotation.csproj", "{3A769AC6-DCEB-4FBD-8BFE-06142C22CC4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taiji.Utils", "Taiji.Utils\Taiji.Utils.csproj", "{D38A3E39-2A19-4C6A-9222-AF0006344099}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,6 +173,18 @@ Global
 		{3A769AC6-DCEB-4FBD-8BFE-06142C22CC4C}.Release|x64.Build.0 = Release|Any CPU
 		{3A769AC6-DCEB-4FBD-8BFE-06142C22CC4C}.Release|x86.ActiveCfg = Release|Any CPU
 		{3A769AC6-DCEB-4FBD-8BFE-06142C22CC4C}.Release|x86.Build.0 = Release|Any CPU
+		{D38A3E39-2A19-4C6A-9222-AF0006344099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D38A3E39-2A19-4C6A-9222-AF0006344099}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D38A3E39-2A19-4C6A-9222-AF0006344099}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D38A3E39-2A19-4C6A-9222-AF0006344099}.Debug|x64.Build.0 = Debug|Any CPU
+		{D38A3E39-2A19-4C6A-9222-AF0006344099}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D38A3E39-2A19-4C6A-9222-AF0006344099}.Debug|x86.Build.0 = Debug|Any CPU
+		{D38A3E39-2A19-4C6A-9222-AF0006344099}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D38A3E39-2A19-4C6A-9222-AF0006344099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D38A3E39-2A19-4C6A-9222-AF0006344099}.Release|x64.ActiveCfg = Release|Any CPU
+		{D38A3E39-2A19-4C6A-9222-AF0006344099}.Release|x64.Build.0 = Release|Any CPU
+		{D38A3E39-2A19-4C6A-9222-AF0006344099}.Release|x86.ActiveCfg = Release|Any CPU
+		{D38A3E39-2A19-4C6A-9222-AF0006344099}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
