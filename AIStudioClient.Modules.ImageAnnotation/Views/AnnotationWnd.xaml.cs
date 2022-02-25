@@ -61,7 +61,7 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
         }
         // 定义像素分辨率比，屏幕尺寸
         private double widthRatio, heightRatio;
-        private double[] screenSize;
+        //private double[] screenSize;
         // 定义十字交叉线
         private LineGeometry lineX, lineY;
         private GeometryGroup linegroup;
@@ -78,16 +78,6 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
         private const int ROIStart = 7;  // 定义ROI开始索引
         private void SelectCancel(object sender, RoutedEventArgs e)
         {
-            labelbox.SelectedIndex = -1;
-            if (labelbox.Tag != null)
-            {
-                int index = (int)labelbox.Tag;
-                Rectangle rectangle = workspace.Children[index + ROIStart] as Rectangle;
-                rectangle.Fill = null;
-                rectangle.Tag = 0;
-                labelbox.Tag = null;
-                PointClose();
-            }
         }
         /* ------------labelbox框事件响应-------------- */
         // 键盘响应
@@ -662,21 +652,17 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             else return input;
         }
 
-        private void btnSelectFolder_Click(object sender, RoutedEventArgs e)
-        {
-            //选择文件夹:然后读取其中的文件
-        }
-
         // 初始化屏幕、像素比
         private void InitScreenRadio()
         {
             PresentationSource source = PresentationSource.FromVisual(this);
+            if(source == null) return;
             Matrix m = source.CompositionTarget.TransformFromDevice;
             widthRatio = m.M11;
             heightRatio = m.M22;
             double w = SystemParameters.PrimaryScreenWidth; //得到屏幕整体宽度
             double h = SystemParameters.PrimaryScreenHeight; //得到屏幕整体高度
-            screenSize = new double[] { w, h };
+            //screenSize = new double[] { w, h };
         }
         // 返回环绕窗口位置
         private double[] CalculateWindowLocation(double[] screen, double[] rect, double[] win)
@@ -707,6 +693,9 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             };
             args.Buttons.AddRange(_buttons);
             _eventAggregator.GetEvent<ModuleLoadedEvent>().Publish(args);
+            //
+            InitScreenRadio();
+
         }
 
         private void OnWndUnloaded(object sender, RoutedEventArgs e)
@@ -793,6 +782,17 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
 
         private void OnCommandClear()
         {
+            labelbox.SelectedIndex = -1;
+            if (labelbox.Tag != null)
+            {
+                int index = (int)labelbox.Tag;
+                Rectangle rectangle = workspace.Children[index + ROIStart] as Rectangle;
+                if (rectangle == null) return;
+                rectangle.Fill = null;
+                rectangle.Tag = 0;
+                labelbox.Tag = null;
+                PointClose();
+            }
         }
 
         #endregion
