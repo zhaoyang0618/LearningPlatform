@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Taiji.Utils;
 
 namespace AIStudioClient.Modules.ImageAnnotation.ViewModels
 {
@@ -25,7 +26,7 @@ namespace AIStudioClient.Modules.ImageAnnotation.ViewModels
                 }
             }
         }
-        public ObservableCollection<string> ImageFiles
+        public ObservableCollection<ImageLabelViewModel> ImageFiles
         {
             get
             {
@@ -40,16 +41,21 @@ namespace AIStudioClient.Modules.ImageAnnotation.ViewModels
         }
 
         string _imageFolder = null;
-        ObservableCollection<string> _listImageFiles = new ObservableCollection<string>();
+        ObservableCollection<ImageLabelViewModel> _listImageFiles = new ObservableCollection<ImageLabelViewModel>();
         void EnumImageFiles(string folder)
         {
             var files = System.IO.Directory.GetFiles(folder);
             _listImageFiles.Clear();
             foreach (var file in files)
             {
-                if(file.EndsWith(".jpg") || file.EndsWith(".png"))
+                if(file.ToLower().EndsWith(".jpg") || file.ToLower().EndsWith(".png"))
                 {
-                    _listImageFiles.Add(file);
+                    var item = new ImageLabelViewModel()
+                    {
+                        Name = FileOperatorHelper.FileName(file),
+                        ImageFilePath = file,
+                    };
+                    _listImageFiles.Add(item);
                 }
             }
         }

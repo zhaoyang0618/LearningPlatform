@@ -11,8 +11,10 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel>
-            <TextBlock>Torch学习平台</TextBlock>
-        </StackPanel>
+        <Grid Grid.Row="0">
+        </Grid>
+        <UniformGrid Grid.Row="1">
+            <Button Margin="4">BP神经网络</Button>
+        </UniformGrid>
     </Grid>
 </UserControl>

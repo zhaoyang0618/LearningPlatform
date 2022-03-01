@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ArtificialIntelligenceStudioClient.Core\ArtificialIntelligenceStudioClient.Core.csproj" />
+    <ProjectReference Include="..\Taiji.Utils\Taiji.Utils.csproj" />
   </ItemGroup>
 
 </Project>

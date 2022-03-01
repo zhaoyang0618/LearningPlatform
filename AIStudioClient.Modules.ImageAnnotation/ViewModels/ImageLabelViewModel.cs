@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AIStudioClient.Modules.ImageAnnotation.ViewModels
 {
-    internal class ImageLabelViewModel
+    public class ImageLabelViewModel
     {
         public string Name { get; set; }
         public string ImageFilePath { get; set; }

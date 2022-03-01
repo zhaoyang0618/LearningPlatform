@@ -32,12 +32,18 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Visibility="Collapsed">
-            <Button Content="矩形标注" Click="LabelRectangle" Name="button_rectangle" Focusable="False"/>
-            <Button Content="取消选中" Click="SelectCancel" Focusable="False"/>
         </StackPanel>
         <ListBox Name="labelbox" Grid.Row="1" Grid.Column="0" 
              SelectionChanged="SelectChange" KeyDown="LabelboxKeyResponse"/>
-        <ListBox Name="listboxImageFiles" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding ImageFiles}" />
+        <ListBox Name="listboxImageFiles" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding ImageFiles}" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <Grid Name="workspace" Grid.Row="2" Grid.Column="1" Background="Black"
           MouseLeftButtonDown="ImgMouseLeftButtonDown" 
           MouseLeftButtonUp="ImgMouseLeftButtonUp"
