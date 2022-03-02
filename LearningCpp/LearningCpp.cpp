@@ -69,6 +69,7 @@ int main(int argc, char* argv[])
 	//ThreadDemo::TestPackagedTask2();
 	testThreadLocal();
 	testCpp20();
+	ExploringCpp20();
 	system("pause");
 	return 0;
 }

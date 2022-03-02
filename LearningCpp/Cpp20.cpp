@@ -145,8 +145,9 @@ enum {
 	2003
 };
 
-void test()
+void ExploringCpp20()
 {
+	//
 	std::cout << "C++ " << std::setfill('0') << std::setw(2) << cpp_year % 100 << '\n';
 	std::cout << "C++ " << std::setw(2) << (__cplusplus / 100) % 100 << '\n';
 }
