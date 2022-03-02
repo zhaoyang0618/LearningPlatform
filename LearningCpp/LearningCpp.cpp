@@ -68,6 +68,7 @@ int main(int argc, char* argv[])
 	//ThreadDemo::TestLock();
 	//ThreadDemo::TestPackagedTask2();
 	testThreadLocal();
+	testCpp20();
 	system("pause");
 	return 0;
 }

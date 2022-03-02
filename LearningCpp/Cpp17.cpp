@@ -854,7 +854,7 @@ struct Point1
 /// </summary>
 /// <param name="has"></param>
 /// <returns></returns>
-std::optional<int> Query(bool has)
+std::optional<int> query(bool has)
 {
     if (has)
         return 0;
@@ -1786,11 +1786,16 @@ void testStringView()
     wchar_t  ch2{ L'a' };
     char16_t ch3{ u'a' };
     char32_t ch4{ U'a' };
-    std::cout << "首先搞懂几个内建类型: char - " << ch1 
-        << "; wchar_t - " << ch2 
+    //这段代码在C++20已经不支持了<<成了delete函数，不能使用
+#if ((defined(_MSVC_LANG) && _MSVC_LANG == 201703L) || __cplusplus == 201703L)
+    //C++17 specific stuff here
+    std::cout << "首先搞懂几个内建类型: char - " << ch1
+        << "; wchar_t - " << ch2
         << "; char16_t - " << ch3
         << "; char32_t - " << ch4
         << std::endl;
+#else
+#endif
 
     //下面的函数调用，
     //How many string copies are created in the below example?

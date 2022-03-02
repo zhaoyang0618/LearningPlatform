@@ -117,7 +117,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cpp17.cpp" />
+    <ClCompile Include="Cpp20.cpp" />
     <ClCompile Include="CppGrammer.cpp" />
     <ClCompile Include="inlinethreadlocal1.cpp" />
     <ClCompile Include="inlinethreadlocal2.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cpp17.h" />
+    <ClInclude Include="Cpp20.h" />
     <ClInclude Include="CppGrammer.h" />
     <ClInclude Include="factory.h" />
     <ClInclude Include="inlinethreadlocal.h" />

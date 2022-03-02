@@ -741,7 +741,7 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             //
             SelectRect = true;
             CROSSLINESHOW = true;
-            button_rectangle.Foreground = new SolidColorBrush(Colors.LightYellow);
+            //button_rectangle.Foreground = new SolidColorBrush(Colors.LightYellow);
             image.Cursor = Cursors.Cross;
             crossline.Cursor = Cursors.Cross;
 
@@ -775,7 +775,7 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             }
             SelectRect = false;
             CROSSLINESHOW = false;
-            button_rectangle.Foreground = new SolidColorBrush(Colors.Black);
+            //button_rectangle.Foreground = new SolidColorBrush(Colors.Black);
             image.Cursor = Cursors.Arrow;
             crossline.Cursor = Cursors.Arrow;
         }
