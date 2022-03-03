@@ -118,6 +118,8 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <EnableModules>
+      </EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,6 +150,7 @@
     <ClCompile Include="inlinethreadlocal2.cpp" />
     <ClCompile Include="lambdathis.cpp" />
     <ClCompile Include="LearningCpp.cpp" />
+    <ClCompile Include="list0102.cpp" />
     <ClCompile Include="SmartPointerDemo.cpp" />
     <ClCompile Include="STLContainersDemo.cpp" />
     <ClCompile Include="STLCookbookDemos.cpp" />

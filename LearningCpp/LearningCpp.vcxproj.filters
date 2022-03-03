@@ -51,6 +51,9 @@
     <ClCompile Include="Cpp20.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="list0102.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LearningCpp.h">
