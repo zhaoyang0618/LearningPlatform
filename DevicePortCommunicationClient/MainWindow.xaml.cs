@@ -368,6 +368,21 @@ namespace DevicePortCommunicationClient
         }
         #endregion
 
+        #region 测试Skia画图
+        private void OnButtonTestSkiaClick(object sender, RoutedEventArgs e)
+        {
+            var wnd = new UI.SkiaWnd();
+            wnd.OnClosed += () => {
+                gridDialog.Children.Clear();
+                gridDialog.Visibility = Visibility.Collapsed;
+                gridMain.Visibility = Visibility.Visible;
+            };
+            gridDialog.Children.Add(wnd);
+            gridDialog.Visibility = Visibility.Visible;
+            gridMain.Visibility = Visibility.Collapsed;
+        }
+        #endregion
+
         #region 辅助函数
         NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 

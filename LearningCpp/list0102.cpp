@@ -151,3 +151,20 @@ void testFormattedOut()
 
 }
 
+void testArrays()
+{
+	std::vector<int> data{};
+	int x{};
+
+	//input
+	while (std::cin >> x)
+		data.emplace_back(x);
+
+	//sort
+	std::ranges::sort(data);
+
+	//print
+	for (int element : data)
+		std::cout << element << std::endl;
+}
+
