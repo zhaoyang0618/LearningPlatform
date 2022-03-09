@@ -105,6 +105,18 @@ namespace DevicePortCommunicationClient.UI
                 //LegendBorder = OxyColors.Black
             };
 
+            //
+            var l = new Legend
+            {
+                LegendTitle= "Temp",
+                LegendPlacement = LegendPlacement.Inside,
+                LegendPosition = LegendPosition.RightTop,
+                LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
+                LegendBorder = OxyColors.Black,
+            };
+
+            _myPlotModel.Legends.Add(l);
+
             //X轴
             var _dateAxis = new DateTimeAxis()
             {
@@ -183,6 +195,7 @@ namespace DevicePortCommunicationClient.UI
                 Title = "Temp",
             };
             _myPlotModel.Series.Add(series);
+
             series = new LineSeries()
             {
                 Color = OxyColors.Blue,
@@ -194,38 +207,57 @@ namespace DevicePortCommunicationClient.UI
             };
             _myPlotModel.Series.Add(series);
 
+            var rand = new Random();
+            var dateOrigin = DateTime.Now.AddHours(-8);
+            for (int i = 0; i < 200;i++)
+            {
+                var date = dateOrigin.AddMinutes(i * 10);
+                var lineSer = _myPlotModel.Series[0] as LineSeries;
+                lineSer.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), rand.Next(100, 300) / 10.0));
+                if (lineSer.Points.Count > 100)
+                {
+                    lineSer.Points.RemoveAt(0);
+                }
+
+                lineSer = _myPlotModel.Series[1] as LineSeries;
+                lineSer.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), rand.Next(350, 750) / 10.0));
+                if (lineSer.Points.Count > 100)
+                {
+                    lineSer.Points.RemoveAt(0);
+                }
+
+            }
+
             plotView.Model = _myPlotModel;
 
-            var rand = new Random();
+            //Task.Factory.StartNew(() =>
+            //{
+            //    while (true)
+            //    {
+            //        this.Dispatcher.Invoke(() => {
+            //            var date = DateTime.Now;
+            //            _myPlotModel.Axes[0].Maximum = DateTimeAxis.ToDouble(date.AddSeconds(1));
 
-            Task.Factory.StartNew(() =>
-            {
-                while (true)
-                {
-                    this.Dispatcher.Invoke(() => {
-                        var date = DateTime.Now;
-                        _myPlotModel.Axes[0].Maximum = DateTimeAxis.ToDouble(date.AddSeconds(1));
+            //            var lineSer = plotView.Model.Series[0] as LineSeries;
+            //            lineSer.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), rand.Next(100, 300) / 10.0));
+            //            if (lineSer.Points.Count > 100)
+            //            {
+            //                lineSer.Points.RemoveAt(0);
+            //            }
 
-                        var lineSer = plotView.Model.Series[0] as LineSeries;
-                        lineSer.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), rand.Next(100, 300) / 10.0));
-                        if (lineSer.Points.Count > 100)
-                        {
-                            lineSer.Points.RemoveAt(0);
-                        }
+            //            lineSer = plotView.Model.Series[1] as LineSeries;
+            //            lineSer.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), rand.Next(350, 750) / 10.0));
+            //            if (lineSer.Points.Count > 100)
+            //            {
+            //                lineSer.Points.RemoveAt(0);
+            //            }
 
-                        lineSer = plotView.Model.Series[1] as LineSeries;
-                        lineSer.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), rand.Next(350, 750) / 10.0));
-                        if (lineSer.Points.Count > 100)
-                        {
-                            lineSer.Points.RemoveAt(0);
-                        }
+            //            _myPlotModel.InvalidatePlot(true);
 
-                        _myPlotModel.InvalidatePlot(true);
-
-                        Thread.Sleep(1000);
-                    });
-                }
-            });
+            //            Thread.Sleep(1000);
+            //        });
+            //    }
+            //});
         }
     }
 }

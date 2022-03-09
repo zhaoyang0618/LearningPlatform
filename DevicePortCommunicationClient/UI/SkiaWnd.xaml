@@ -13,11 +13,10 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <skia:SKElement Grid.Column="0" PaintSurface="OnPaintSurface" IgnorePixelScaling="True"></skia:SKElement>
         <oxyplot:PlotView Grid.Column="1" x:Name="plotView"></oxyplot:PlotView>
-        <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
+        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
             <Button Click="OnButtonCloseClick">关闭</Button>
         </StackPanel>
     </Grid>
