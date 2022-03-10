@@ -6,6 +6,7 @@ using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -148,23 +149,23 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
         private void ImgMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (!SelectRect) { return; }
-            if (!image.IsMouseOver && !crossline.IsMouseOver) { return; }
-            image.CaptureMouse();
+            if (!imageViewer.IsMouseOver && !crossline.IsMouseOver) { return; }
+            imageViewer.CaptureMouse();
             lMouseDown = true;
             CROSSLINESHOW = false;
             ClearCrossLine();
             position = e.GetPosition(imgcontrol);
-            imageposition = e.GetPosition(image);
+            imageposition = e.GetPosition(imageViewer);
         }
         // 鼠标左键松开响应
         int rectIndex = 0;
         private void ImgMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (!SelectRect) { return; }
-            if (!image.IsMouseOver && !crossline.IsMouseOver) { return; }
+            if (!imageViewer.IsMouseOver && !crossline.IsMouseOver) { return; }
             if (!lMouseDown) return;
-            Point mouse = e.GetPosition(image);
-            image.ReleaseMouseCapture();
+            Point mouse = e.GetPosition(imageViewer);
+            imageViewer.ReleaseMouseCapture();
             lMouseDown = false;
             CROSSLINESHOW = true;
             string label = string.Format("测试{0:D3}", rectIndex++);// PopupLabel();
@@ -186,22 +187,22 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
         // 鼠标右键按下响应
         private void ImgMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (!image.IsMouseOver && !crossline.IsMouseOver) { return; }
-            image.CaptureMouse();
+            if (!imageViewer.IsMouseOver && !crossline.IsMouseOver) { return; }
+            imageViewer.CaptureMouse();
             rMouseDown = true;
             position = e.GetPosition(imgcontrol);
         }
         // 鼠标右键松开响应
         private void ImgMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (!image.IsMouseOver && !crossline.IsMouseOver) { return; }
-            image.ReleaseMouseCapture();
+            if (!imageViewer.IsMouseOver && !crossline.IsMouseOver) { return; }
+            imageViewer.ReleaseMouseCapture();
             rMouseDown = false;
         }
         // 鼠标移动响应
         private void ImgMouseMove(object sender, MouseEventArgs e)
         {
-            if (!image.IsMouseOver && !crossline.IsMouseOver)
+            if (!imageViewer.IsMouseOver && !crossline.IsMouseOver)
             {
                 ClearCrossLine();
                 return;
@@ -222,8 +223,8 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
         // 工作区滚轮事件响应
         private void ImgMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (!image.IsMouseOver && !crossline.IsMouseOver) { return; }
-            var point = e.GetPosition(image);
+            if (!imageViewer.IsMouseOver && !crossline.IsMouseOver) { return; }
+            var point = e.GetPosition(imageViewer);
             var group_image = workspace.FindResource("Imageview") as TransformGroup;
             var delta = e.Delta * 0.002;
             DoImageWheelZoom(group_image, point, delta);
@@ -249,20 +250,21 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             var move_image = group_image.Children[1] as TranslateTransform;
             pointMouseDown = true;
             Ellipse circle = sender as Ellipse;
+            if (circle == null) return;
             circle.CaptureMouse();
             string tag = (string)circle.Tag;
             int index = labelbox.SelectedIndex;
             double[] rect_roi = rect_rois[index];
-            double x = rect_roi[0] * image.ActualWidth * scale_image.ScaleX + move_image.X
-                       + (imgcontrol.ActualWidth - image.ActualWidth) / 2;
-            double y = rect_roi[1] * image.ActualHeight * scale_image.ScaleY + move_image.Y
-                       + (imgcontrol.ActualHeight - image.ActualHeight) / 2;
-            double w = rect_roi[2] * image.ActualWidth * scale_image.ScaleX;
-            double h = rect_roi[3] * image.ActualHeight * scale_image.ScaleY;
-            double ix = rect_roi[0] * image.ActualWidth;
-            double iy = rect_roi[1] * image.ActualHeight;
-            double iw = rect_roi[2] * image.ActualWidth;
-            double ih = rect_roi[3] * image.ActualHeight;
+            double x = rect_roi[0] * imageViewer.ActualWidth * scale_image.ScaleX + move_image.X
+                       + (imgcontrol.ActualWidth - imageViewer.ActualWidth) / 2;
+            double y = rect_roi[1] * imageViewer.ActualHeight * scale_image.ScaleY + move_image.Y
+                       + (imgcontrol.ActualHeight - imageViewer.ActualHeight) / 2;
+            double w = rect_roi[2] * imageViewer.ActualWidth * scale_image.ScaleX;
+            double h = rect_roi[3] * imageViewer.ActualHeight * scale_image.ScaleY;
+            double ix = rect_roi[0] * imageViewer.ActualWidth;
+            double iy = rect_roi[1] * imageViewer.ActualHeight;
+            double iw = rect_roi[2] * imageViewer.ActualWidth;
+            double ih = rect_roi[3] * imageViewer.ActualHeight;
             switch (tag)
             {
                 case "1":
@@ -313,9 +315,9 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             rectanglebox.Height = 0;
             // 创建标注roi，添加进标注列表
             int index = labelbox.SelectedIndex;
-            Point mouse = e.GetPosition(image);
+            Point mouse = e.GetPosition(imageViewer);
             double[] rect_roi = CreateRoi(pimageposition, mouse);
-            if (image.ActualWidth * image.ActualHeight * rect_roi[2] * rect_roi[3] > 9)
+            if (imageViewer.ActualWidth * imageViewer.ActualHeight * rect_roi[2] * rect_roi[3] > 9)
             {
                 rect_rois[index] = rect_roi;
             }
@@ -332,7 +334,7 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             if (1 == (int)rectangle.Tag)
             {
                 rectangleMouseDown = true;
-                imageposition = e.GetPosition(image);
+                imageposition = e.GetPosition(imageViewer);
                 rectangle.CaptureMouse();
             }
         }
@@ -343,9 +345,9 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             if (rectangleMouseDown && (int)rectangle.Tag == 1)
             {
                 int index = labelbox.SelectedIndex;
-                Point mouse = e.GetPosition(image);
-                double deltax = (mouse.X - imageposition.X) / image.ActualWidth;
-                double deltay = (mouse.Y - imageposition.Y) / image.ActualHeight;
+                Point mouse = e.GetPosition(imageViewer);
+                double deltax = (mouse.X - imageposition.X) / imageViewer.ActualWidth;
+                double deltay = (mouse.Y - imageposition.Y) / imageViewer.ActualHeight;
                 double movex = rect_rois[index][0];
                 double movey = rect_rois[index][1];
                 rect_rois[index][0] = relu(rect_rois[index][0] + deltax, 0, 1 - rect_rois[index][2]);
@@ -355,8 +357,8 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
                 var group_rect = rectangle.RenderTransform as TransformGroup;
                 var scale_rect = group_rect.Children[0] as ScaleTransform;
                 var move_rect = group_rect.Children[1] as TranslateTransform;
-                move_rect.X += movex * image.ActualWidth * scale_rect.ScaleX;
-                move_rect.Y += movey * image.ActualHeight * scale_rect.ScaleY;
+                move_rect.X += movex * imageViewer.ActualWidth * scale_rect.ScaleX;
+                move_rect.Y += movey * imageViewer.ActualHeight * scale_rect.ScaleY;
                 imageposition = mouse;
                 FlashPoint();
             }
@@ -422,10 +424,10 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             double y = rect_rois[index][1];
             double w = rect_rois[index][2];
             double h = rect_rois[index][3];
-            double x1 = 2 * x * image.ActualWidth * scale_image.ScaleX + 2 * move_image.X - image.ActualWidth;
-            double y1 = 2 * y * image.ActualHeight * scale_image.ScaleY + 2 * move_image.Y - image.ActualHeight;
-            double x2 = 2 * w * image.ActualWidth * scale_image.ScaleX + x1;
-            double y2 = 2 * h * image.ActualHeight * scale_image.ScaleY + y1;
+            double x1 = 2 * x * imageViewer.ActualWidth * scale_image.ScaleX + 2 * move_image.X - imageViewer.ActualWidth;
+            double y1 = 2 * y * imageViewer.ActualHeight * scale_image.ScaleY + 2 * move_image.Y - imageViewer.ActualHeight;
+            double x2 = 2 * w * imageViewer.ActualWidth * scale_image.ScaleX + x1;
+            double y2 = 2 * h * imageViewer.ActualHeight * scale_image.ScaleY + y1;
             c1.Margin = new Thickness(x1, y1, 0, 0);
             c2.Margin = new Thickness(x2, y1, 0, 0);
             c3.Margin = new Thickness(x1, y2, 0, 0);
@@ -448,8 +450,8 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             // H+h > 2*move_y > -((2*scale-1)*h + H)  垂直平移限制条件
             double W = img.ActualWidth;
             double H = img.ActualHeight;
-            double w = image.ActualWidth;
-            double h = image.ActualHeight;
+            double w = imageViewer.ActualWidth;
+            double h = imageViewer.ActualHeight;
             if (move_image.X * 2 > W + w - 20)
                 move_image.X = (W + w - 20) / 2;
             if (-move_image.X * 2 > (2 * scale_image - 1) * w + W - 20)
@@ -511,10 +513,10 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
         private double[] CreateRoi(Point imageposition, Point mouse)
         {
             Rect rect = new Rect(imageposition, mouse);
-            double roi_x1 = relu(rect.Left / image.ActualWidth, 0, 1);
-            double roi_y1 = relu(rect.Top / image.ActualHeight, 0, 1);
-            double roi_x2 = relu((rect.Width + rect.Left) / image.ActualWidth, 0, 1);
-            double roi_y2 = relu((rect.Height + rect.Top) / image.ActualHeight, 0, 1);
+            double roi_x1 = relu(rect.Left / imageViewer.ActualWidth, 0, 1);
+            double roi_y1 = relu(rect.Top / imageViewer.ActualHeight, 0, 1);
+            double roi_x2 = relu((rect.Width + rect.Left) / imageViewer.ActualWidth, 0, 1);
+            double roi_y2 = relu((rect.Height + rect.Top) / imageViewer.ActualHeight, 0, 1);
             double roi_w = roi_x2 - roi_x1;
             double roi_h = roi_y2 - roi_y1;
             double[] rect_roi = { roi_x1, roi_y1, roi_w, roi_h };
@@ -525,12 +527,12 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
         {
             // 创建矩形控件
             Rectangle rectangle = new Rectangle();
-            rectangle.Width = rect_roi[2] * image.ActualWidth;
-            rectangle.Height = rect_roi[3] * image.ActualHeight;
+            rectangle.Width = rect_roi[2] * imageViewer.ActualWidth;
+            rectangle.Height = rect_roi[3] * imageViewer.ActualHeight;
             if (rectangle.Width * rectangle.Height < 9) return null;
             rectangle.Margin = new Thickness(0, 0,
-                                             image.ActualWidth - rectangle.Width,
-                                             image.ActualHeight - rectangle.Height);
+                                             imageViewer.ActualWidth - rectangle.Width,
+                                             imageViewer.ActualHeight - rectangle.Height);
             rectangle.Stroke = new SolidColorBrush(Colors.Red);
             rectangle.MouseLeftButtonDown += new MouseButtonEventHandler(SelectRectangle);
             rectangle.MouseMove += new MouseEventHandler(MoveRectangle);
@@ -542,8 +544,8 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             var group_image = workspace.FindResource("Imageview") as TransformGroup;
             scale_rect = group_image.Children[0] as ScaleTransform;
             TranslateTransform move_image = group_image.Children[1] as TranslateTransform;
-            move_rect.X = rect_roi[0] * image.ActualWidth * scale_rect.ScaleX + move_image.X;
-            move_rect.Y = rect_roi[1] * image.ActualHeight * scale_rect.ScaleY + move_image.Y;
+            move_rect.X = rect_roi[0] * imageViewer.ActualWidth * scale_rect.ScaleX + move_image.X;
+            move_rect.Y = rect_roi[1] * imageViewer.ActualHeight * scale_rect.ScaleY + move_image.Y;
             group_rect.Children.Add(scale_rect);
             group_rect.Children.Add(move_rect);
             rectangle.RenderTransform = group_rect;
@@ -575,8 +577,8 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
                 var scale_rect = group_rect.Children[0] as ScaleTransform;
                 var move_rect = group_rect.Children[1] as TranslateTransform;
                 scale_rect = scale_image;
-                move_rect.X = roi[0] * image.ActualWidth * scale_image.ScaleX + move_image.X;
-                move_rect.Y = roi[1] * image.ActualHeight * scale_image.ScaleY + move_image.Y;
+                move_rect.X = roi[0] * imageViewer.ActualWidth * scale_image.ScaleX + move_image.X;
+                move_rect.Y = roi[1] * imageViewer.ActualHeight * scale_image.ScaleY + move_image.Y;
                 i++;
             }
         }
@@ -587,17 +589,17 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             foreach (double[] roi in rect_rois)
             {
                 Rectangle rectangle = workspace.Children[i] as Rectangle;
-                rectangle.Width = roi[2] * image.ActualWidth;
-                rectangle.Height = roi[3] * image.ActualHeight;
+                rectangle.Width = roi[2] * imageViewer.ActualWidth;
+                rectangle.Height = roi[3] * imageViewer.ActualHeight;
                 rectangle.Margin = new Thickness(0, 0,
-                                                 image.ActualWidth - rectangle.Width,
-                                                 image.ActualHeight - rectangle.Height);
+                                                 imageViewer.ActualWidth - rectangle.Width,
+                                                 imageViewer.ActualHeight - rectangle.Height);
                 var group_rect = rectangle.RenderTransform as TransformGroup;
                 var scale_rect = group_rect.Children[0] as ScaleTransform;
                 var move_rect = group_rect.Children[1] as TranslateTransform;
                 scale_rect = new ScaleTransform(1, 1);
-                move_rect.X = roi[0] * image.ActualWidth;
-                move_rect.Y = roi[1] * image.ActualHeight;
+                move_rect.X = roi[0] * imageViewer.ActualWidth;
+                move_rect.Y = roi[1] * imageViewer.ActualHeight;
                 i++;
             }
         }
@@ -606,19 +608,19 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
         {
             double[] roi = rect_rois[index];
             Rectangle rectangle = workspace.Children[ROIStart + index] as Rectangle;
-            rectangle.Width = roi[2] * image.ActualWidth;
-            rectangle.Height = roi[3] * image.ActualHeight;
+            rectangle.Width = roi[2] * imageViewer.ActualWidth;
+            rectangle.Height = roi[3] * imageViewer.ActualHeight;
             rectangle.Margin = new Thickness(0, 0,
-                                             image.ActualWidth - rectangle.Width,
-                                             image.ActualHeight - rectangle.Height);
+                                             imageViewer.ActualWidth - rectangle.Width,
+                                             imageViewer.ActualHeight - rectangle.Height);
             var group_rect = rectangle.RenderTransform as TransformGroup;
             var scale_rect = group_rect.Children[0] as ScaleTransform;
             var move_rect = group_rect.Children[1] as TranslateTransform;
             var group_image = workspace.FindResource("Imageview") as TransformGroup;
             scale_rect = group_image.Children[0] as ScaleTransform;
             var move_image = group_image.Children[1] as TranslateTransform;
-            move_rect.X = roi[0] * image.ActualWidth * scale_rect.ScaleX + move_image.X;
-            move_rect.Y = roi[1] * image.ActualHeight * scale_rect.ScaleY + move_image.Y;
+            move_rect.X = roi[0] * imageViewer.ActualWidth * scale_rect.ScaleX + move_image.X;
+            move_rect.Y = roi[1] * imageViewer.ActualHeight * scale_rect.ScaleY + move_image.Y;
         }
         // 清除十字交叉线
         private void ClearCrossLine()
@@ -637,8 +639,8 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             var move = group.Children[1] as TranslateTransform;
             double W = imgcontrol.ActualWidth;
             double H = imgcontrol.ActualHeight;
-            double w = image.ActualWidth;
-            double h = image.ActualHeight;
+            double w = imageViewer.ActualWidth;
+            double h = imageViewer.ActualHeight;
             lineX.StartPoint = new Point(mouse.X, Math.Max(0, move.Y + (H - h) / 2));
             lineX.EndPoint = new Point(mouse.X, Math.Min(H, move.Y + h * scale + (H - h) / 2));
             lineY.StartPoint = new Point(Math.Max(0, move.X + (W - w) / 2), mouse.Y);
@@ -742,7 +744,7 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             SelectRect = true;
             CROSSLINESHOW = true;
             //button_rectangle.Foreground = new SolidColorBrush(Colors.LightYellow);
-            image.Cursor = Cursors.Cross;
+            imageViewer.Cursor = Cursors.Cross;
             crossline.Cursor = Cursors.Cross;
 
             //SelectRect = !SelectRect;
@@ -776,7 +778,7 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
             SelectRect = false;
             CROSSLINESHOW = false;
             //button_rectangle.Foreground = new SolidColorBrush(Colors.Black);
-            image.Cursor = Cursors.Arrow;
+            imageViewer.Cursor = Cursors.Arrow;
             crossline.Cursor = Cursors.Arrow;
         }
 
@@ -793,6 +795,14 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
                 labelbox.Tag = null;
                 PointClose();
             }
+        }
+
+        private void OnImageFilesSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //打开文件
+            var sel = listboxImageFiles.SelectedItem as ImageLabelViewModel;
+            if(sel == null) return;
+            LoadImageFile(sel);
         }
 
         #endregion
@@ -854,8 +864,32 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
         {
             this.Loaded += OnWndLoaded;
             this.Unloaded += OnWndUnloaded;
+
+            listboxImageFiles.SelectionChanged += OnImageFilesSelectionChanged;
         }
 
+        void LoadImageFile(ImageLabelViewModel image)
+        {
+            if (image == null) return;
+
+            //首先打开图片
+            listboxImageFiles.IsEnabled = false;
+            if (!File.Exists(image.ImageFilePath)) return;
+            var imgData = File.ReadAllBytes(image.ImageFilePath);
+            if(imgData == null) return;
+            using (var ms = new MemoryStream(imgData))
+            {
+                var img = new BitmapImage();
+                img.BeginInit();
+                img.CacheOption = BitmapCacheOption.OnLoad;
+                img.StreamSource = ms;
+                img.EndInit();
+                imageViewer.Source = img;
+            }
+            //其次读取标签文件
+            //
+            listboxImageFiles.IsEnabled = true;
+        }
         #endregion
     }
 }
