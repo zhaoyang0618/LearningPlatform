@@ -27,5 +27,20 @@ namespace AIStudioClient.Modules.ImageAnnotation.ViewModels
         {
             this.AnnotatedObjects = new List<AnnotationItem>();
         }
+
+        /// <summary>
+        /// 读取标注的数据
+        /// </summary>
+        public void Read()
+        { 
+        }
+
+        /// <summary>
+        /// 保存标注的数据
+        /// </summary>
+        public void Save()
+        {
+
+        }
     }
 }

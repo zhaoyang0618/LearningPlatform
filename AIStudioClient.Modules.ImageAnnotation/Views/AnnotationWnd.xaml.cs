@@ -887,6 +887,8 @@ namespace AIStudioClient.Modules.ImageAnnotation.Views
                 imageViewer.Source = img;
             }
             //其次读取标签文件
+            image.Read();
+            //绑定到列表框
             //
             listboxImageFiles.IsEnabled = true;
         }
