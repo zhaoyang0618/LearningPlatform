@@ -76,23 +76,59 @@ namespace DevicePortCommunicationClient.UI
 
 		void DrawPlot()
         {
-			//var PlotModel = new PlotModel();
-			//PlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Minimum = -2, Maximum = 2 });
+            //var PlotModel = new PlotModel();
+            //PlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Minimum = -2, Maximum = 2 });
 
-			//for (int i = 0; i < 4; i++)
-			//{
-			//	PlotModel.Series.Add(new LineSeries { LineStyle = LineStyle.Solid });
-			//}
+            //for (int i = 0; i < 4; i++)
+            //{
+            //	PlotModel.Series.Add(new LineSeries { LineStyle = LineStyle.Solid });
+            //}
 
-			//plotView.Model = PlotModel;
+            //plotView.Model = PlotModel;
 
-			////
-			//var myModel = new PlotModel { Title = "Example 1", Background = OxyColors.White };
-			//myModel.Series.Add(new FunctionSeries(Math.Cos, 0, 10, 0.1, "cos(x)"));
-			//myModel.Series.Add(new FunctionSeries(Math.Sin, -10, 10, 0.1, "sin(x)"));
-			//myModel.Series.Add(new FunctionSeries(t => 5 * Math.Cos(t), t => 5 * Math.Sin(t), 0, 2 * Math.PI, 0.1, "cos(t),sin(t)"));
-			//this.plotView.Model = myModel;
+            ////
+            //var myModel = new PlotModel { Title = "Example 1", Background = OxyColors.White };
+            //myModel.Series.Add(new FunctionSeries(Math.Cos, 0, 10, 0.1, "cos(x)"));
+            //myModel.Series.Add(new FunctionSeries(Math.Sin, -10, 10, 0.1, "sin(x)"));
+            //myModel.Series.Add(new FunctionSeries(t => 5 * Math.Cos(t), t => 5 * Math.Sin(t), 0, 2 * Math.PI, 0.1, "cos(t),sin(t)"));
+            //this.plotView.Model = myModel;
 
+            //Test2();
+
+            //Task.Factory.StartNew(() =>
+            //{
+            //    while (true)
+            //    {
+            //        this.Dispatcher.Invoke(() => {
+            //            var date = DateTime.Now;
+            //            _myPlotModel.Axes[0].Maximum = DateTimeAxis.ToDouble(date.AddSeconds(1));
+
+            //            var lineSer = plotView.Model.Series[0] as LineSeries;
+            //            lineSer.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), rand.Next(100, 300) / 10.0));
+            //            if (lineSer.Points.Count > 100)
+            //            {
+            //                lineSer.Points.RemoveAt(0);
+            //            }
+
+            //            lineSer = plotView.Model.Series[1] as LineSeries;
+            //            lineSer.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), rand.Next(350, 750) / 10.0));
+            //            if (lineSer.Points.Count > 100)
+            //            {
+            //                lineSer.Points.RemoveAt(0);
+            //            }
+
+            //            _myPlotModel.InvalidatePlot(true);
+
+            //            Thread.Sleep(1000);
+            //        });
+            //    }
+            //});
+
+            Test1();
+        }
+
+        private void Test2()
+        {
             //
             var _myPlotModel = new PlotModel()
             {
@@ -108,7 +144,7 @@ namespace DevicePortCommunicationClient.UI
             //
             var l = new Legend
             {
-                LegendTitle= "Temp",
+                LegendTitle = "Temp",
                 LegendPlacement = LegendPlacement.Inside,
                 LegendPosition = LegendPosition.RightTop,
                 LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
@@ -209,7 +245,7 @@ namespace DevicePortCommunicationClient.UI
 
             var rand = new Random();
             var dateOrigin = DateTime.Now.AddHours(-8);
-            for (int i = 0; i < 200;i++)
+            for (int i = 0; i < 200; i++)
             {
                 var date = dateOrigin.AddMinutes(i * 10);
                 var lineSer = _myPlotModel.Series[0] as LineSeries;
@@ -229,35 +265,139 @@ namespace DevicePortCommunicationClient.UI
             }
 
             plotView.Model = _myPlotModel;
+        }
 
-            //Task.Factory.StartNew(() =>
-            //{
-            //    while (true)
-            //    {
-            //        this.Dispatcher.Invoke(() => {
-            //            var date = DateTime.Now;
-            //            _myPlotModel.Axes[0].Maximum = DateTimeAxis.ToDouble(date.AddSeconds(1));
+        void Test1()
+        {
+            int samples = 5;
+            int distance = 179;
+            int rectPad = 34;
+            var model = new PlotModel()
+            {
+                Background = OxyColors.White,
+                Title = "Schedule 1",
+                TitleFont = "Arial",
+                TitlePadding = 16
+            };
+            model.Axes.Add(new LinearAxis
+            {
+                Title = "Samples",
+                AxisTitleDistance = 16,
+                TitleFontSize = 16,
+                Position = AxisPosition.Left,
+                AbsoluteMaximum = samples * distance,
+                Maximum = samples * distance,
+                AbsoluteMinimum = 0,
+                MinimumRange = 1,
+                MajorStep = distance,
+                MinorStep = distance,
+                LabelFormatter = y =>
+                {
+                    int Nr = samples - (int)y / distance + 1;
+                    return Nr > samples ? "" : Nr.ToString();
+                }
+            });
+            model.Axes.Add(new LinearAxis
+            {
+                Title = "Runtime",
+                AxisTitleDistance = 16,
+                TitleFontSize = 16,
+                Minimum = 0,
+                Maximum = 1500,
+                AbsoluteMinimum = 0,
+                MinimumRange = 5,
+                Position = AxisPosition.Bottom,
+                MajorTickSize = 15,
+                MinorTickSize = 5,
+                MajorGridlineStyle = LineStyle.Solid,
+                MajorGridlineColor = OxyColors.LightGray,
+                LabelFormatter = time =>
+                {
+                    int hour = 0; int min = 0; int sec = 0;
+                    sec = (int)time;
+                    if (sec >= 60)
+                    {
+                        min = ((int)sec) / 60;
+                        sec = sec % 60;
+                    }
+                    if (min >= 60)
+                    {
+                        hour = min / 60;
+                        min = min % 60;
+                    }
+                    return string.Format("{0:D2}:{1:D2}:{2:D2}", hour, min, sec);
+                }
+            });
 
-            //            var lineSer = plotView.Model.Series[0] as LineSeries;
-            //            lineSer.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), rand.Next(100, 300) / 10.0));
-            //            if (lineSer.Points.Count > 100)
-            //            {
-            //                lineSer.Points.RemoveAt(0);
-            //            }
+            var lineAnnotation = new LineAnnotation()
+            {
+                Type = LineAnnotationType.Vertical,
+                X = 100,
+                Text = "当前时间",
+                Color = OxyColors.Red,
+                LineStyle = LineStyle.Solid
+            };
+            model.Annotations.Add(lineAnnotation);
 
-            //            lineSer = plotView.Model.Series[1] as LineSeries;
-            //            lineSer.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), rand.Next(350, 750) / 10.0));
-            //            if (lineSer.Points.Count > 100)
-            //            {
-            //                lineSer.Points.RemoveAt(0);
-            //            }
+            var rect1 = new RectangleAnnotation()
+            {
+                MinimumX = 0,
+                MaximumX = 5.9,
+                MinimumY = distance * (samples - 1) + rectPad,
+                MaximumY = distance * (samples) - rectPad,
+                Fill = OxyColor.FromRgb(155, 188, 243),//sky blue
+                Stroke = OxyColors.Transparent
+            };
+            model.Annotations.Add(rect1);
 
-            //            _myPlotModel.InvalidatePlot(true);
+            var rect2 = new RectangleAnnotation()
+            {
+                MinimumX = 6,
+                MaximumX = 180,
+                MinimumY = distance * (samples - 1) + 1.5 * rectPad,
+                MaximumY = distance * (samples) - 1.5 * rectPad,
+                Fill = OxyColor.FromRgb(191, 2, 1),//red
+                Stroke = OxyColors.Transparent
+            };
 
-            //            Thread.Sleep(1000);
-            //        });
-            //    }
-            //});
+            var rect3 = new RectangleAnnotation()
+            {
+                MinimumX = 180.1,
+                MaximumX = 240,
+                MinimumY = distance * (samples - 1) + rectPad,
+                MaximumY = distance * (samples) - rectPad,
+                Fill = OxyColor.FromRgb(254, 152, 14),
+                Stroke = OxyColors.Transparent//organge
+            };
+
+            var rect4 = new RectangleAnnotation()
+            {
+                MinimumX = 180.1,
+                MaximumX = 480,
+                MinimumY = distance * (samples - 1) + 1.5 * rectPad,
+                MaximumY = distance * (samples) - 1.5 * rectPad,
+                Fill = OxyColor.FromRgb(254, 191, 20),//yellow
+                Stroke = OxyColors.Transparent
+            };
+            model.Annotations.Add(rect3);
+            model.Annotations.Add(rect2);
+            model.Annotations.Add(rect4);
+            var myController = new PlotController();
+            myController.UnbindMouseDown(OxyMouseButton.Right);
+            myController.BindMouseDown(OxyMouseButton.Left, PlotCommands.PanAt);
+            plotView.Controller = myController;
+            //plot1.Model = Example.RectangleAnnotation();
+            plotView.Model = model;
+            //plotView.Model.MouseDown += Model_MouseDown;
+        }
+        private void Model_MouseDown(object sender, OxyMouseDownEventArgs e)
+        {
+
+            double x = e.Position.X;
+            double y = e.Position.Y;
+            DataPoint p = OxyPlot.Axes.Axis.InverseTransform(e.Position, plotView.Model.DefaultXAxis, plotView.Model.DefaultYAxis);
+
+            //this.Text = ($"X is {x} and Y is {y} and Inverse is {p.ToString()}");
         }
     }
 }
