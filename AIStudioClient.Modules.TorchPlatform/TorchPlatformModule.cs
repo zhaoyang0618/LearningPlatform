@@ -8,6 +8,17 @@ using System;
 
 namespace AIStudioClient.Modules.TorchPlatform
 {
+    /// <summary>
+    /// 一些神经网络相关的例子
+    /// 原来是使用python编写的，争取把它们转化为C#代码
+    /// https://blog.csdn.net/kobayashi_/article/details/108951993
+    /// 
+    /// https://blog.csdn.net/asialee_bird/article/details/94836962
+    /// https://www.codeproject.com/Articles/5182988/Solving-Iris-classification-using-XGBoost-and-Csha
+    /// 
+    /// 图像处理
+    /// https://www.cnblogs.com/hellotim/p/14023632.html
+    /// </summary>
     public class TorchPlatformModule : IModule
     {
         private readonly IRegionManager _regionManager;
