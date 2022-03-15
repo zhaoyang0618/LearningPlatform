@@ -10,13 +10,37 @@ namespace AIStudioClient.Modules.ImageAnnotation.ViewModels
     {
         public string Name { get; set; }
         public string ImageFilePath { get; set; }
+        /// <summary>
+        /// 标签使用JSON数据保存
+        /// </summary>
         public string LabelFilePath
         {
             get
             {
                 if(string.IsNullOrEmpty(ImageFilePath))return null;
-                return string.Format("{0}.txt", ImageFilePath);
+                return string.Format("{0}.json", ImageFilePath);
             }
+        }
+
+        public List<AnnotationItem> AnnotatedObjects { get; set; }
+        public ImageLabelViewModel()
+        {
+            this.AnnotatedObjects = new List<AnnotationItem>();
+        }
+
+        /// <summary>
+        /// 读取标注的数据
+        /// </summary>
+        public void Read()
+        { 
+        }
+
+        /// <summary>
+        /// 保存标注的数据
+        /// </summary>
+        public void Save()
+        {
+
         }
     }
 }

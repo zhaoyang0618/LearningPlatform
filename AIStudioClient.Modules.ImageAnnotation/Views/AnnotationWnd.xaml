@@ -22,36 +22,32 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="5"/>
+            <RowDefinition Height="64"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Visibility="Collapsed">
-        </StackPanel>
-        <ListBox Name="labelbox" Grid.Row="1" Grid.Column="0" 
-             SelectionChanged="SelectChange" KeyDown="LabelboxKeyResponse"/>
-        <ListBox Name="listboxImageFiles" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding ImageFiles}" >
+        <ListBox Name="labelbox" Grid.Row="0" Grid.Column="0" Margin="2" SelectionChanged="SelectChange" KeyDown="LabelboxKeyResponse"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" Margin="2" VerticalAlignment="Top" IsEditable="True" x:Name="cboObjectIdList"></ComboBox>
+        <ListBox Name="listboxImageFiles" Grid.Row="1" Grid.Column="1" Margin="2" MinWidth="128" ItemsSource="{Binding ImageFiles}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Name}"></TextBlock>
+                        <TextBlock Text="{Binding Name}" ToolTip="{Binding ImageFilePath}"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Grid Name="workspace" Grid.Row="2" Grid.Column="1" Background="Black"
-          MouseLeftButtonDown="ImgMouseLeftButtonDown" 
-          MouseLeftButtonUp="ImgMouseLeftButtonUp"
-          MouseRightButtonDown="ImgMouseRightButtonDown" 
-          MouseRightButtonUp="ImgMouseRightButtonUp"
-          MouseMove="ImgMouseMove"
-          MouseWheel="ImgMouseWheel"
-          MouseLeave="ImgMouseLeave">
+        <Grid Name="workspace" Grid.Row="2" Grid.Column="0" Background="Black"
+              MouseLeftButtonDown="ImgMouseLeftButtonDown" 
+              MouseLeftButtonUp="ImgMouseLeftButtonUp"
+              MouseRightButtonDown="ImgMouseRightButtonDown" 
+              MouseRightButtonUp="ImgMouseRightButtonUp"
+              MouseMove="ImgMouseMove"
+              MouseWheel="ImgMouseWheel"
+              MouseLeave="ImgMouseLeave">
             <Grid.Resources>
                 <TransformGroup x:Key="Imageview">
                     <ScaleTransform/>
@@ -61,7 +57,7 @@
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled"
                     Focusable="False" x:Name="BackFrame">
                 <ContentControl Name="imgcontrol">
-                    <Image Name="image" Source="D:\Images\1.jpg" Width="Auto" Height="Auto" RenderTransform="{StaticResource Imageview}" 
+                    <Image Name="imageViewer" Width="Auto" Height="Auto" RenderTransform="{StaticResource Imageview}" 
                  Stretch="Uniform"  RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                 </ContentControl>
             </ScrollViewer>
