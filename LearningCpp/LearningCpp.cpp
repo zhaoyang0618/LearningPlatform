@@ -70,6 +70,7 @@ int main(int argc, char* argv[])
 	testThreadLocal();
 	testCpp20();
 	ExploringCpp20();
+	testFoldExpressions();
 	system("pause");
 	return 0;
 }

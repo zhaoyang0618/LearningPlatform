@@ -270,6 +270,8 @@ void push_back_vec(std::vector<T>& v, Args&&... args)
 	(v.push_back(std::forward<Args>(args)), ...);
 }
 
+void testFoldExpressions();
+
 
 //if constexpr
 //The compile - time if for C++!

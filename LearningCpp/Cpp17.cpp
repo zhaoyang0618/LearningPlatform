@@ -2046,4 +2046,16 @@ void testParallel()
 
 }
 
+///ÕÛµþ±í´ïÊ½ 
+template<typename ...T>
+constexpr auto foldSum(T... args)
+{
+    return (... + args);
+}
+
+void testFoldExpressions()
+{
+    auto a = foldSum(1, 2, 3, 4, 5, 6);
+    std::cout << a << std::endl;
+}
 
