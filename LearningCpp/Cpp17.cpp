@@ -2053,9 +2053,22 @@ constexpr auto foldSum(T... args)
     return (... + args);
 }
 
+///没有折叠表达式以前的写法
+template<typename T>
+constexpr auto foldSumRec(T arg) {
+    return arg;
+}
+template<typename T1, typename... Ts>
+constexpr auto foldSumRec(T1 arg1, Ts... otherArgs) {
+    return arg1 + foldSumRec(otherArgs...);
+}
+
+
 void testFoldExpressions()
 {
-    auto a = foldSum(1, 2, 3, 4, 5, 6);
+    constexpr auto a = foldSum(1, 2, 3, 4, 5, 6);
     std::cout << a << std::endl;
+    constexpr auto b = foldSumRec(1, 2, 3, 4, 5, 6);
+    std::cout << b << std::endl;
 }
 
