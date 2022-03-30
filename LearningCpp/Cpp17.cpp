@@ -16,6 +16,7 @@
 #include <assert.h>
 
 #include "../Common/TimeLost.h"
+#include "overload.h"
 
 //auto decltype用法
 //返回值是int
@@ -2071,4 +2072,23 @@ void testFoldExpressions()
     constexpr auto b = foldSumRec(1, 2, 3, 4, 5, 6);
     std::cout << b << std::endl;
 }
+
+/// <summary>
+/// using的一些用法
+/// </summary>
+void testUsing()
+{
+    auto twice = overload {
+        [](std::string& s) { s += s; },
+        [](auto& v) {v *= 2; }
+    };
+
+    int i = 42;
+    twice(i);
+    std::cout << "i: " << i << std::endl;
+    std::string hi = "hi";
+    twice(hi);
+    std::cout << "hi: " << hi << std::endl;
+}
+
 
