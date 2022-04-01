@@ -12,5 +12,3 @@ struct overload : Ts ...
 
 template<typename ... Ts>
 overload(Ts...)->overload<Ts...>;
-
-void testUsing();

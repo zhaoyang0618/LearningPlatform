@@ -171,6 +171,7 @@
     <ClInclude Include="STLCookbookDemos.h" />
     <ClInclude Include="ThreadDemo.h" />
     <ClInclude Include="ThreadWrapper.h" />
+    <ClInclude Include="tracknew.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

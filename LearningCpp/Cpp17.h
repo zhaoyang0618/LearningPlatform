@@ -757,6 +757,7 @@ void testStringConversion();
 //transform_inclusive_scan		applies a functor, then calculates inclusive scan
 void testParallel();
 
+void testTrackNew();
 
 
 

@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
 	testCpp20();
 	ExploringCpp20();
 	testFoldExpressions();
-	testUsing();
+	testTrackNew();
 	system("pause");
 	return 0;
 }
