@@ -2115,3 +2115,17 @@ void testTrackNew()
     //delete[] p3;
 }
 
+//uWebSockets·þÎñÆ÷¶Ë
+//uWS::Server server(3000);
+//server.onConnection([](uWS::WebSocket socket) {
+//    cout << "[Connection] clients: " << ++connections << endl;
+//    });
+//
+//server.onMessage([](uWS::WebSocket socket, char* message, size_t length, uWS::OpCode opCode) {
+//    socket.send(message, length, opCode);
+//    });
+//
+//server.onDisconnection([](uWS::WebSocket socket) {
+//    cout << "[Disconnection] clients: " << --connections << endl;
+//    });
+//server.run();
