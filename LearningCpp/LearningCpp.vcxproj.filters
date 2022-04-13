@@ -98,5 +98,8 @@
     <ClInclude Include="tracknew.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="trie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

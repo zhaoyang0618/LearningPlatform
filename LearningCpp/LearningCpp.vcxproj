@@ -172,6 +172,7 @@
     <ClInclude Include="ThreadDemo.h" />
     <ClInclude Include="ThreadWrapper.h" />
     <ClInclude Include="tracknew.h" />
+    <ClInclude Include="trie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
