@@ -9,6 +9,7 @@
 #include "LearningCpp.h"
 #include "CppGrammer.h"
 #include "inlinethreadlocal.h"
+#include "trie.h"
 
 int main(int argc, char* argv[])
 {
@@ -72,6 +73,7 @@ int main(int argc, char* argv[])
 	ExploringCpp20();
 	testFoldExpressions();
 	testTrackNew();
+	trie<string>::test();
 	system("pause");
 	return 0;
 }
