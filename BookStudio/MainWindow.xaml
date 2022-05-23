@@ -1,0 +1,26 @@
+﻿<Window x:Class="BookStudio.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookStudio"
+        mc:Ignorable="d"
+        Title="书籍下载管理工具" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0">网址</TextBlock>
+            <TextBox Grid.Column="1" x:Name="textURL"></TextBox>
+            <Button Grid.Column="2" x:Name="btnDownload">获取</Button>
+        </Grid>
+        <Grid Grid.Row="1"></Grid>
+    </Grid>
+</Window>

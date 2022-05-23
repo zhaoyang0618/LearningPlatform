@@ -31,11 +31,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taiji.Utils", "Taiji.Utils\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StudyNet6", "StudyNet6", "{9C63B869-656A-410C-B380-225213611AB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client01", "Client01\Client01.csproj", "{133FAC82-FE5A-4758-93B6-7CFE3DFF15F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client01", "Client01\Client01.csproj", "{133FAC82-FE5A-4758-93B6-7CFE3DFF15F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proto01", "Proto01\Proto01.csproj", "{3026D3AC-EE78-48AD-BD42-1F4647308A04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proto01", "Proto01\Proto01.csproj", "{3026D3AC-EE78-48AD-BD42-1F4647308A04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server01", "Server01\Server01.csproj", "{47211F24-D0A0-4FBB-B9DC-1FDAD1E1540A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server01", "Server01\Server01.csproj", "{47211F24-D0A0-4FBB-B9DC-1FDAD1E1540A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStudio", "BookStudio\BookStudio.csproj", "{84F0AB76-8D0D-43AC-995F-71B65D361183}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -229,6 +231,18 @@ Global
 		{47211F24-D0A0-4FBB-B9DC-1FDAD1E1540A}.Release|x64.Build.0 = Release|Any CPU
 		{47211F24-D0A0-4FBB-B9DC-1FDAD1E1540A}.Release|x86.ActiveCfg = Release|Any CPU
 		{47211F24-D0A0-4FBB-B9DC-1FDAD1E1540A}.Release|x86.Build.0 = Release|Any CPU
+		{84F0AB76-8D0D-43AC-995F-71B65D361183}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84F0AB76-8D0D-43AC-995F-71B65D361183}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84F0AB76-8D0D-43AC-995F-71B65D361183}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{84F0AB76-8D0D-43AC-995F-71B65D361183}.Debug|x64.Build.0 = Debug|Any CPU
+		{84F0AB76-8D0D-43AC-995F-71B65D361183}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{84F0AB76-8D0D-43AC-995F-71B65D361183}.Debug|x86.Build.0 = Debug|Any CPU
+		{84F0AB76-8D0D-43AC-995F-71B65D361183}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84F0AB76-8D0D-43AC-995F-71B65D361183}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84F0AB76-8D0D-43AC-995F-71B65D361183}.Release|x64.ActiveCfg = Release|Any CPU
+		{84F0AB76-8D0D-43AC-995F-71B65D361183}.Release|x64.Build.0 = Release|Any CPU
+		{84F0AB76-8D0D-43AC-995F-71B65D361183}.Release|x86.ActiveCfg = Release|Any CPU
+		{84F0AB76-8D0D-43AC-995F-71B65D361183}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

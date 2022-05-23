@@ -72,11 +72,11 @@ namespace AIStudioClient.Modules.TorchPlatform.AI
                 nn.ReLU());
         }
 
-        public override Tensor forward(Tensor input)
+        public (Tensor, Tensor) forward(Tensor input)
         {
             var out_1 = this.Conv_BN_ReLU_2.forward(input);
             var out_2 = this.downsample.forward(out_1);
-            return out_2;//这一步的返回值似乎存在问题
+            return (out_1, out_2);//这一步的返回值似乎存在问题
         }
     }
 
