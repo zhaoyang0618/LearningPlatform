@@ -16,8 +16,8 @@ namespace stdrv = std::ranges::views;
 
 // https://en.cppreference.com/w/cpp/ranges/lazy_split_view
 // P2210R2: a temporary patch until online g++ >= 12
-#define lazy_split_view split_view
-#define lazy_split split
+//#define lazy_split_view split_view
+//#define lazy_split split
 
 template<template<typename> typename Container, typename Arg = std::string>
 concept IsSplitContainer =
@@ -49,6 +49,58 @@ auto print = [](auto const& view)
 	std::cout << "} ";
 };
 
+/// <summary>
+/// 管道符|的重载
+/// https://zhuanlan.zhihu.com/p/436956716
+/// </summary>
+
+//namespace std
+//{
+//	namespace ranges
+//	{
+//		namespace views
+//		{
+//			namespace __adaptor
+//			{
+//				struct _RangeAdaptorClosure {
+//					// range | adaptor is equivalent to adaptor(range).
+//					template <typename _Self, typename _Range>
+//						requires std::derived_from<remove_cvref_t<_Self>, _RangeAdaptorClosure>&& __adaptor_invocable<_Self, _Range>
+//						friend constexpr auto operator|(_Range&& __r, _Self&& __self) {
+//						return std::forward<_Self>(__self)(std::forward<_Range>(__r));
+//					}
+//
+//					// Compose the adaptors __lhs and __rhs into a pipeline, returning
+//					// another range adaptor closure object.
+//					template <typename _Lhs, typename _Rhs>
+//						requires derived_from<_Lhs, _RangeAdaptorClosure>&&
+//					derived_from<_Rhs, _RangeAdaptorClosure>
+//						friend constexpr auto operator|(_Lhs __lhs, _Rhs __rhs) {
+//						return _Pipe<_Lhs, _Rhs>{std::move(__lhs), std::move(__rhs)};
+//					}
+//				};
+//			}
+//		}
+//	}
+//}
+
+//class Add : public std::ranges::views::__adaptor::_RangeAdaptor<Add> {
+//public:
+//	constexpr auto operator()(int range, int arg) const { return range + arg; }
+//
+//	using _RangeAdaptor<Add>::operator();
+//	// _S_arity表示函数参数个数
+//	static constexpr int _S_arity = 2;
+//};
+//
+//class Sub : public std::ranges::views::__adaptor::_RangeAdaptor<Sub> {
+//public:
+//	constexpr auto operator()(int range, int arg) const { return range - arg; }
+//
+//	using _RangeAdaptor<Sub>::operator();
+//	static constexpr int _S_arity = 2;
+//};
+
 void testCpp20()
 {
 	//std::cout << "C++ 20 学习" << std::endl;
@@ -77,6 +129,15 @@ void testCpp20()
 	//std::cout << "\n" "substrings: ";
 	//std::ranges::for_each(text | std::views::lazy_split(delim), print);
 	//std::cout << std::endl;
+
+	//
+	std::cout << "管道符: " << std::endl;
+	using namespace std::views;
+	std::vector<int> v{ 1,2,3,4,5,6,7,8 };
+	auto res = all(v) | filter([](int a) { return a % 2; }) | take(3);
+	for (const auto& i : res) {
+		std::cout << i << std::endl;
+	}
 }
 //output: Hello C++20 and New Spilt
 
