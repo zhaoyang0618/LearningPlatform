@@ -3,6 +3,7 @@
 #include <vector>
 #include <list>
 #include <deque>
+#include <map>
 #include <ranges>
 #include <algorithm>
 #include <format>
@@ -101,6 +102,196 @@ auto print = [](auto const& view)
 //	static constexpr int _S_arity = 2;
 //};
 
+/// <summary>
+/// Range和View示例
+/// </summary>
+void ComposeRangeAndViews()
+{
+	namespace vws = std::views;
+	std::vector<int> vals { 0, 1,2,3,4,};
+	//
+	std::map<std::string, int> composers{
+		{"Bach", 1685},
+		{"Mozart", 1756},
+		{"Beethoven", 1770},
+		{"Tchaikovsky", 1840},
+		{"Chopin", 1810},
+		{"Vivaldi", 1678},
+	};
+	//
+	// iterate over the names of the first 3 composers born since 1700:
+	for (const auto& elem : composers 
+		| vws::filter([](const auto& y) { // since 1700
+			return y.second >= 1700;
+			})
+		| vws::take(3) // first 3
+		| vws::keys // keys/names only
+				) 
+	{
+		std::cout << "- " << elem << '\n';
+	}
+
+}
+
+/// <summary>
+/// C++20 now can map operator != to operator == with arbitrary order of the operands.
+/// </summary>
+struct NullTerm
+{
+	bool operator ==(auto pos) const
+	{
+		return *pos == '\0';
+	}
+};
+
+/// <summary>
+/// 哨兵
+/// </summary>
+void testSentinel1()
+{
+	const char* rawString = "hello world";
+	// iterate over the range of the begin of rawString and its end:
+	for (auto pos = rawString; pos != NullTerm{}; ++pos) {
+		std::cout << ' ' << *pos;
+	}
+	std::cout << '\n';
+	// call range algorithm with iterator and sentinel:
+	std::ranges::for_each(rawString, // begin of range
+		NullTerm{}, // end is null terminator
+		[](char c) {
+			std::cout << ' ' << c;
+		});
+	std::cout << '\n';
+}
+
+void testSentinel2()
+{
+	const char* rawString = "hello world";
+	// define a range of a raw string and a null terminator:
+	std::ranges::subrange rawStringRange{ rawString, NullTerm{} };
+
+	// use the range in an algorithm:
+	std::ranges::for_each(rawStringRange,
+		[](char c) {
+			std::cout << ' ' << c;
+		});
+	std::cout << '\n';
+	// range-based for loop also supports iterator/sentinel:
+	for (char c : rawStringRange) {
+		std::cout << ' ' << c;
+	}
+	std::cout << '\n';
+}
+
+template<auto END>
+struct EndValue 
+{
+	bool operator== (auto pos)const
+	{
+		return *pos == END;
+	}
+};
+
+void testSentinel3()
+{
+	std::vector coll = { 42, 8, 0, 15, 7, -1 }; // -1 marks the end
+	// define a range the begin of coll and the element 7 as end:
+	std::ranges::subrange range{ coll.begin(), EndValue<7>{} };
+	// sort the elements of this range:
+	std::ranges::sort(range);
+	// print the elements of the range:
+	std::ranges::for_each(range,
+		[](auto val) {
+			std::cout << ' ' << val;
+		});
+	std::cout << '\n';
+	// print all elements of coll up to -1:
+	std::ranges::for_each(coll.begin(), EndValue<-1>{},
+		[](auto val) {
+			std::cout << ' ' << val;
+		});
+	std::cout << '\n';
+}
+
+void testRangeAndCount()
+{
+	std::vector<int> coll{ 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	auto pos5 = std::ranges::find(coll, 5);
+	//counted中数量必须保证足够，所以这里有一个检测
+	//如果数量不足，程序会有未定义行为，不可取
+	if (std::ranges::distance(pos5, coll.end()) >= 3) {
+		for (int val : std::views::counted(pos5, 3)) {
+			std::cout << val << ' ';
+		}
+	}
+	std::cout << '\n';
+}
+
+template<std::ranges::input_range Range>
+std::ranges::range_value_t<Range> maxValue(Range&& rg)
+{
+	if (std::ranges::empty(rg)) {
+		return std::ranges::range_value_t<Range>{};
+	}
+	auto pos = std::ranges::begin(rg);
+	auto max = *pos;
+	while (++pos != std::ranges::end(rg)) {
+		if (*pos > max) {
+			max = *pos;
+		}
+	}
+	return max;
+}
+
+/// <summary>
+/// 延迟计算
+/// </summary>
+void testFiltTrans()
+{
+	namespace vws = std::views;
+	std::vector<int> coll{ 8, 15, 7, 0, 9 };
+	// define a view:
+	auto vColl = coll
+		| vws::filter([](int i) {
+		std::cout << " filter " << i << '\n';
+		return i % 3 == 0;
+			})
+		| vws::transform([](int i) {
+				std::cout << " trans " << i << '\n';
+				return -i;
+			});
+
+	// and use it:
+	std::cout << "*** coll | filter | transform:\n";
+	for (int i : vColl) {
+		std::cout << " => " << i << '\n';
+	}
+
+}
+
+void testTransFilt()
+{
+	namespace vws = std::views;
+	std::vector<int> coll{ 8, 15, 7, 0, 9 };
+
+	// define a view:
+	auto vColl = coll
+		| vws::transform([](int i) {
+		std::cout << " trans: " << i << '\n';
+		return -i;
+			})
+		| vws::filter([](int i) {
+				std::cout << "  filt: " << i << '\n';
+				return i % 3 == 0;
+			});
+
+	// and use it:
+	std::cout << "*** coll | transform | filter:\n";
+	for (int i : vColl) {
+		std::cout << "   => " << i << '\n';
+	}
+}
+
 void testCpp20()
 {
 	//std::cout << "C++ 20 学习" << std::endl;
@@ -138,6 +329,16 @@ void testCpp20()
 	for (const auto& i : res) {
 		std::cout << i << std::endl;
 	}
+
+	//
+	ComposeRangeAndViews();
+	//
+	testSentinel1();
+	testSentinel2();
+	testSentinel3();
+	testRangeAndCount();
+	testFiltTrans();
+	testTransFilt();
 }
 //output: Hello C++20 and New Spilt
 
