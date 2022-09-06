@@ -143,10 +143,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ASIODemo.cpp" />
+    <ClCompile Include="BigIntegerDemo.cpp" />
     <ClCompile Include="LearningBoost.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ASIODemo.h" />
+    <ClInclude Include="BigIntegerDemo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
