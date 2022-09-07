@@ -134,10 +134,6 @@ public:
             cout << "left factor of " << num << " is: " << sf << "\n";
             //cout << sf.substr(sf.size() - 8) << "\n";
 
-            //auto a = 0;// factor<cpp_int>(num);
-            //auto b = 25;// leftFactor<cpp_int>(num);
-            //cpp_int d = euclid<cpp_int>(a, b);
-            //cout << "the max common factor of " << a << " and " << b << " is: " << d.str() << "\n";
             int exceptionCount = 0;
             for (int i = 1000; i <= 10000; i++)
             {
