@@ -13,5 +13,21 @@ namespace BookStudio
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            try
+            {
+                using (var db = new DB.BookDBContext())
+                {
+                    db.Database.EnsureCreated();
+                }
+            }
+            catch(Exception exp)
+            {
+
+            }
+        }
+
     }
 }
