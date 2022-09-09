@@ -6,18 +6,30 @@ using System.Threading.Tasks;
 
 namespace Algs4.Utils
 {
-    internal class InsertionSort
+    /// <summary>
+    /// 需要的额外内存是常数
+    /// </summary>
+    internal class ShellSort
     {
         public static void sort<T>(T[] a) where T : IComparable<T>
         {
             int N = a.Length;
-            for (int i = 0; i < N; i++)
+            int h = 1;
+            while (h < N / 3) h = 3 * h + 1;
+            while(h >= 1)
             {
-                for (int j = i; j > 0 && less(a[j], a[j-1]); j--)
+                System.Diagnostics.Debug.WriteLine("H={0}", h);
+                for (int i = h; i < N; i++)
                 {
-                    exch(a, j, j-1);
-                    show(a);
+                    for(int j = i; j >= h && less(a[j], a[j - h]); j-=h)
+                    {
+                        exch(a, j, j - h);
+                        show(a);
+                    }
+
                 }
+
+                h /= 3;
             }
         }
 
@@ -32,10 +44,9 @@ namespace Algs4.Utils
             a[i] = a[j];
             a[j] = t;
         }
-
         private static void show<T>(T[] a)
         {
-            foreach(var v in a)
+            foreach (var v in a)
             {
                 System.Diagnostics.Debug.Write(v);
                 System.Diagnostics.Debug.Write(" ");
