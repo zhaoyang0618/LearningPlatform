@@ -45,6 +45,9 @@
     <ClCompile Include="TestGApi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GpuBasicsSimilarity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestVideoAnalysis.h">
@@ -75,6 +78,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TestGApi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GpuBasicsSimilarity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

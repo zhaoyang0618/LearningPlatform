@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GpuBasicsSimilarity.cpp" />
     <ClCompile Include="ImageStudio.cpp" />
     <ClCompile Include="MyCropLayer.cpp" />
     <ClCompile Include="PlateReconize.cpp" />
@@ -160,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileHelper.h" />
+    <ClInclude Include="GpuBasicsSimilarity.h" />
     <ClInclude Include="MyCropLayer.h" />
     <ClInclude Include="PlateReconize.h" />
     <ClInclude Include="TestCoreFunctionality.h" />
