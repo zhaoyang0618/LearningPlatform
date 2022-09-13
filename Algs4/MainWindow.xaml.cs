@@ -37,5 +37,27 @@ namespace Algs4
             ShellSort.sort(a.ToCharArray());
             this.IsEnabled = true;
         }
+        private void OnButtonMaxSubArrayClick(object sender, RoutedEventArgs e)
+        {
+            //排序算法
+            this.IsEnabled = false;
+            var a = new int[10];
+            var rnd = new Random();
+            for(int i=0;i<10;i++)
+            {
+                a[i] = rnd.Next(-100, 100);
+            }
+            foreach(var v in a)
+            {
+                System.Diagnostics.Debug.Write(v);
+                System.Diagnostics.Debug.Write("; ");
+            }
+            System.Diagnostics.Debug.Write("\n");
+            //
+            var (low, high, sum) = FindMaximumSubArray.find(a);
+            System.Diagnostics.Debug.WriteLine(String.Format("{0} - {1}: {2}", low, high, sum));
+            //
+            this.IsEnabled = true;
+        }
     }
 }

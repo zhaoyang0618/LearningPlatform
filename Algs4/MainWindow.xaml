@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Algs4"
         mc:Ignorable="d"
         Title="算法(Robert Sedgewick and Kevin Wayne)" Height="450" Width="800">
-    <Grid>
+    <UniformGrid>
         <Button Click="OnButtonSortClick">排序算法</Button>
-    </Grid>
+        <Button Click="OnButtonMaxSubArrayClick">最大子列算法</Button>
+    </UniformGrid>
 </Window>
