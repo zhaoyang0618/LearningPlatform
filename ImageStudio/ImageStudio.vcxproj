@@ -80,7 +80,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\3party\opencv450\build\include;E:\3party\glog-0.4.0\output;$(IncludePath)</IncludePath>
+    <IncludePath>E:\3party\opencv450\build\include;E:\3party\glog-0.4.0\output;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.1\include;$(IncludePath)</IncludePath>
     <LibraryPath>E:\3party\opencv450\build\lib;E:\3party\glog-0.4.0\output\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -147,10 +147,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CornerSubPixel.cpp" />
+    <ClCompile Include="FeatureDescription.cpp" />
+    <ClCompile Include="FeatureDetection.cpp" />
+    <ClCompile Include="FeatureMatchingWithFLANN.cpp" />
     <ClCompile Include="GpuBasicsSimilarity.cpp" />
+    <ClCompile Include="GpuMatWithThrust.cpp" />
+    <ClCompile Include="HarrisCornerDetector.cpp" />
     <ClCompile Include="ImageStudio.cpp" />
     <ClCompile Include="MyCropLayer.cpp" />
+    <ClCompile Include="OwnCornerDetector.cpp" />
     <ClCompile Include="PlateReconize.cpp" />
+    <ClCompile Include="ShiTomasiCornerDetector.cpp" />
     <ClCompile Include="TestCoreFunctionality.cpp" />
     <ClCompile Include="TestDNN.cpp" />
     <ClCompile Include="TestGApi.cpp" />
@@ -160,10 +168,18 @@
     <ClCompile Include="VideoAnalysisThread.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CornerSubPixel.h" />
+    <ClInclude Include="FeatureDescription.h" />
+    <ClInclude Include="FeatureDetection.h" />
+    <ClInclude Include="FeatureMatchingWithFLANN.h" />
     <ClInclude Include="FileHelper.h" />
     <ClInclude Include="GpuBasicsSimilarity.h" />
+    <ClInclude Include="GpuMatWithThrust.h" />
+    <ClInclude Include="HarrisCornerDetector.h" />
     <ClInclude Include="MyCropLayer.h" />
+    <ClInclude Include="OwnCornerDetector.h" />
     <ClInclude Include="PlateReconize.h" />
+    <ClInclude Include="ShiTomasiCornerDetector.h" />
     <ClInclude Include="TestCoreFunctionality.h" />
     <ClInclude Include="TestDNN.h" />
     <ClInclude Include="TestGApi.h" />

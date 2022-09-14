@@ -1,4 +1,4 @@
-#include "Cpp20.h"
+﻿#include "Cpp20.h"
 
 #include <vector>
 #include <list>
@@ -11,6 +11,7 @@
 #include <string_view>
 #include <iomanip>
 #include <iterator>
+#include <coroutine>
 
 namespace stdr = std::ranges;
 namespace stdrv = std::ranges::views;
@@ -51,7 +52,7 @@ auto print = [](auto const& view)
 };
 
 /// <summary>
-/// �ܵ���|������
+/// 管道符|的重载
 /// https://zhuanlan.zhihu.com/p/436956716
 /// </summary>
 
@@ -90,7 +91,7 @@ auto print = [](auto const& view)
 //	constexpr auto operator()(int range, int arg) const { return range + arg; }
 //
 //	using _RangeAdaptor<Add>::operator();
-//	// _S_arity��ʾ������������
+//	// _S_arity表示函数参数个数
 //	static constexpr int _S_arity = 2;
 //};
 //
@@ -103,7 +104,7 @@ auto print = [](auto const& view)
 //};
 
 /// <summary>
-/// Range��Viewʾ��
+/// Range和View示例
 /// </summary>
 void ComposeRangeAndViews()
 {
@@ -145,7 +146,7 @@ struct NullTerm
 };
 
 /// <summary>
-/// �ڱ�
+/// 哨兵
 /// </summary>
 void testSentinel1()
 {
@@ -217,8 +218,8 @@ void testRangeAndCount()
 {
 	std::vector<int> coll{ 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	auto pos5 = std::ranges::find(coll, 5);
-	//counted���������뱣֤�㹻������������һ�����
-	//����������㣬�������δ������Ϊ������ȡ
+	//counted中数量必须保证足够，所以这里有一个检测
+	//如果数量不足，程序会有未定义行为，不可取
 	if (std::ranges::distance(pos5, coll.end()) >= 3) {
 		for (int val : std::views::counted(pos5, 3)) {
 			std::cout << val << ' ';
@@ -244,7 +245,7 @@ std::ranges::range_value_t<Range> maxValue(Range&& rg)
 }
 
 /// <summary>
-/// �ӳټ���
+/// 延迟计算
 /// </summary>
 void testFiltTrans()
 {
@@ -294,12 +295,12 @@ void testTransFilt()
 
 void testCpp20()
 {
-	//std::cout << "C++ 20 ѧϰ" << std::endl;
+	//std::cout << "C++ 20 学习" << std::endl;
 	std::string str = "Hello233C++20233and233New233Spilt";
 	std::string delimiter = "233";
 	std::list<std::string>&& strCont = Split<std::list>(str, delimiter);
 	//auto&& strCont = Split<std::list>(str, delimiter);
-	std::cout << "�ֽ�֮��: " << std::endl;
+	std::cout << "分解之后: " << std::endl;
 	stdr::for_each(strCont, [](auto&& x) { std::cout << std::format("{} ", x); });
 	std::cout << "" << std::endl;
 
@@ -322,7 +323,7 @@ void testCpp20()
 	//std::cout << std::endl;
 
 	//
-	std::cout << "�ܵ���: " << std::endl;
+	std::cout << "管道符: " << std::endl;
 	using namespace std::views;
 	std::vector<int> v{ 1,2,3,4,5,6,7,8 };
 	auto res = all(v) | filter([](int a) { return a % 2; }) | take(3);
@@ -413,3 +414,156 @@ void ExploringCpp20()
 	std::cout << "C++ " << std::setfill('0') << std::setw(2) << cpp_year % 100 << '\n';
 	std::cout << "C++ " << std::setw(2) << (__cplusplus / 100) % 100 << '\n';
 }
+
+//https://zhuanlan.zhihu.com/p/561623494
+////!coro_ret 协程函数的返回值，内部定义promise_type，承诺对象
+//template <typename T>
+//struct coro_ret
+//{
+//	struct promise_type;
+//	using handle_type = std::coroutine_handle<promise_type>;
+//	//! 协程句柄
+//	handle_type coro_handle_;
+//
+//	coro_ret(handle_type h) 
+//		: coro_handle_(h)
+//	{
+//	}
+//
+//	coro_ret(const coro_ret&) = delete;
+//	coro_ret(coro_ret&& s)
+//		: coro_handle_(s.coro_)
+//	{
+//		s.coro_handle_ = nullptr;
+//	}
+//	~coro_ret()
+//	{
+//		//!自行销毁
+//		if (coro_handle_)
+//			coro_handle_.destroy();
+//	}
+//	coro_ret& operator=(const coro_ret&) = delete;
+//	coro_ret& operator=(coro_ret&& s)
+//	{
+//		coro_handle_ = s.coro_handle_;
+//		s.coro_handle_ = nullptr;
+//		return *this;
+//	}
+//	//!恢复协程，返回是否结束
+//	bool move_next()
+//	{
+//		coro_handle_.resume();
+//		return coro_handle_.done();
+//	}
+//
+//	//!通过promise获取数据，返回值
+//	T get()
+//	{
+//		return coro_handle_.promise().return_data_;
+//	}
+//
+//	//!promise_type就是承诺对象，承诺对象用于协程内外交流
+//	struct promise_type
+//	{
+//		promise_type() = default;
+//		~promise_type() = default;
+//		​
+//		//!生成协程返回值
+//		auto get_return_object()
+//		{
+//			return coro_ret<T>{handle_type::from_promise(*this)};
+//		}
+//		​
+//		//! 注意这个函数,返回的就是awaiter
+//		//! 如果返回std::suspend_never{}，就不挂起，
+//		//! 返回std::suspend_always{} 挂起
+//		//! 当然你也可以返回其他awaiter
+//		auto initial_suspend()
+//		{
+//			//return std::suspend_never{};
+//			return std::suspend_always{};
+//		}
+//		//!co_return 后这个函数会被调用
+//		void return_value(T v)
+//		{
+//			return_data_ = v;
+//			return;
+//		}
+//
+//		//!
+//		auto yield_value(T v)
+//		{
+//			std::cout << "yield_value invoked." << std::endl;
+//			return_data_ = v;
+//			return std::suspend_always{};
+//		}
+//		//! 在协程最后退出后调用的接口。
+//		//! 若 final_suspend 返回 std::suspend_always 则需要用户自行调用
+//		//! handle.destroy() 进行销毁，但注意final_suspend被调用时协程已经结束
+//		//! 返回std::suspend_always并不会挂起协程（实测 VSC++ 2022）
+//		auto final_suspend() noexcept
+//		{
+//			std::cout << "final_suspend invoked." << std::endl;
+//			return std::suspend_always{};
+//		}
+//		//
+//		void unhandled_exception()
+//		{
+//			std::exit(1);
+//		}
+//		//返回值
+//		T return_data_;
+//	};
+//
+//};
+//​
+//​
+////这就是一个协程函数
+//coro_ret<int> coroutine_7in7out()
+//{
+//	//进入协程看initial_suspend，返回std::suspend_always{};会有一次挂起
+//	std::cout << "Coroutine co_await std::suspend_never" << std::endl;
+//
+//	//co_await std::suspend_never{} 不会挂起
+//	co_await std::suspend_never{};
+//	std::cout << "Coroutine co_await std::suspend_always" << std::endl;
+//	co_await std::suspend_always{};
+//	​
+//		std::cout << "Coroutine stage 1 ,co_yield" << std::endl;
+//	co_yield 101;
+//	std::cout << "Coroutine stage 2 ,co_yield" << std::endl;
+//	co_yield 202;
+//	std::cout << "Coroutine stage 3 ,co_yield" << std::endl;
+//	co_yield 303;
+//	std::cout << "Coroutine stage end, co_return" << std::endl;
+//	co_return 808;
+//}
+//
+//void testCoroutine()
+//{
+//	bool done = false;
+//	std::cout << "Start coroutine_7in7out ()\n";
+//	//调用协程,得到返回值c_r，后面使用这个返回值来管理协程。
+//	auto c_r = coroutine_7in7out();
+//	//第一次停止因为initial_suspend 返回的是suspend_always
+//	//此时没有进入Stage 1
+//	std::cout << "Coroutine " << (done ? "is done " : "isn't done ")
+//		<< "ret =" << c_r.get() << std::endl;
+//	done = c_r.move_next();
+//	//此时是，co_await std::suspend_always{}
+//	std::cout << "Coroutine " << (done ? "is done " : "isn't done ")
+//		<< "ret =" << c_r.get() << std::endl;
+//	done = c_r.move_next();
+//	//此时打印Stage 1
+//	std::cout << "Coroutine " << (done ? "is done " : "isn't done ")
+//		<< "ret =" << c_r.get() << std::endl;
+//	done = c_r.move_next();
+//	std::cout << "Coroutine " << (done ? "is done " : "isn't done ")
+//		<< "ret =" << c_r.get() << std::endl;
+//	done = c_r.move_next();
+//	std::cout << "Coroutine " << (done ? "is done " : "isn't done ")
+//		<< "ret =" << c_r.get() << std::endl;
+//	done = c_r.move_next();
+//	std::cout << "Coroutine " << (done ? "is done " : "isn't done ")
+//		<< "ret =" << c_r.get() << std::endl;
+//}​
