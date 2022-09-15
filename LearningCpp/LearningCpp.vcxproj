@@ -151,9 +151,24 @@
     <ClCompile Include="lambdathis.cpp" />
     <ClCompile Include="LearningCpp.cpp" />
     <ClCompile Include="list0102.cpp" />
+    <ClCompile Include="mod1.ixx" />
+    <ClCompile Include="mod1io.cpp" />
+    <ClCompile Include="mod1price.cpp" />
+    <ClCompile Include="mod2.ixx" />
+    <ClCompile Include="mod2order.ixx" />
+    <ClCompile Include="mod3.ixx" />
+    <ClCompile Include="mod3customer.ixx" />
+    <ClCompile Include="mod3io.cpp" />
+    <ClCompile Include="mod3order.ixx" />
+    <ClCompile Include="mod3price.cpp" />
+    <ClCompile Include="ModReach.ixx" />
+    <ClCompile Include="ModReachTest.cpp" />
     <ClCompile Include="SmartPointerDemo.cpp" />
+    <ClCompile Include="SquareModule.ixx" />
     <ClCompile Include="STLContainersDemo.cpp" />
     <ClCompile Include="STLCookbookDemos.cpp" />
+    <ClCompile Include="testMod1.cpp" />
+    <ClCompile Include="testMod3.cpp" />
     <ClCompile Include="ThreadDemo.cpp" />
     <ClCompile Include="ThreadWrapper.cpp" />
   </ItemGroup>
@@ -169,6 +184,7 @@
     <ClInclude Include="SmartPointerDemo.h" />
     <ClInclude Include="STLContainersDemo.h" />
     <ClInclude Include="STLCookbookDemos.h" />
+    <ClInclude Include="testlang.h" />
     <ClInclude Include="ThreadDemo.h" />
     <ClInclude Include="ThreadWrapper.h" />
     <ClInclude Include="tracknew.h" />

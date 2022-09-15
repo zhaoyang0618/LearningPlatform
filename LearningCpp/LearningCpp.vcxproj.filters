@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="lang">
+      <UniqueIdentifier>{b1b735ee-3d6d-42e7-b222-dc66683a1b68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LearningCpp.cpp">
@@ -53,6 +56,51 @@
     </ClCompile>
     <ClCompile Include="list0102.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SquareModule.ixx">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="ModReach.ixx">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="ModReachTest.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="mod1.ixx">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="mod1price.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="mod1io.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="testMod1.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="mod2order.ixx">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="mod2.ixx">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="mod3customer.ixx">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="mod3.ixx">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="mod3order.ixx">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="mod3io.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="mod3price.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="testMod3.cpp">
+      <Filter>lang</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="trie.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testlang.h">
+      <Filter>lang</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

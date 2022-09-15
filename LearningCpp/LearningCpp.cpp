@@ -6,10 +6,16 @@
 
 #include <iostream>
 #include <cstdio>
+#include <format>
 #include "LearningCpp.h"
 #include "CppGrammer.h"
 #include "inlinethreadlocal.h"
 #include "trie.h"
+#include "testlang.h"
+
+//使用模块
+import Square;
+
 
 int main(int argc, char* argv[])
 {
@@ -74,6 +80,16 @@ int main(int argc, char* argv[])
 	testFoldExpressions();
 	testTrackNew();
 	trie<string>::test();
+
+	//
+	int num = 42;
+	//auto err = square(num);//会出现编译错误
+	Square sq = toSquare(num);
+	std::cout << std::format("the sqaure of {} is: {}\n", num, sq.getValue());
+
+	TestModeReach();
+	testMod1();
+	testMod3();
 	system("pause");
 	return 0;
 }
