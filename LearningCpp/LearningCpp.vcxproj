@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="coro.cpp" />
     <ClCompile Include="Cpp17.cpp" />
     <ClCompile Include="Cpp20.cpp" />
     <ClCompile Include="CppGrammer.cpp" />
@@ -173,6 +174,9 @@
     <ClCompile Include="ThreadWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="coro.h" />
+    <ClInclude Include="coropromise.h" />
+    <ClInclude Include="corotask.h" />
     <ClInclude Include="Cpp17.h" />
     <ClInclude Include="Cpp20.h" />
     <ClInclude Include="CppGrammer.h" />

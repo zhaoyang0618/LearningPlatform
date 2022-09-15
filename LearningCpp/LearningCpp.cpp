@@ -90,6 +90,7 @@ int main(int argc, char* argv[])
 	TestModeReach();
 	testMod1();
 	testMod3();
+	testCoro();
 	system("pause");
 	return 0;
 }

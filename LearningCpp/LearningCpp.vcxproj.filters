@@ -102,6 +102,9 @@
     <ClCompile Include="testMod3.cpp">
       <Filter>lang</Filter>
     </ClCompile>
+    <ClCompile Include="coro.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LearningCpp.h">
@@ -150,6 +153,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="testlang.h">
+      <Filter>lang</Filter>
+    </ClInclude>
+    <ClInclude Include="corotask.h">
+      <Filter>lang</Filter>
+    </ClInclude>
+    <ClInclude Include="coropromise.h">
+      <Filter>lang</Filter>
+    </ClInclude>
+    <ClInclude Include="coro.h">
       <Filter>lang</Filter>
     </ClInclude>
   </ItemGroup>
