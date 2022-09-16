@@ -91,6 +91,7 @@ int main(int argc, char* argv[])
 	testMod1();
 	testMod3();
 	testCoro();
+	testjthread();
 	system("pause");
 	return 0;
 }
