@@ -25,6 +25,12 @@ void func(std::stop_token st, int num)
 	std::this_thread::sleep_for(2ms);
 }
 
+void sleep(const int seconds)
+{
+	std::this_thread::sleep_for(std::chrono::seconds(seconds));
+
+}
+
 void testjthread()
 {
 	// create stop_source and stop_token:
@@ -43,4 +49,22 @@ void testjthread()
 	// after a while, request stop:
 	std::this_thread::sleep_for(120ms);
 	ssrc.request_stop();
+
+	//
+	{
+		std::jthread jt{
+			[](std::stop_token st) {
+				while (!st.stop_requested())
+				{
+					std::cout << "Do Work!\n";
+					sleep(1);
+				}
+		}
+		};
+
+		sleep(5);
+		jt.request_stop();
+		jt.join();
+	}
+
 }
