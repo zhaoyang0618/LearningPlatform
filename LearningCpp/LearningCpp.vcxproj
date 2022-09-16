@@ -191,6 +191,7 @@
     <ClInclude Include="SmartPointerDemo.h" />
     <ClInclude Include="STLContainersDemo.h" />
     <ClInclude Include="STLCookbookDemos.h" />
+    <ClInclude Include="stringtask.h" />
     <ClInclude Include="testlang.h" />
     <ClInclude Include="ThreadDemo.h" />
     <ClInclude Include="ThreadWrapper.h" />

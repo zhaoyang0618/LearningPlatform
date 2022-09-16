@@ -173,5 +173,8 @@
     <ClInclude Include="intrange.h">
       <Filter>lang</Filter>
     </ClInclude>
+    <ClInclude Include="stringtask.h">
+      <Filter>lang</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

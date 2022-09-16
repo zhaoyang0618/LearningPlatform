@@ -4,6 +4,7 @@
 #include "coro.h"
 #include "intgen.h"
 #include "intrange.h"
+#include "stringtask.h"
 
 template <typename T>
 IntGen loopOver(const T& coll)
@@ -27,16 +28,30 @@ IntRange loopOver2(const T& coll)
 	}
 }
 
+StringTask computeInSteps()
+{
+	std::string ret;
+	ret += "Hello";
+	co_await std::suspend_always(); // SUSPEND
+	ret += " World";
+	co_await std::suspend_always(); // SUSPEND
+	ret += "!";
+	co_return ret;
+}
+
 void testCoro()
 {
-	//第一个例子 
 	using namespace std::literals;
-	// start coroutine:
-	CoroTask sayHelloTask = sayHello();
-	std::cout << "coroutine sayHello() started\n";
-	// loop to resume the coroutine until it is done:
-	while (sayHelloTask.resume()) { // resume
-		std::this_thread::sleep_for(1000ms);
+
+	//第一个例子 
+	{
+		// start coroutine:
+		CoroTask sayHelloTask = sayHello();
+		std::cout << "coroutine sayHello() started\n";
+		// loop to resume the coroutine until it is done:
+		while (sayHelloTask.resume()) { // resume
+			std::this_thread::sleep_for(1000ms);
+		}
 	}
 
 	//第二个例子
@@ -65,5 +80,15 @@ void testCoro()
 		}
 	}
 
-	//
+	//第三个例子
+	{
+		StringTask task = computeInSteps();
+		// loop to resume the coroutine until it is done:
+		while (task.resume()) { // RESUME
+			std::this_thread::sleep_for(500ms);
+		}
+		// print return value of coroutine:
+		std::cout << "result: " << task.getResult() << '\n';
+
+	}
 }
