@@ -177,11 +177,14 @@
     <ClInclude Include="coro.h" />
     <ClInclude Include="coropromise.h" />
     <ClInclude Include="corotask.h" />
+    <ClInclude Include="corotask1.h" />
     <ClInclude Include="Cpp17.h" />
     <ClInclude Include="Cpp20.h" />
     <ClInclude Include="CppGrammer.h" />
     <ClInclude Include="factory.h" />
     <ClInclude Include="inlinethreadlocal.h" />
+    <ClInclude Include="intgen.h" />
+    <ClInclude Include="intrange.h" />
     <ClInclude Include="lambdathis.h" />
     <ClInclude Include="LearningCpp.h" />
     <ClInclude Include="overload.h" />

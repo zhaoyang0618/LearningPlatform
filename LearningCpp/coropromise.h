@@ -13,6 +13,7 @@ struct CoroPromise {
 	auto initial_suspend() { // start immediately?
 		std::cout << "- promise: initial_suspend()\n";
 		return std::suspend_always{}; // - suspend immediately
+		//return std::suspend_never{}; // - suspend immediately
 	}
 	auto final_suspend() noexcept { // clean-ups / postprocessing
 		std::cout << "- promise: final_suspend()\n";

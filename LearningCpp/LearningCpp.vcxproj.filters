@@ -164,5 +164,14 @@
     <ClInclude Include="coro.h">
       <Filter>lang</Filter>
     </ClInclude>
+    <ClInclude Include="corotask1.h">
+      <Filter>lang</Filter>
+    </ClInclude>
+    <ClInclude Include="intgen.h">
+      <Filter>lang</Filter>
+    </ClInclude>
+    <ClInclude Include="intrange.h">
+      <Filter>lang</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
