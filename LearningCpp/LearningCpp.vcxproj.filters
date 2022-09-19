@@ -120,6 +120,9 @@
     <ClCompile Include="semaphore.cpp">
       <Filter>lang</Filter>
     </ClCompile>
+    <ClCompile Include="semaphorenotify.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LearningCpp.h">

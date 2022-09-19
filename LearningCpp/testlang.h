@@ -8,3 +8,4 @@ void testLatch();
 void testLatchReady();
 void testBarrier();
 void testSemaphore();
+void testSemaphoreNotify();

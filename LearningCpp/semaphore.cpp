@@ -30,20 +30,20 @@ void testSemaphore()
 			// get next value from the queue:
 			char val;
 			{
-			std::lock_guard lg{valuesMx};
-			val = values.front();
-			values.pop();
+				std::lock_guard lg{valuesMx};
+				val = values.front();
+				values.pop();
 			}
 			// print the value 10 times:
 			for (int i = 0; i < 10; ++i) {
-			std::cout.put(val).flush();
-			auto dur = 130ms * ((idx % 3) + 1);
-			std::this_thread::sleep_for(dur);
+				std::cout.put(val).flush();
+				auto dur = 130ms * ((idx % 3) + 1);
+				std::this_thread::sleep_for(dur);
 			}
 			// remove thread from the set of enabled threads:
 			enabled.release();
 			}
-			} });
+		} });
 	}
 	std::cout << "== wait 2 seconds (no thread enabled)\n" << std::flush;
 	std::this_thread::sleep_for(2s);

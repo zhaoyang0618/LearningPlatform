@@ -96,6 +96,7 @@ int main(int argc, char* argv[])
 	testLatchReady();
 	testBarrier();
 	testSemaphore();
+	testSemaphoreNotify();
 	system("pause");
 	return 0;
 }

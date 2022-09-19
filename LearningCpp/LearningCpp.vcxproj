@@ -168,6 +168,7 @@
     <ClCompile Include="ModReach.ixx" />
     <ClCompile Include="ModReachTest.cpp" />
     <ClCompile Include="semaphore.cpp" />
+    <ClCompile Include="semaphorenotify.cpp" />
     <ClCompile Include="SmartPointerDemo.cpp" />
     <ClCompile Include="SquareModule.ixx" />
     <ClCompile Include="STLContainersDemo.cpp" />
