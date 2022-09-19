@@ -52,10 +52,12 @@ void testSemaphore()
 	std::cout << "== enable 3 parallel threads\n" << std::flush;
 	enabled.release(3);
 	std::this_thread::sleep_for(2s);
+
 	// enable 2 more concurrent threads:
 	std::cout << "\n== enable 2 more parallel threads\n" << std::flush;
 	enabled.release(2);
 	std::this_thread::sleep_for(2s);
+
 	// Normally we would run forever, but let¡¯s end the program here.
 	std::cout << "\n== stop processing\n" << std::flush;
 	for (auto& t : pool) {
