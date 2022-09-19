@@ -92,6 +92,10 @@ int main(int argc, char* argv[])
 	testMod3();
 	testCoro();
 	testjthread();
+	testLatch();
+	testLatchReady();
+	testBarrier();
+	testSemaphore();
 	system("pause");
 	return 0;
 }

@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="barrier.cpp" />
     <ClCompile Include="coro.cpp" />
     <ClCompile Include="Cpp17.cpp" />
     <ClCompile Include="Cpp20.cpp" />
@@ -150,6 +151,8 @@
     <ClCompile Include="inlinethreadlocal1.cpp" />
     <ClCompile Include="inlinethreadlocal2.cpp" />
     <ClCompile Include="lambdathis.cpp" />
+    <ClCompile Include="latch.cpp" />
+    <ClCompile Include="latchready.cpp" />
     <ClCompile Include="LearningCpp.cpp" />
     <ClCompile Include="list0102.cpp" />
     <ClCompile Include="mod1.ixx" />
@@ -164,6 +167,7 @@
     <ClCompile Include="mod3price.cpp" />
     <ClCompile Include="ModReach.ixx" />
     <ClCompile Include="ModReachTest.cpp" />
+    <ClCompile Include="semaphore.cpp" />
     <ClCompile Include="SmartPointerDemo.cpp" />
     <ClCompile Include="SquareModule.ixx" />
     <ClCompile Include="STLContainersDemo.cpp" />

@@ -108,6 +108,18 @@
     <ClCompile Include="testjthread.cpp">
       <Filter>lang</Filter>
     </ClCompile>
+    <ClCompile Include="latch.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="latchready.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="barrier.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="semaphore.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LearningCpp.h">

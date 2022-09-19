@@ -4,3 +4,7 @@ void testMod1();
 void testMod3();
 void testCoro();
 void testjthread();
+void testLatch();
+void testLatchReady();
+void testBarrier();
+void testSemaphore();
