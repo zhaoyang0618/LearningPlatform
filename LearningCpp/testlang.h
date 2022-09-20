@@ -13,3 +13,4 @@ void testAtomicRef();
 void testAtomicShared();
 void testAtomicWeak();
 void testAtomicWait();
+void testAtomicTicket();

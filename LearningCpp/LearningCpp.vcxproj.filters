@@ -135,6 +135,9 @@
     <ClCompile Include="atomicwait.cpp">
       <Filter>lang</Filter>
     </ClCompile>
+    <ClCompile Include="atomicticket.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LearningCpp.h">

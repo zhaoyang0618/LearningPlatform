@@ -100,7 +100,8 @@ int main(int argc, char* argv[])
 	//testAtomicRef();
 	//testAtomicShared();
 	//testAtomicWeak();
-	testAtomicWait();
+	//testAtomicWait();
+	testAtomicTicket();
 	system("pause");
 	return 0;
 }

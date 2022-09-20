@@ -16,13 +16,14 @@ void testAtomicWait()
                            std::cout << "=> x changed to " << lastX << std::endl;
                            lastX = aVal.load();
                          }
-                         std::cout << "READER DONE" << std::endl;
+                         std::cout << "READER DONE: " << lastX << std::endl;
                       } };
 
     // writer:
     std::jthread tWrite{ [&] {
                           for (int newVal : { 17, 34, 3, 42, -1}) {
-                            std::this_thread::sleep_for(5ns);
+                            std::this_thread::sleep_for(5000ns);
+                            std::cout << "write: " << newVal << std::endl;
                             aVal = newVal;
                             aVal.notify_all();
                           }
