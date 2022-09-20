@@ -101,7 +101,8 @@ int main(int argc, char* argv[])
 	//testAtomicShared();
 	//testAtomicWeak();
 	//testAtomicWait();
-	testAtomicTicket();
+	//testAtomicTicket();
+	testAsyncStream();
 	system("pause");
 	return 0;
 }

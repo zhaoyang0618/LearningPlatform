@@ -14,3 +14,4 @@ void testAtomicShared();
 void testAtomicWeak();
 void testAtomicWait();
 void testAtomicTicket();
+void testAsyncStream();

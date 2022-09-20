@@ -178,6 +178,7 @@
     <ClCompile Include="SquareModule.ixx" />
     <ClCompile Include="STLContainersDemo.cpp" />
     <ClCompile Include="STLCookbookDemos.cpp" />
+    <ClCompile Include="syncstream.cpp" />
     <ClCompile Include="testjthread.cpp" />
     <ClCompile Include="testMod1.cpp" />
     <ClCompile Include="testMod3.cpp" />
