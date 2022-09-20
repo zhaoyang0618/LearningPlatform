@@ -74,12 +74,12 @@ int main(int argc, char* argv[])
 	//ThreadDemo::TestAsync2();
 	//ThreadDemo::TestLock();
 	//ThreadDemo::TestPackagedTask2();
-	testThreadLocal();
-	testCpp20();
-	ExploringCpp20();
-	testFoldExpressions();
-	testTrackNew();
-	trie<string>::test();
+	//testThreadLocal();
+	//testCpp20();
+	//ExploringCpp20();
+	//testFoldExpressions();
+	//testTrackNew();
+	//trie<string>::test();
 
 	//
 	int num = 42;
@@ -87,16 +87,20 @@ int main(int argc, char* argv[])
 	Square sq = toSquare(num);
 	std::cout << std::format("the sqaure of {} is: {}\n", num, sq.getValue());
 
-	TestModeReach();
-	testMod1();
-	testMod3();
-	testCoro();
-	testjthread();
-	testLatch();
-	testLatchReady();
-	testBarrier();
-	testSemaphore();
-	testSemaphoreNotify();
+	//TestModeReach();
+	//testMod1();
+	//testMod3();
+	//testCoro();
+	//testjthread();
+	//testLatch();
+	//testLatchReady();
+	//testBarrier();
+	//testSemaphore();
+	//testSemaphoreNotify();
+	//testAtomicRef();
+	//testAtomicShared();
+	//testAtomicWeak();
+	testAtomicWait();
 	system("pause");
 	return 0;
 }

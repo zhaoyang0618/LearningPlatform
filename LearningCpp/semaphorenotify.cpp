@@ -31,6 +31,7 @@ void testSemaphoreNotify()
 				std::cout << "[process] timeout" << std::endl;
 			}
 		}
+		std::cout << "[process] end" << std::endl;
 	}};
 
 	// generate a couple of values:
@@ -45,4 +46,5 @@ void testSemaphoreNotify()
 		std::cout << "[main] processing done\n" << std::endl;
 	}
 	// end of loop signals stop
+	std::cout << "[main] end\n" << std::endl;
 }

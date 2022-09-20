@@ -143,6 +143,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="atomicref.cpp" />
+    <ClCompile Include="atomicshared.cpp" />
+    <ClCompile Include="atomicwait.cpp" />
+    <ClCompile Include="atomicweak.cpp" />
     <ClCompile Include="barrier.cpp" />
     <ClCompile Include="coro.cpp" />
     <ClCompile Include="Cpp17.cpp" />

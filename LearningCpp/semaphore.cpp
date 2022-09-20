@@ -24,9 +24,12 @@ void testSemaphore()
 	std::vector<std::jthread> pool;
 	for (int idx = 0; idx < numThreads; ++idx) {
 		pool.push_back(std::jthread{ [&enabled, &values, &valuesMx, idx](std::stop_token st) {
+		std::cout << "线程" << std::this_thread::get_id() << "开始" << std::endl;
 		while (!st.stop_requested()) {
 			// request thread to become one of the enabled threads:
+			std::cout << "线程" << std::this_thread::get_id() << "等待" << std::endl;
 			enabled.acquire();
+			std::cout << "线程" << std::this_thread::get_id() << "acquired" << std::endl;
 			// get next value from the queue:
 			char val;
 			{
@@ -37,26 +40,28 @@ void testSemaphore()
 			// print the value 10 times:
 			for (int i = 0; i < 10; ++i) {
 				std::cout.put(val).flush();
-				auto dur = 130ms * ((idx % 3) + 1);
+				auto dur = 1300ms * ((idx % 3) + 1);
 				std::this_thread::sleep_for(dur);
 			}
 			// remove thread from the set of enabled threads:
 			enabled.release();
-			}
-		} });
+			std::cout << "线程" << std::this_thread::get_id() << "释放" << std::endl;
+		}
+		std::cout << "线程" << std::this_thread::get_id() << "结束" << std::endl;
+			} });
 	}
 	std::cout << "== wait 2 seconds (no thread enabled)\n" << std::flush;
-	std::this_thread::sleep_for(2s);
+	std::this_thread::sleep_for(10s);
 
 	// enable 3 concurrent threads:
 	std::cout << "== enable 3 parallel threads\n" << std::flush;
 	enabled.release(3);
-	std::this_thread::sleep_for(2s);
+	std::this_thread::sleep_for(10s);
 
 	// enable 2 more concurrent threads:
 	std::cout << "\n== enable 2 more parallel threads\n" << std::flush;
 	enabled.release(2);
-	std::this_thread::sleep_for(2s);
+	std::this_thread::sleep_for(10s);
 
 	// Normally we would run forever, but let’s end the program here.
 	std::cout << "\n== stop processing\n" << std::flush;

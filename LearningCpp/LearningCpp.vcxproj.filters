@@ -123,6 +123,18 @@
     <ClCompile Include="semaphorenotify.cpp">
       <Filter>lang</Filter>
     </ClCompile>
+    <ClCompile Include="atomicref.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="atomicshared.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="atomicweak.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="atomicwait.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LearningCpp.h">

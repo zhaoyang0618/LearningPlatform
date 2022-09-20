@@ -9,3 +9,7 @@ void testLatchReady();
 void testBarrier();
 void testSemaphore();
 void testSemaphoreNotify();
+void testAtomicRef();
+void testAtomicShared();
+void testAtomicWeak();
+void testAtomicWait();
