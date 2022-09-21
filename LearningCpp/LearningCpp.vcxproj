@@ -181,6 +181,7 @@
     <ClCompile Include="STLContainersDemo.cpp" />
     <ClCompile Include="STLCookbookDemos.cpp" />
     <ClCompile Include="syncstream.cpp" />
+    <ClCompile Include="testFormat.cpp" />
     <ClCompile Include="testjthread.cpp" />
     <ClCompile Include="testMod1.cpp" />
     <ClCompile Include="testMod3.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="lambdathis.h" />
     <ClInclude Include="LearningCpp.h" />
     <ClInclude Include="overload.h" />
+    <ClInclude Include="print.h" />
     <ClInclude Include="SmartPointerDemo.h" />
     <ClInclude Include="STLContainersDemo.h" />
     <ClInclude Include="STLCookbookDemos.h" />

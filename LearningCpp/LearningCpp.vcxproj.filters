@@ -147,6 +147,9 @@
     <ClCompile Include="add.cpp">
       <Filter>lang</Filter>
     </ClCompile>
+    <ClCompile Include="testFormat.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LearningCpp.h">
@@ -216,6 +219,9 @@
       <Filter>lang</Filter>
     </ClInclude>
     <ClInclude Include="stringtask.h">
+      <Filter>lang</Filter>
+    </ClInclude>
+    <ClInclude Include="print.h">
       <Filter>lang</Filter>
     </ClInclude>
   </ItemGroup>
