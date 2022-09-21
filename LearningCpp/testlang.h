@@ -15,3 +15,4 @@ void testAtomicWeak();
 void testAtomicWait();
 void testAtomicTicket();
 void testAsyncStream();
+void testConcepts();

@@ -141,6 +141,12 @@
     <ClCompile Include="syncstream.cpp">
       <Filter>lang</Filter>
     </ClCompile>
+    <ClCompile Include="concepts.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="add.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LearningCpp.h">
