@@ -11,5 +11,8 @@ namespace Architecture.Models
     /// </summary>
     public class Prize
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
     }
 }
