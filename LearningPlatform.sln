@@ -41,9 +41,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStudio", "BookStudio\Bo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algs4", "Algs4\Algs4.csproj", "{235DDA77-039B-4425-B2C9-F8F4364C066D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Architecture.Models", "Architecture.Models\Architecture.Models.csproj", "{C839B2B3-345B-4B4F-9B75-7048A2C9AA90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Architecture.Models", "Architecture.Models\Architecture.Models.csproj", "{C839B2B3-345B-4B4F-9B75-7048A2C9AA90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Architecture.DAL", "Architecture.DAL\Architecture.DAL.csproj", "{38805817-A2CF-420D-B84A-BF9F27DD0B1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Architecture.DAL", "Architecture.DAL\Architecture.DAL.csproj", "{38805817-A2CF-420D-B84A-BF9F27DD0B1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpiderClient", "SpiderClient\SpiderClient.csproj", "{4DFE2929-D3E0-4E4E-8720-17DAB07B070A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -285,6 +287,18 @@ Global
 		{38805817-A2CF-420D-B84A-BF9F27DD0B1A}.Release|x64.Build.0 = Release|Any CPU
 		{38805817-A2CF-420D-B84A-BF9F27DD0B1A}.Release|x86.ActiveCfg = Release|Any CPU
 		{38805817-A2CF-420D-B84A-BF9F27DD0B1A}.Release|x86.Build.0 = Release|Any CPU
+		{4DFE2929-D3E0-4E4E-8720-17DAB07B070A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DFE2929-D3E0-4E4E-8720-17DAB07B070A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DFE2929-D3E0-4E4E-8720-17DAB07B070A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4DFE2929-D3E0-4E4E-8720-17DAB07B070A}.Debug|x64.Build.0 = Debug|Any CPU
+		{4DFE2929-D3E0-4E4E-8720-17DAB07B070A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4DFE2929-D3E0-4E4E-8720-17DAB07B070A}.Debug|x86.Build.0 = Debug|Any CPU
+		{4DFE2929-D3E0-4E4E-8720-17DAB07B070A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DFE2929-D3E0-4E4E-8720-17DAB07B070A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DFE2929-D3E0-4E4E-8720-17DAB07B070A}.Release|x64.ActiveCfg = Release|Any CPU
+		{4DFE2929-D3E0-4E4E-8720-17DAB07B070A}.Release|x64.Build.0 = Release|Any CPU
+		{4DFE2929-D3E0-4E4E-8720-17DAB07B070A}.Release|x86.ActiveCfg = Release|Any CPU
+		{4DFE2929-D3E0-4E4E-8720-17DAB07B070A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
