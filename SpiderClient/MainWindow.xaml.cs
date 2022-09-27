@@ -105,18 +105,17 @@ namespace SpiderClient
             try
             {
                 this.IsEnabled = false;
-                textHTML.Clear();
+                textContent.Clear();
                 if (_currentDocument != null)
                 {
-                    textHTML.Clear();
                     var toQuery = textAttr.Text;
                     var celss = _currentDocument.QuerySelectorAll(toQuery);
                     if (celss != null)
                     {
                         foreach (var ul in celss)
                         {
-                            textHTML.AppendText(ul.InnerHtml);
-                            textHTML.AppendText("\r\n");
+                            textContent.AppendText(ul.InnerHtml);
+                            textContent.AppendText("\r\n");
                             ////获取子元素
                             //var li = ul.ChildNodes;
                             //foreach (var l in li)
@@ -145,7 +144,7 @@ namespace SpiderClient
             }
             catch (Exception exp)
             {
-                textHTML.Text = exp.Message;
+                textContent.Text = exp.Message;
                 this.IsEnabled = true;
             }
         }
