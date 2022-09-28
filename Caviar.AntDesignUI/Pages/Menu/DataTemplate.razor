@@ -1,0 +1,111 @@
+﻿@*
+    生成者：未登录用户
+    生成时间：2021/5/31 10:49:32
+    代码由代码生成器自动生成，更改的代码可能被进行替换
+    界面如需更改，建议直接将内容剪切到自己的文件内，保留此空白文件
+    菜单列表
+*@
+
+@inherits DataComponentBase<SysMenuView,SysMenu>
+@page "/SysMenu/CreateEntity"
+@page "/SysMenu/UpdateEntity"
+<Form @ref="_meunForm" 
+    LabelColSpan="6"
+    WrapperColSpan="16"
+    Model="@DataSource" 
+    OnFinish="FormSubmit" 
+    ValidateMode="@FormValidateMode.Rules" 
+    ValidateOnChange="true">
+    <CavFormItem FieldName="MenuName" FieldRules="@context.Entity">
+        <Input DebounceMilliseconds="-1"@bind-Value="@context.Entity.MenuName"/>
+    </CavFormItem>
+    <CavFormItem FieldName="Upper directory">
+        <Dropdown>
+            <Overlay>
+                <Tree ShowIcon DataSource="_sysMenus"
+                      TitleExpression="x => x.DataItem.DisplayName"
+                      ChildrenExpression="x => x.DataItem.Children"
+                      IconExpression="x => x.DataItem.Entity.Icon"
+                      IsLeafExpression="x => x.DataItem.Children?.Count == 0"
+                      KeyExpression="x => x.DataItem.Id.ToString()"
+                      OnClick='e=>EventRecord(e)'
+                      TItem="SysMenuView">
+                </Tree>
+            </Overlay>
+            <ChildContent>
+                <Button OnClick="RemoveRecord">@ParentMenuName</Button>
+            </ChildContent>
+        </Dropdown>
+    </CavFormItem>
+    <CavFormItem FieldName="MenuType" FieldRules="@context.Entity">
+        <EnumRadioGroup TEnum="MenuType" @bind-Value="context.Entity.MenuType" 
+        OnChange="EventCallback.Factory.Create<MenuType>(this, CheckMenuType)"
+            Options="GetRadioOptions<MenuType>()"></EnumRadioGroup>
+    </CavFormItem>
+    <CavFormItem Style="@buttonStrle" FieldName="ButtonPosition" FieldRules="@context.Entity">
+        <EnumRadioGroup TEnum="ButtonPosition" @bind-Value="context.Entity.ButtonPosition" Options="GetRadioOptions<ButtonPosition>()"></EnumRadioGroup>
+    </CavFormItem>
+    <CavFormItem Style="@visibility" FieldName="Url" FieldRules="@context.Entity">
+        <Input DebounceMilliseconds="-1"@bind-Value="@context.Entity.Url">
+    </CavFormItem>
+    <CavFormItem Style="@visibility" FieldName="TargetType" FieldRules="@context.Entity">
+        <EnumRadioGroup TEnum="TargetType" @bind-Value="context.Entity.TargetType"  Options="GetRadioOptions<TargetType>()"></EnumRadioGroup>
+    </CavFormItem>
+    <CavFormItem Style="@buttonStrle" FieldName="IsDoubleTrue" FieldRules="@context.Entity">
+        <Checkbox @bind-Value="@context.Entity.IsDoubleTrue">@LanguageService[$"{CurrencyConstant.EntitysName}.IsDoubleTrue"]</Checkbox>
+    </CavFormItem>
+    <CavFormItem FieldName="Icon" FieldRules="@context.Entity">
+        <Space>
+            <SpaceItem>
+                <Button OnClick="()=> { _visible = true; }">@LanguageService[$"{CurrencyConstant.EntitysName}.Icon Library"]</Button>
+                <CavModalIcon @bind-IconValue="@context.Entity.Icon" @bind-Visible="_visible"></CavModalIcon>
+            </SpaceItem>
+            <SpaceItem>
+                @if (!string.IsNullOrEmpty(context.Entity.Icon))
+                {
+                    <Icon Type="@context.Entity.Icon" Style="font-size:30px" Theme="outline"></Icon>
+                    <Text>@context.Entity.Icon</text>
+                }
+            </SpaceItem>
+        </Space>
+    </CavFormItem>
+    <CavFormItem FieldName="Number" FieldRules="@context.Entity">
+        <Input DebounceMilliseconds="-1"@bind-Value="@context.Entity.Number" Style="width: 20%;">
+    </CavFormItem>
+    <CavFormItem FieldName="Remark" FieldRules="@context.Entity">
+        <TextArea Placeholder="@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.InputRemark}"]"  AllowClear="true" @bind-Value="@context.Entity.Remark" />
+    </CavFormItem>
+</Form>
+
+@code{
+
+    bool _visible = false;
+
+    string visibility = "display:none;";
+    string buttonStrle = "display:none;";
+    public void CheckMenuType()
+    {
+        switch (DataSource.Entity.MenuType)
+        {
+            case MenuType.Catalog:
+                visibility = "display:none;";
+                buttonStrle = "display:none;";
+                DataSource.Entity.Url = "";
+                DataSource.Entity.ButtonPosition = ButtonPosition.Default;
+                DataSource.Entity.TargetType = TargetType.CurrentPage;
+                break;
+            case MenuType.Button:
+                visibility = "";
+                buttonStrle = "";
+                break;
+            default:
+                buttonStrle = "display:none;";
+                visibility = "";
+                DataSource.Entity.ButtonPosition = ButtonPosition.Default;
+                DataSource.Entity.TargetType = TargetType.CurrentPage;
+                break;
+        }
+    }
+
+
+}

@@ -1,0 +1,64 @@
+﻿@page "/ApplicationUser/MyUserDetails"
+@implements IReuseTabsPage
+
+@if (_user != null)
+{
+    <Space Size=@(("8", "8")) Wrap Align="start">
+        <SpaceItem>
+            <GridCol>
+                <Card Title=@("个人信息") Bordered Hoverable>
+                    <ChildContent>
+                        <CardMeta AvatarTemplate="@GetHeadPortrait()" TitleTemplate="@GetTitleRender()" Description="@_user.Remark" />
+                        <body>
+                            <p style="margin-top:10px">
+                                <Text>@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.UserName}"]：</Text><Text>@_user.UserName</Text>
+                            </p>
+                            <p>
+                                <Text>@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.Password}"]：</Text><Text>@_user.Email</Text>
+                            </p>
+                            <p>
+                                <Text>@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.PhoneNumber}"]：</Text><Text>@_user.PhoneNumber</Text>
+                            </p>
+                            <p>
+                                <Text>@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.ApplicationRoleKey}"]：</Text><Text>@Roles</Text>
+                            </p>
+                            <p>
+                                <Text>@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.UserGroupName}"]：</Text><Text>@_user.UserGroupName</Text>
+                            </p>
+                            <p>
+                                <Text>@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.PersonalSignature}"]：</Text><Text>@_user.Remark</Text>
+                            </p>
+                        </body>
+                    </ChildContent>
+                </Card>
+            </GridCol>
+        </SpaceItem>
+        <SpaceItem>
+            <GridCol>
+                <UpdateDetails UserDetails="_user"></UpdateDetails>
+            </GridCol>
+        </SpaceItem>
+    </Space>
+
+}
+@code{
+
+    
+
+        public RenderFragment GetHeadPortrait()
+            {
+                RenderFragment avatarTemplate =@<Avatar Style="background-color: #87d068" Src="@_user.HeadPortrait" Icon="user" />;
+        return avatarTemplate;
+    }
+    public RenderFragment GetTitleRender()
+    {
+        RenderFragment titleRender =@<Title Level="4">@_user.AccountName</Title>
+    ;
+        return titleRender;
+    }
+
+    public RenderFragment GetPageTitle()=>
+       @<div>
+           @LanguageService[$"{CurrencyConstant.Menu}.{CurrencyConstant.MyUserDetails}"]
+       </div>;
+}

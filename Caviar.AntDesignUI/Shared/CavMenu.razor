@@ -1,0 +1,53 @@
+﻿<Menu Mode="MenuMode.Inline"
+      Accordion=Layout.Accordion
+      Theme="Theme"
+      @bind-OpenKeys="OpenKeysNav"
+      @bind-SelectedKeys="SelectedKeys"
+      InlineCollapsed="InlineCollapsed"
+      Selectable="false"
+      OnMenuItemClicked="OnMenuItemClickedNav"
+      @ref="AntDesignMenu">
+    @if (SysMenus != null)
+    {
+        var menu = GetSubMenu(SysMenus);
+        @menu
+    }
+</Menu>
+
+@code {
+    RenderFragment GetSubMenu(List<SysMenuView> ViewMenus)
+    {
+        RenderFragment ViewSubMenu = null;
+        if (ViewMenus == null || ViewMenus.Count == 0) return ViewSubMenu;
+        foreach (var viewMenu in ViewMenus)
+        {
+            var item = viewMenu.Entity;
+            RenderFragment subTitle =
+            @<span style="font-size:15px">
+            @if (!string.IsNullOrEmpty(item.Icon))
+            {
+                <Icon Style="font-size:15px" Type="@item.Icon" Theme="outline"></Icon>
+            }
+            <span>@viewMenu.DisplayName</span>
+        </span>
+    ;
+            switch (item.MenuType)
+            {
+                case MenuType.Catalog:
+                    ViewSubMenu +=
+                     @<SubMenu Key="@viewMenu.Entity.MenuName" TitleTemplate="subTitle">
+                     @GetSubMenu(viewMenu.Children)
+                     </SubMenu>;
+                     break;
+                case MenuType.Menu:
+                ViewSubMenu += @<MenuItem Key="@viewMenu.Entity.MenuName" ChildContent="@subTitle" RouterLink="@item.Url"></MenuItem>;
+                    break;
+                default:
+                    break;
+            }
+        };
+        return ViewSubMenu;
+    }
+}
+
+

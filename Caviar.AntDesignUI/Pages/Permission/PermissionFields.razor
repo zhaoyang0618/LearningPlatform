@@ -1,0 +1,123 @@
+﻿@page "/Permission/RoleFields/{RoleId:int}"
+@implements IReuseTabsPage
+
+<Row Gutter="@gutter">
+    <AntDesign.Col Flex="2">
+        <Card Bordered="false" Title=@(Role?.Entity.Name + "-" + LanguageService[$"{CurrencyConstant.EntitysName}.Model"])>
+            <Body>
+                <Table TItem="FieldsView" DataSource="@Models">
+                        <Column @bind-Field="@context.DisplayName" Title="@LanguageService[$"{CurrencyConstant.EntitysName}.Model"]">
+                        </Column>
+                        <ActionColumn Title="@LanguageService[$"{CurrencyConstant.Menu}.Action"]">
+                            <Space>
+                                <SpaceItem>
+                                    <Button Type="@ButtonType.Primary" OnClick="()=>GetFields(context)">
+                                        @LanguageService[$"{CurrencyConstant.Menu}.Select"]
+                                    </Button>
+                                </SpaceItem>
+                            </Space>
+                        </ActionColumn>
+                    </Table>
+            </Body>
+        </Card>
+
+    </AntDesign.Col>
+    <AntDesign.Col Flex="3">
+        <Card Bordered="false" Title="@FieldName">
+            <Extra>
+                <Button Type="@ButtonType.Primary" OnClick="Preservation">
+                    @LanguageService[$"{CurrencyConstant.Menu}.Save"]
+                </Button>
+            </Extra>
+            <Body>
+                @if(Fields == null || Fields.Count == 0)
+                {
+                    <Empty />
+                }
+                else
+                {
+                    <Table TItem="FieldsView" DataSource="@Fields" @bind-PageIndex="PageIndex" RowClassName="@(_=>"editable-row")" Bordered>
+                    <Column Title="@LanguageService[$"{CurrencyConstant.EntitysName}.DisplayName"]" TData="string">
+                        <Text>@context.DisplayName</Text>
+                    </Column>
+                    <Column Title="@LanguageService[$"{CurrencyConstant.EntitysName}.Number"]" TData="string">
+                        @{
+                            var _editid = context.Entity.FieldName + "-Number";
+                            if (editId == _editid)
+                            {
+                                <Input DebounceMilliseconds="-1"Type="text" @bind-Value="context.Entity.Number" OnBlur="()=>stopEdit(context)" AutoFocus />
+                            }
+                            else
+                            {
+                                <div class="editable-cell-value-wrap" @onclick="()=>startEdit(_editid)">
+                                    @context.Entity.Number
+                                </div>
+                            }
+                        }
+                    </Column>
+                    <Column Title="@LanguageService[$"{CurrencyConstant.EntitysName}.TableWidth"]" TData="string">
+                        @{
+                            var _editId = context.Entity.FieldName + "-Width";
+                            if (editId == _editId)
+                            {
+                                <Input DebounceMilliseconds="-1"Type="text" @bind-Value="context.Entity.TableWidth" OnBlur="()=>stopEdit(context)" AutoFocus />
+                            }
+                            else
+                            {
+                                <div class="editable-cell-value-wrap" @onclick="()=>startEdit(_editId)">
+                                    @context.Entity.TableWidth
+                                </div>
+                            }
+                        }
+                    </Column>
+                    <Column Title="@LanguageService[$"{CurrencyConstant.EntitysName}.IsPanel"]" TData="bool">
+                        <Switch @bind-Value="@context.Entity.IsPanel"></Switch>
+                    </Column>
+                    <Column Title="@LanguageService[$"{CurrencyConstant.EntitysName}.IsPermission"]" TData="bool">
+                        <Switch @bind-Value="@context.IsPermission"></Switch>
+                    </Column>
+                </Table>
+                }
+            </Body>
+        </Card>
+    </AntDesign.Col>
+
+</Row>
+
+<style>
+    .editable-cell {
+        position: relative;
+    }
+
+    .editable-cell-value-wrap {
+        padding: 5px 12px;
+        cursor: pointer;
+    }
+
+    .editable-row:hover .editable-cell-value-wrap {
+        padding: 4px 11px;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+    }
+
+    [data-theme='dark'] .editable-row:hover .editable-cell-value-wrap {
+        border: 1px solid #434343;
+    }
+</style>
+
+
+@code{
+    Dictionary<string, int> gutter = new()
+    {
+        ["xs"] = 8,
+        ["sm"] = 16,
+        ["md"] = 24,
+        ["lg"] = 32,
+        ["xl"] = 48,
+        ["xxl"] = 64
+    };
+       public RenderFragment GetPageTitle() =>
+       @<div>
+           @Role?.Entity.Name@LanguageService[$"{CurrencyConstant.Menu}.{CurrencyConstant.FieldPermissionsKey}"]
+       </div>;
+}

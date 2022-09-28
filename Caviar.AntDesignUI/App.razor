@@ -1,0 +1,89 @@
+@using System.Web
+@using Newtonsoft.Json
+<CascadingAuthenticationState>
+    <Router @ref="UserConfig.Router" AppAssembly="@typeof(Caviar.AntDesignUI.Config).Assembly"
+            AdditionalAssemblies="Config.AdditionalAssemblies"
+            PreferExactMatches="@true">
+        <Found Context="routeData">
+            <AuthorizeView Context="authCountext">
+                <Authorized>
+                    @{
+                        var touristVisit = authCountext.User.Claims.SingleOrDefault(u => u.Type == CurrencyConstant.TouristVisit);
+                        if(touristVisit != null)
+                        {
+                            UserConfig.IsTourist = bool.Parse(touristVisit.Value);
+                        }
+                    }
+                    <ReuseTabsRouteView RouteData="@routeData" DefaultLayout="@typeof(CavMainLayout)" />
+                </Authorized>
+                <NotAuthorized>
+                    @LoginRender()
+                </NotAuthorized>
+            </AuthorizeView>
+        </Found>
+        <NotFound>
+            <Caviar.AntDesignUI.Pages.Exception._404._404></Caviar.AntDesignUI.Pages.Exception._404._404>
+        </NotFound>
+    </Router>
+    <AntContainer />
+</CascadingAuthenticationState>
+
+@code {
+    [Inject]
+    UserConfig UserConfig { get; set; }
+    [Inject]
+    CavLayout Layout{ get; set; }
+    [Inject]
+    ILanguageService LanguageService { get; set; }
+
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
+
+    [Inject]
+    IJSRuntime JSRuntime{ get; set; }
+    [Inject]
+    CavModal CavModal{ get; set; }
+
+    RenderFragment LoginRender()
+    {
+        return CavModal.Render(UrlConfig.Login, "登录页面", null);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                if(Config.IsServer)
+                {
+                    var uri = new Uri(NavigationManager.Uri);
+                    var collection = HttpUtility.ParseQueryString(uri.Query);
+                    //是否自动切换为wasm
+                    if (!string.IsNullOrEmpty(collection["IsAutomaticSwitchWasm"]))
+                    {
+                        UserConfig.IsAutomaticSwitchWasm = bool.Parse(collection["IsAutomaticSwitchWasm"]);
+                    }
+                }
+                var language = await JSRuntime.InvokeAsync<string>(CurrencyConstant.GetCookie, CurrencyConstant.LanguageHeader);
+                LanguageService.SetLanguage(language);
+                var layoutTheme = await JSRuntime.InvokeAsync<string>(CurrencyConstant.GetCookie, CurrencyConstant.LayoutTheme);
+                layoutTheme = HttpUtility.UrlDecode(layoutTheme);
+                try
+                {
+                    JsonConvert.PopulateObject(layoutTheme,Layout);
+                }
+                catch
+                {
+                    //防止错误数据
+                }
+                StateHasChanged();
+            }
+            catch
+            {
+                //任务被取消
+            }
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}

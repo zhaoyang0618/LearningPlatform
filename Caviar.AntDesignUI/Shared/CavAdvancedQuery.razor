@@ -1,0 +1,153 @@
+﻿@page "/Data/AdvancedQuery"
+
+
+<Space Direction="DirectionVHType.Vertical">
+    <SpaceItem>
+        <Space>
+            <SpaceItem>
+                <Input DebounceMilliseconds='-1' TValue="uint" @bind-Value="QueryView.Number" Style="width:100px">
+                    <AddOnBefore>@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.SearchNumber}"]</AddOnBefore>
+                </Input>
+            </SpaceItem>
+            <SpaceItem>
+                <Button Type="@ButtonType.Primary" OnClick="AddCondition">@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.AddCondition}"]</Button>
+            </SpaceItem>
+        </Space>
+
+
+    </SpaceItem>
+    @{
+        var count = 0;
+        foreach (var item in QueryView.QueryModels)
+        {
+            var QueryModel = item.Value;
+            var component = QueryModel.ComponentStatus;
+            var i = count;
+            count++;
+            @if (i > 0)
+            {
+                <SpaceItem>
+                    <Switch @bind-Value="component.AndOr" OnChange="u=>AndOr(QueryModel,u)" Style="width:50px" CheckedChildren="@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.And}"]" UnCheckedChildren="@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.Or}"]" />
+                </SpaceItem>
+            }
+            <SpaceItem>
+                <Space>
+                    <SpaceItem>
+                        <SimpleSelect Placeholder="@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.SelectQueryFields}"]" @bind-Value="QueryModel.Key"
+                              OnSelectedItemChanged="u=>OnSelectItem(item.Key,u)"
+                              Style="width:120px">
+                            <SelectOptions>
+                                @if (Fields != null)
+                                {
+                                    foreach (var field_item in Fields)
+                                    {
+                                        if (field_item.IsPermission && field_item.Entity.IsPanel)
+                                        {
+                                            <SimpleSelectOption Value="@field_item.Entity.FieldName" Label="@field_item.DisplayName"></SimpleSelectOption>
+                                        }
+                                    }
+                                }
+                            </SelectOptions>
+                        </SimpleSelect>
+                    </SpaceItem>
+                    <SpaceItem>
+                        <CavEnumSelect Style="width:120px" TEnum="QueryModel.QuerType" @bind-Value="QueryModel.QuerTypes" />
+                    </SpaceItem>
+                    @{
+                        QueryModel.IsEnum = true;
+                        var entityType = component.Field?.EntityType.ToLower();
+                        if (component.Field != null && component.Field.IsEnum)
+                        {
+                            <SpaceItem>
+                                <SimpleSelect Placeholder="@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.SelectType}"]"
+                                OnSelectedItemChanged="u=>OnValueChange(QueryModel,u)"
+                                @bind-Value="QueryModel.Value"
+                                Style="width:120px">
+                                    <SelectOptions>
+                                        @foreach (var enumItem in component.Field.EnumValueName)
+                                        {
+                                            <SimpleSelectOption Value="@enumItem.Key.ToString()" Label="@enumItem.Value"></SimpleSelectOption>
+                                        }
+                                    </SelectOptions>
+                                </SimpleSelect>
+                            </SpaceItem>
+
+                        }
+                        else
+                        {
+                            QueryModel.IsEnum = false;
+                            switch (entityType)
+                            {
+                                case "int32":
+                                    var intValue = 0;
+                                    try
+                                    {
+                                        if (string.IsNullOrEmpty(QueryModel.Value))
+                                        {
+                                            QueryModel.Value = "0";
+                                        }
+                                        intValue = int.Parse(QueryModel.Value);
+                                    }
+                                    catch { }
+                                    <SpaceItem>
+                                        <Input DebounceMilliseconds="-1" TValue="int" Value="intValue" OnChange="u=>OnValueChange(QueryModel,u)" Placeholder="@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.SearchData}"]" />
+                                    </SpaceItem>
+                                    break;
+                                case "boolean":
+                                    if (string.IsNullOrEmpty(QueryModel.Value))
+                                    {
+                                        QueryModel.Value = "False";
+                                    }
+                                    else
+                                    {
+                                        try
+                                        {
+                                            component.IsCompleted = bool.Parse(QueryModel.Value);
+                                        }
+                                        catch { }
+                                    }
+
+                                    <SpaceItem>
+                                        <Switch @bind-Value="component.IsCompleted" Style="width:50px" OnChange="u=>{
+                                        OnValueChange(QueryModel,u);}" CheckedChildren="@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.Yes}"]" UnCheckedChildren="@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.No}"]" />
+                                    </SpaceItem>
+                                    break;
+                                case "guid":
+                                    <SpaceItem>
+                                        <Input DebounceMilliseconds="-1" TValue="Guid" OnChange="u=>OnValueChange(QueryModel,u)" Placeholder="@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.SearchData}"]" />
+                                    </SpaceItem>
+                                    break;
+                                case "datetime":
+                                    DateTime? dateTimeValue = null;
+                                    if (!string.IsNullOrEmpty(QueryModel.Value))
+                                    {
+                                        try
+                                        {
+                                            dateTimeValue = DateTime.Parse(QueryModel.Value);
+                                        }
+                                        catch { }
+                                    }
+                                    <SpaceItem>
+                                        <DatePicker TValue="DateTime?" Value="dateTimeValue" Format="yyyy-MM-dd HH:mm:ss" ShowTime="@true" OnChange="u=>OnDateTimeChange(QueryModel,u)" Picker="@DatePickerType.Date" />
+                                    </SpaceItem>
+                                    break;
+                                default:
+                                    <SpaceItem>
+                                        <Input DebounceMilliseconds="-1" TValue="string" @bind-Value="QueryModel.Value" Placeholder="@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.SearchData}"]" />
+                                    </SpaceItem>
+                                    break;
+                            }
+                        }
+                        if (i > 0)
+                        {
+                            <SpaceItem>
+                                <Button Type="@ButtonType.Dashed" OnClick="()=>RemoveCondition(item.Key)">@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.Remove}"]</Button>
+                            </SpaceItem>
+                        }
+                    }
+
+                </Space>
+            </SpaceItem>
+        }
+    }
+</Space>

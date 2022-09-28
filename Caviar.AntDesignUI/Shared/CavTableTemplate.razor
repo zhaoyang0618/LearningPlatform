@@ -1,0 +1,352 @@
+﻿@typeparam TData
+
+<Space Direction="@DirectionVHType.Vertical" Size="@("small")">
+    @if (TableOptions.IsOpenQuery)
+    {
+        var queryItem = TableOptions.GetQueryItems?.Invoke();
+        <SpaceItem>
+            <Space Size=@(("8", "8" )) Wrap Align="start">
+                @if (queryItem != null)
+                {
+                    <SpaceItem>
+                        @queryItem
+                    </SpaceItem>
+                }
+                else
+                {
+                    <SpaceItem>
+                        <CavSearch Fields="TableOptions.ViewFields" QueryCallback="QueryStart"></CavSearch>
+                    </SpaceItem>
+                }
+                @if (TableOptions.IsAdvancedQuery)
+                {
+                    <SpaceItem>
+                        <Button OnClick="ClickAdvancedQuery">@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.AdvancedSearch}"]</Button>
+                    </SpaceItem>
+                }
+                @if (IsQueryState)
+                {
+                    <SpaceItem>
+                        <Button Type="@ButtonType.Dashed" OnClick="CloseQuery" Danger>@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.CancelSearch}"]</Button>
+                    </SpaceItem>
+                }
+            </Space>
+        </SpaceItem>
+    }
+    <SpaceItem>
+        <Space Size=@(("8", "8" )) Wrap Align="start">
+            @if (TableOptions.Buttons != null)
+            {
+                foreach (var item in TableOptions.Buttons)
+                {
+                    if (item.Entity.ButtonPosition == ButtonPosition.Default && item.Entity.MenuType == MenuType.Button)
+                    {
+                        <SpaceItem>
+                            @CreatePackButton(item, default)
+                        </SpaceItem>
+                    }
+                }
+            }
+        </Space>
+
+    </SpaceItem>
+</Space>
+
+@if(TableOptions.ViewFields == null)
+{
+    
+}
+else
+{
+    <Table DataSource="TableOptions.DataSource"
+       @ref="TableOptions.Table"
+       ScrollX="@TableOptions.ScrollX"
+       Bordered="TableOptions.Bordered"
+       HidePagination
+       PageSize="TableOptions.PageSize"
+       TItem="TData"
+       Loading="TableOptions.Loading"
+       @bind-SelectedRows="SelectedRows"
+       TreeChildren="TableOptions.TreeChildren">
+
+
+
+    @{
+        if (TableOptions.IsSelectedRows)
+        {
+            <Selection Width="50" />
+        }
+        foreach (var item in TableOptions.ViewFields)
+        {
+            if (!item.Entity.IsPanel || !item.IsPermission) continue;
+            item.Value = context;
+            var tableItem = TableOptions.GetTableItems?.Invoke(item,context);
+            var fieldName = "entity." + item.Entity.FieldName;
+            var isEnum = item.IsEnum;
+            if (tableItem != null)
+            {
+                @tableItem
+                continue;
+            }
+            if (isEnum)
+            {
+                <Column Title="@item.DisplayName" TData="string" Width="@item.Entity.TableWidth">
+                    @{
+                        var obj = context.GetObjValue("Entity").GetObjValue(item.Entity.FieldName);
+                        if (obj != null)
+                        {
+                            var value = (int)obj;
+                            @item.EnumValueName[value]
+                        }
+                    }
+                </Column>
+                continue;
+            }
+            var entityType = item.EntityType.ToLower();
+
+            switch (entityType)
+            {
+                case "string":
+                    <Column Title="@item.DisplayName" DataIndex="@fieldName" TData="string" Width="@item.Entity.TableWidth">
+                        @{
+                            var obj = context.GetObjValue("Entity").GetObjValue(item.Entity.FieldName);
+                            if (obj != null)
+                            {
+                                var value = (string)obj;
+                                if (value.Count() >= TableOptions.EllipsisMaxLen)
+                                {
+                                    var txt = value.Substring(0, TableOptions.DisplayLen) + "...";
+                                    if (value.Length >= TableOptions.TooltipMaxLen)
+                                    {
+                                        value = value.Substring(0, TableOptions.TooltipMaxLen) + "...";
+                                    }
+                                    <Tooltip Title="@value">
+                                        <span>@txt</span>
+                                    </Tooltip>
+                                }
+                                else
+                                {
+                                    <span>@value</span>
+                                }
+                            }
+                        }
+                    </Column>
+                    break;
+                case "int32":
+                    <Column Title="@item.DisplayName" DataIndex="@fieldName" TData="int?" />
+                    break;
+                case "boolean":
+                    <Column Title="@item.DisplayName" DataIndex="@fieldName" TData="bool?">
+                        @{
+                            var obj = context.GetObjValue("Entity").GetObjValue(item.Entity.FieldName);
+                            if (obj != null)
+                            {
+                                var value = (bool)obj;
+                                if (value)
+                                {
+                                    <Tag Color="green">@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.Yes}"]</Tag>
+                                }
+                                else
+                                {
+                                    <Tag Color="pink">@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.No}"]</Tag>
+                                }
+                            }
+                        }
+                    </Column>
+                    break;
+                case "guid":
+                    <Column Title="@item.DisplayName" DataIndex="@fieldName" TData="Guid?" />
+                    break;
+                case "datetime":
+                    <Column Title="@item.DisplayName" DataIndex="@fieldName" TData="DateTime?" />
+                    break;
+                case "datetimeoffset":
+                    <Column Title="@item.DisplayName" DataIndex="@fieldName" TData="DateTimeOffset?" />
+                    break;
+                case "double":
+                    <Column Title="@item.DisplayName" DataIndex="@fieldName" TData="double?">
+                    </Column>
+                    break;
+                case "float":
+                    <Column Title="@item.DisplayName" DataIndex="@fieldName" TData="float?" />
+                    break;
+                case "short":
+                    <Column Title="@item.DisplayName" DataIndex="@fieldName" TData="short?" />
+                    break;
+                case "byte":
+                    <Column Title="@item.DisplayName" DataIndex="@fieldName" TData="byte?" />
+                    break;
+                case "icon"://特殊字段编码
+                    <Column Title="@item.DisplayName" DataIndex="@fieldName" TData="string">
+                        @{
+                            var obj = context.GetObjValue("Entity").GetObjValue(item.Entity.FieldName);
+                            if (obj != null)
+                            {
+                                <Icon Type="@obj.ToString()" Theme="outline" />
+                            }
+                        }
+                    </Column>
+                    break;
+                case "headportrait":
+                    <Column Title="@item.DisplayName" DataIndex="@fieldName" TData="string">
+                        @{
+                            var obj = context.GetObjValue("Entity").GetObjValue(item.Entity.FieldName);
+                            if (obj != null)
+                            {
+                                <Avatar Src="@obj.ToString()" />
+                            }
+                            else
+                            {
+                                <Avatar Style="background-color: #87d068" Icon="user" />
+                            }
+                        }
+                    </Column>
+                    break;
+                default:
+                    Console.WriteLine($"未找到对应类型:{item.EntityType}");
+                    break;
+            }
+
+        }
+
+        if (TableOptions.Buttons != null && TableOptions.Buttons.Count > 0)
+        {
+            List<SysMenuView> but = TableOptions.Buttons.Where(u => u.Entity.ButtonPosition == ButtonPosition.Row && u.Entity.MenuType == MenuType.Button).ToList();
+            if (but.Count > 0)
+            {
+                <ActionColumn Title=@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.Operation}"] Width="@(but.Count==2?TableOptions.ActionColumnMaxWidth:TableOptions.ActionColumnMinWidth)" Fixed="@TableOptions.Fixed">
+                    @if (but.Count >= 3)
+                    {
+                        <Dropdown>
+                            <Overlay>
+                                <Menu>
+                                    @foreach (var item in but)
+                                    {
+                                        <MenuItem>
+                                            @CreatePackButton(item, context)
+                                        </MenuItem>
+                                    }
+
+                                </Menu>
+                            </Overlay>
+                            <ChildContent>
+                                <a class="ant-dropdown-link" @onclick:preventDefault>
+                                    @LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.More}"] <Icon Type="down" />
+                                </a>
+                            </ChildContent>
+                        </Dropdown>
+
+                    }
+                    else
+                    {
+                        <Space Size=@("small")>
+                            @foreach (var item in but)
+                            {
+                                <SpaceItem>
+                                    @CreatePackButton(item, context)
+                                </SpaceItem>
+                            }
+                        </Space>
+                    }
+                </ActionColumn>
+            }
+        }
+    }
+
+</Table>
+}
+
+
+
+<div style="float:right;margin-top:20px">
+    <Pagination Total="TableOptions.Total"
+                ShowTotal=showTotal
+                PageSize="TableOptions.PageSize"
+                Current="TableOptions.PageIndex"
+                OnChange="PageIndexChanged"
+                OnShowSizeChange="PageIndexChanged" />
+</div>
+
+
+@code {
+    RenderFragment CreatePackButton(SysMenuView menu, TData context)
+    {
+        var button = TableOptions.CreateButtons?.Invoke(menu, context);
+        if (button != null) return button;
+        RenderFragment render = null;
+        if (menu.Entity.IsDoubleTrue)
+        {
+            string title = LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.DeleteTitle}"].Replace("{menu.DisplayName}", LanguageService[$"{CurrencyConstant.Menu}.{menu.DisplayName}"]);
+            render =
+    @<Popconfirm Title='@title'
+                 OkText=@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.Confirm}"]
+                 CancelText=@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.Cancel}"]
+                 OnConfirm="()=>ButtonClick(menu,context)">
+        @CreateButton(menu, context)
+    </Popconfirm>;
+        }
+        else
+        {
+            render = CreateButton(menu, context);
+        }
+        return render;
+    }
+
+    RenderFragment CreateButton(SysMenuView menu, TData context)
+    {
+
+        RenderFragment render = null;
+        string type = menu.Entity.ButtonPosition == ButtonPosition.Default ? "primary" : "link";
+        bool danger = menu.Entity.IsDoubleTrue == true ? true : false;
+
+        @if (menu.Entity.TargetType == TargetType.NewLabel)
+        {
+            render =
+    @<a href="@menu.Entity.Url" target="_blank">
+        <Button Icon="@menu.Entity.Icon" Type="@type" Danger="danger" OnClick="() => doubleTrueClick(menu, context)">
+            @menu.DisplayName
+        </Button>
+    </a>
+    ;
+        }
+        else
+        {
+            render =@<Button Icon="@menu.Entity.Icon" Type="@type" Danger="danger" OnClick="() => doubleTrueClick(menu, context)">
+        @menu.DisplayName
+    </Button>;
+        }
+
+        return render;
+    }
+
+    void doubleTrueClick(SysMenuView menu, TData context)
+    {
+        if (menu.Entity.IsDoubleTrue) return;
+        ButtonClick(menu, context);
+    }
+
+    [Inject]
+    MessageService MessageService { get; set; }
+
+    QueryView QueryView { get; set; } = new QueryView();
+    CavAdvancedQuery advancedQuery;
+    async Task ClickAdvancedQuery()
+    {
+        var options = new CavModalOptions()
+            {
+                Url = UrlConfig.AuvancedQuery,
+                Title = LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.AdvancedSearch}"],
+                FuncValidate = Validate,
+            };
+        RenderFragment render =
+    @<CavAdvancedQuery @ref="advancedQuery" QueryView="QueryView" Fields="TableOptions.ViewFields" QueryCallback="QueryStart"></CavAdvancedQuery>
+    ;
+        options.Render = render;
+        await CavModal.Create(options);
+    }
+
+    Task<bool> Validate()
+    {
+        return advancedQuery.Validate();
+    }
+}

@@ -1,0 +1,106 @@
+﻿<Menu>
+    @{
+        var settings = UserConfig.Menus.Where(u => u.Entity.MenuType == MenuType.Settings && u.Entity.ParentId != 0).ToList();
+        settings = settings.ListToTree();
+        @CreateMenu(settings)
+    }
+</Menu>
+@code {
+    [Inject]
+    UserConfig UserConfig{ get; set; }
+
+    [Inject]
+    IJSRuntime JSRuntime { get; set; }
+
+    [Inject]
+    CavModal CavModal { get; set; }
+
+    [Inject] 
+    NavigationManager NavigationManager { get; set; }
+
+    [Inject] 
+    HostAuthenticationStateProvider AuthStateProvider { get; set; }
+   
+
+
+    RenderFragment CreateMenu(List<SysMenuView> menus)
+    {
+        RenderFragment render = null;
+        foreach(var menu in menus)
+        {
+            if(menu.Children != null && menu.Children.Count > 0)
+            {
+                render +=
+                @<SubMenu Title="@menu.DisplayName">
+                    @CreateMenu(menu.Children)
+                </SubMenu>;
+                return render;
+            }
+            switch (menu.Entity.TargetType)
+            {
+                case TargetType.CurrentPage:
+                    render +=
+                    @<MenuItem OnClick="() => NavigationManager.NavigateTo(menu.Entity.Url)">
+                        <a>
+                           @menu.DisplayName
+                        </a>
+                    </MenuItem>;
+                    break;
+                case TargetType.NewLabel:
+                render +=
+                @<MenuItem>">
+                    <a href="@menu.Entity.Url" target="_blank">
+                        @menu.DisplayName
+                    </a>
+                </MenuItem>;
+                    break;
+                case TargetType.Callback:
+                 render +=
+                    @<MenuItem OnClick="()=>Callback(menu)">
+                        <a>
+                           @menu.DisplayName
+                        </a>
+                    </MenuItem>;
+                    break;
+                case TargetType.EjectPage:
+                render +=
+                    @<MenuItem OnClick="()=>CreateModal(menu)">
+                        <a>
+                           @menu.DisplayName
+                        </a>
+            </MenuItem>
+        ;
+                    break;
+                default:
+                    return render;
+            }
+        }
+        return render;
+    }
+
+    public async void Callback(SysMenuView menu)
+    {
+        switch (menu.Entity.MenuName)
+        {
+            case CurrencyConstant.Logout:
+                var result = await AuthStateProvider.Logout();
+                if (Config.IsServer)
+                {
+                    NavigationManager.NavigateTo(JSRuntime, result);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public async void CreateModal(SysMenuView menu)
+    {
+        CavModalOptions options = new CavModalOptions()
+        {
+            Url = menu.Entity.Url,
+            Title = menu.DisplayName,
+        };
+        await CavModal.Create(options);
+    }
+}

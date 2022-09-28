@@ -1,0 +1,69 @@
+﻿@page "/WebConfig/LayoutSettings"
+@implements IReuseTabsPage
+
+﻿<Card Title=@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.LayoutSettings}"] Bordered Hoverable>
+    <ChildContent>
+        <Row>
+            <Space>
+                <SpaceItem>
+                    <Text>手风琴模式：</Text>
+                </SpaceItem>
+                <SpaceItem>
+                    <Tooltip Title="@("点击菜单，收起其他展开的所有菜单，保持菜单聚焦简洁。")">
+                        <Switch @bind-Checked="CavLayout.Accordion" />
+                    </Tooltip>
+                </SpaceItem>
+            </Space>
+        </Row>
+        <Row Style="margin-top:20px">
+            <Space>
+                <SpaceItem>
+                    <Text>Table页：</Text>
+                </SpaceItem>
+                <SpaceItem>
+                    <Switch @bind-Checked="CavLayout.IsTable"/>
+                </SpaceItem>
+            </Space>
+        </Row>
+        <Row Style="margin-top:20px">
+            <Space>
+                <SpaceItem>
+                    <Text>菜单栏主题：</Text>
+                </SpaceItem>
+                <SpaceItem>
+                    <RadioGroup @bind-Value="@CavLayout.LeftMenuTheme" TValue="CavLayout.LeftMenuThemeEnum">
+                        <Radio Value="CavLayout.LeftMenuThemeEnum.Light">明亮</Radio>
+                        <Radio Value="CavLayout.LeftMenuThemeEnum.Dark">暗黑</Radio>
+                    </RadioGroup>
+                </SpaceItem>
+            </Space>
+        </Row>
+        <Row Style="margin-top:20px">
+            <Space>
+                <SpaceItem>
+                    <Text>主题模式：</Text>
+                </SpaceItem>
+                <SpaceItem>
+                    <RadioGroup @bind-Value="@CavLayout.Theme" TValue="string">
+                        <Radio Value="@("ant-design-blazor.css")">默认主题</Radio>
+                        <Radio Value="@("ant-design-blazor.aliyun.css")">阿里云主题</Radio>
+                        <Radio Value="@("ant-design-blazor.dark.css")">暗黑主题</Radio>
+                        <Radio Value="@("ant-design-blazor.compact.css")">紧凑主题</Radio>
+                    </RadioGroup>
+                </SpaceItem>
+            </Space>
+
+        </Row>
+
+    </ChildContent>
+</Card>
+
+<Button Style="margin-top:20px" Type="@ButtonType.Primary" OnClick="Preservation">@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.Preservation}"]</Button>
+
+
+@code{
+    public RenderFragment GetPageTitle() =>
+    @<div>
+        @LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.LayoutSettings}"]
+    </div>;
+}

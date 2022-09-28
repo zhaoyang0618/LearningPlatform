@@ -1,0 +1,18 @@
+﻿@page "/Permission/RoleMenus"
+
+
+<Text>@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.SelectAccessibleMenu}"].Replace("{DataSource.Entity.Name}",LanguageService[$"{CurrencyConstant.EntitysName}.{DataSource.Entity.Name}"])</Text>
+<Tree
+      Style="margin-top:20px"
+      TItem="SysMenuView"
+      BlockNode
+      ShowIcon DataSource="Menus"
+      TitleExpression="x => x.DataItem.DisplayName"
+      ChildrenExpression="x => x.DataItem.Children"
+      IconExpression="x => x.DataItem.Entity.Icon"
+      IsLeafExpression="x => x.DataItem.Children?.Count == 0"
+      KeyExpression="x => x.DataItem.Id.ToString()">
+    <TitleIconTemplate Context="node">
+        <Checkbox @bind-Checked="node.DataItem.IsPermission" OnChange="(u)=>CheckedChanged(u,node.DataItem)"></Checkbox>
+    </TitleIconTemplate>
+</Tree>

@@ -1,0 +1,34 @@
+﻿
+
+<Card Bordered="true" Title="@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.UserLogin}"]" Style="width:400px" Hoverable="true">
+    <Body>
+        <Form Model="@ApplicationUser" @ref="_form"
+              ValidateMode="@FormValidateMode.Rules">
+            <CavFormItem Label="" FieldName="UserName" FieldRules="@context">
+                <Input DebounceMilliseconds="-1" Placeholder="@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.InputUserName}"]" Size="large" @bind-Value="@context.UserName">
+                    <Prefix><Icon Type="user" /></Prefix>
+                </Input>
+            </CavFormItem>
+            <CavFormItem Label="" FieldName="Password" FieldRules='@context'>
+                <InputPassword DebounceMilliseconds="-1" @bind-Value='@context.Password' Placeholder="@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.InputUserName}"]" Size="large">
+                    <Prefix><Icon Type="lock" /></Prefix>
+                </InputPassword>
+            </CavFormItem>
+            <Space Direction="DirectionVHType.Vertical" Style="width:100%">
+                <SpaceItem>
+                    <Spin Spinning="Loading">
+                        <Button Type="@ButtonType.Primary" OnClick="SubmitLogin" Class="submit" Size="large" Block>登&nbsp;录</Button>
+                    </Spin>
+                </SpaceItem>
+                <SpaceItem>
+                    <div class="other">
+                        <a class="register">@LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.RegisteredAccount}"]</a>
+                        <a style="float: right;">
+                            @LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.ForgetPassword}"]
+                        </a>
+                    </div>
+                </SpaceItem>
+            </Space>
+        </Form>
+    </Body>
+</Card>

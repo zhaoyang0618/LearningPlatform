@@ -1,0 +1,26 @@
+﻿
+<pre class="language-@Language line-numbers">
+<code>
+@Code
+        </code>
+    </pre>
+
+@inject IPrismHighlighter Highlighter
+
+@code {
+    [Parameter]
+    public string Code { get; set; }
+
+    [Parameter]
+    public string Language { get; set; }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await Highlighter.HighlightAllAsync();
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+}
+
+    

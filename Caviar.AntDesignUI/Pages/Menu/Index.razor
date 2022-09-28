@@ -1,0 +1,34 @@
+﻿@*
+    生成者：未登录用户
+    生成时间：2021/5/31 10:49:32
+    代码由代码生成器自动生成，更改的代码可能被进行替换
+    界面如需更改，建议直接将内容剪切到自己的文件内，保留此空白文件
+    菜单列表
+*@
+
+@inherits IndexComponentBase<SysMenuView>
+@page "/SysMenu/Index"
+
+<CavTableTemplate TData="SysMenuView"
+                  TableOptions="TableOptions"
+               PageIndexChanged="PageIndexChanged"
+               RowCallback="RowCallback"
+               QueryCallback="QueryCallback">
+</CavTableTemplate>
+
+@code{
+    RenderFragment CreateColumn(FieldsView fields,SysMenuView context)
+    {
+        RenderFragment render = null;
+        switch(fields.Entity.FieldName)
+        {
+            case "MenuName":
+                render =@<Column Title="@fields.DisplayName" TData="string" Width="@fields.Entity.TableWidth">
+                    @context.DisplayName
+                </Column>;
+                return render;
+            default:
+                return null;
+        }
+    }
+}

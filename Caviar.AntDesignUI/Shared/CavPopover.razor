@@ -1,0 +1,92 @@
+﻿<Space Wrap>
+    @if (UserConfig.IsTourist)
+    {
+        <SpaceItem>
+            <Popover ContentTemplate="@_popoverMenu" Placement="@Placement.BottomRight">
+                <Button Type="@ButtonType.Text" OnClick="ModelUserLogin">
+                    @LanguageService[$"{CurrencyConstant.Page}.{CurrencyConstant.UserLogin}"]
+                </Button>
+            </Popover>
+        </SpaceItem>
+    }
+    else if(IsSmallScreen)
+    {
+        <SpaceItem>
+            <Popover ContentTemplate="@_popoverMenu" Placement="@Placement.BottomRight">
+                <Button Type="@ButtonType.Text">
+                    <AuthorizeView Context="authCountext">
+                        <Authorized>
+                            @{
+                                var Claim = authCountext.User.Claims.SingleOrDefault(u => u.Type == CurrencyConstant.HeadPortrait);
+                            }
+                            <Avatar Style="background-color: #87d068" Src="@Claim.Value" Icon="user" />
+                            @authCountext.User.Claims.SingleOrDefault(u=>u.Type == CurrencyConstant.AccountName)?.Value
+                        </Authorized>
+                    </AuthorizeView>
+                </Button>
+            </Popover>
+        </SpaceItem>
+    }
+    else
+    {
+        <SpaceItem>
+            <Popover ContentTemplate="@_runtime" Placement="@Placement.BottomRight">
+                <Button Type="@ButtonType.Text">
+                    <b>@Runtime</b>
+                </Button>
+            </Popover>
+        </SpaceItem>
+        <SpaceItem>
+            <Popover ContentTemplate="@_popoverMenu" Placement="@Placement.BottomRight">
+                <Button Type="@ButtonType.Text">
+                    <AuthorizeView Context="authCountext">
+                        <Authorized>
+                            @{
+                                var Claim = authCountext.User.Claims.SingleOrDefault(u => u.Type == CurrencyConstant.HeadPortrait);
+                            }
+                            <Avatar Style="background-color: #87d068" Src="@Claim.Value" Icon="user" />
+                            @authCountext.User.Claims.SingleOrDefault(u=>u.Type == CurrencyConstant.AccountName)?.Value
+                        </Authorized>
+                    </AuthorizeView>
+                </Button>
+            </Popover>
+        </SpaceItem>
+        <SpaceItem>
+            <Popover ContentTemplate="@_language" Placement="@Placement.BottomRight">
+                <Button Icon="global" Type="@ButtonType.Text"></Button>
+            </Popover>
+        </SpaceItem>
+    }
+</Space>
+
+@using Caviar.AntDesignUI.Pages.User;
+@code{
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
+    RenderFragment _popoverMenu =
+    @<CavPopoverMenu></CavPopoverMenu>
+    ;
+
+    RenderFragment _language =
+    @<CavLanguage></CavLanguage>
+    ;
+
+    RenderFragment _runtime =
+    @<CavRuntime></CavRuntime>
+    ;
+
+    private async void ModelUserLogin()
+    {
+        CavModalOptions options = new CavModalOptions()
+            {
+                Render =@<CavLoginCore></CavLoginCore>,
+                Footer = null,
+                IsOverflow = false,
+                Height = 314,
+                Width = 400,
+                BodyStyle = "padding:0px;",
+            };
+        await CavModal.Create(options);
+    }
+    
+}

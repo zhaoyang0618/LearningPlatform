@@ -1,0 +1,11 @@
+﻿
+@page "/Permission/UserRoles"
+@inherits IndexComponentBase<ApplicationRoleView>
+
+<CavTableTemplate TData="ApplicationRoleView"
+               TableOptions="TableOptions"
+               PageIndexChanged="PageIndexChanged"
+               RowCallback="RowCallback"
+               @bind-SelectedRows="RoleSelectedRows"
+               QueryCallback="QueryCallback">
+</CavTableTemplate>

@@ -1,0 +1,91 @@
+﻿@inherits CavLayoutBase
+<Layout Style="min-height:100vh;">
+    @if (IsDrawer)
+    {
+        <Drawer Closable="true" Visible="!Collapsed" Placement="left" Title='GetLogo()' OnClose="_=>DrawerClose()">
+            <CavMenu Theme="MenuTheme.Light" InlineCollapsed="false" @bind-BreadcrumbItemArr="BreadcrumbItemArr"></CavMenu>
+        </Drawer>
+    }
+    else
+    {
+        <Sider Collapsible CollapsedWidth="CollapsedWidth" Collapsed=@Collapsed
+           OnCollapse=@OnCollapse NoTrigger Breakpoint="@BreakpointType.Lg"
+           Style="overflow: auto; height: 100vh; position: fixed; left: 0;" Theme="Layout.SiderTheme">
+            <div class="logo" align="center">
+                <img src="@LogoImgSrc" height="32" />
+            </div>
+            <CavMenu Theme="Layout.MenuTheme" InlineCollapsed="@Collapsed" @bind-BreadcrumbItemArr="BreadcrumbItemArr"></CavMenu>
+        </Sider>
+    }
+
+
+    <Layout Style="@HeaderStyle">
+        <Header Style="@Layout.HeaderStyle">
+            @if (Collapsed)
+            {
+                <Icon Type="menu-unfold" Theme="outline" Class="trigger" OnClick="Toggle" />
+            }
+            else
+            {
+                <Icon Type="menu-fold" Theme="outline" Class="trigger" OnClick="Toggle" />
+            }
+            <div style="float:right;margin-right:20px;">
+                <CavPopover></CavPopover>
+            </div>
+        </Header>
+        @if(Layout.IsTable)
+        {
+            <Content Style="@Layout.ContentStyle">
+                <ReuseTabs Class="top-row px-4" TabPaneClass="content px-4" />
+            </Content>
+        }
+        else{
+            <div style="margin: 12px 16px;">
+                <CavBreadcrumb BreadcrumbItemArr="@BreadcrumbItemArr"></CavBreadcrumb>
+            </div>
+            <Content Style="@Layout.ContentStyle">
+                @Body
+            </Content>
+        }
+        
+        <CavFooter></CavFooter>
+    </Layout>
+</Layout>
+<style>
+    .trigger {
+        font-size: 18px;
+        line-height: 64px;
+        padding: 0 24px;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+        .trigger:hover {
+            color: #1890ff;
+        }
+
+    .logo {
+        height: 32px;
+        margin: 16px;
+    }
+
+</style>
+
+@code {
+
+
+    public RenderFragment GetLogo()
+    {
+        RenderFragment logo =
+    @<div class="logo" align="center">
+        <img src="@LogoImgSrc" height="32" />
+    </div>
+    ;
+        return logo;
+    }
+
+    void DrawerClose()
+    {
+        Collapsed = true;
+    }
+}
