@@ -1,8 +1,63 @@
-﻿@page "/"
-@namespace Architecture.Web.Pages
+﻿@page "_Host"
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Caviar.AntDesignUI
+@using Caviar.Infrastructure
+@using Caviar.SharedKernel.Entities
+@using Microsoft.Extensions.Options
+
 @{
-    Layout = "_Layout";
+    var IsServer = Request.Query.ContainsKey(CurrencyConstant.ServerName);
+    var host = Request.Host;
+    string query = "";
+    if (Request.QueryString.HasValue)
+    {
+        query = Request.QueryString.Value + "&" + CurrencyConstant.ServerName;
+    }
+    else
+    {
+        query = "?" + CurrencyConstant.ServerName;
+    }
+    var serverHost = $"{Request.Scheme}://{host}{Request.Path}{query}";
 }
 
-<component type="typeof(App)" render-mode="ServerPrerendered" />
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Caviar</title>
+    <base href="/" />
+</head>
+
+<body>
+
+    @if (IsServer)
+    {
+        <app>
+            <component type="typeof(Caviar.AntDesignUI.App)" render-mode="ServerPrerendered" />
+        </app>
+        <script src="_framework/blazor.server.js"></script>
+    }
+    else
+    {
+        <div id="iframe_div" style="width:100%; height:100%;overflow-y:hidden">
+            <iframe id="iframe_Server" src='@serverHost' style="width:100%; height:100%;border:medium none"></iframe>
+        </div>
+        <app id="wasm_app" style="display: none;">
+            <component type="typeof(Caviar.AntDesignUI.App)" render-mode="WebAssemblyPrerendered">
+        </app>
+        <script>
+            setTimeout('loadJS("_framework/blazor.webassembly.js")', 10000)
+        </script>
+    }
+
+    <link href="_content/AntDesign/css/ant-design-blazor.css" rel="stylesheet" id="uiCss" media="screen">
+    <script src="_content/AntDesign/js/ant-design-blazor.js"></script>
+    <script src="_content/Caviar.AntDesignUI/js/decode.min.js"></script>
+    <script src="_content/Caviar.AntDesignUI/js/caviar.js"></script>
+    <script src="_content/Caviar.AntDesignUI/js/prism.js"></script>
+    <link href="_content/Caviar.AntDesignUI/js/prism.css" rel="stylesheet" />
+</body>
+
+</html>
