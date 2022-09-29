@@ -1,5 +1,4 @@
 using Architecture.Web;
-using Architecture.Web.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 

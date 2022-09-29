@@ -7,15 +7,33 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Compile Remove="Shared\**" />
     <Compile Remove="wwwroot\css\**" />
+    <Content Remove="Data\**" />
+    <Content Remove="Shared\**" />
     <Content Remove="wwwroot\css\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Shared\**" />
     <EmbeddedResource Remove="wwwroot\css\**" />
+    <None Remove="Data\**" />
+    <None Remove="Shared\**" />
     <None Remove="wwwroot\css\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Error.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="App.razor" />
+    <Content Remove="Pages\Counter.razor" />
+    <Content Remove="Pages\Error.cshtml" />
+    <Content Remove="Pages\FetchData.razor" />
+    <Content Remove="Pages\Index.razor" />
+    <Content Remove="Pages\_Layout.cshtml" />
     <Content Remove="wwwroot\favicon.ico" />
+    <Content Remove="_Imports.razor" />
   </ItemGroup>
 
   <ItemGroup>
