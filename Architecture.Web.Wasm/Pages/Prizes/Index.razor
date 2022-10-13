@@ -1,6 +1,10 @@
 ﻿@page "/prizes/index"
+@using System.ComponentModel
 @using Architecture.Models
+@using AntDesign.TableModels
+
 @inject HttpClient Http
+
 
 @attribute [ReuseTabsPageTitle("奖项列表")]
 
@@ -9,6 +13,25 @@
 <h1>奖项列表</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
+
+<Table @ref="table"
+       TItem="Prize"
+       DataSource="@prizes"
+       Total="_total"
+       @bind-PageIndex="_pageIndex"
+       @bind-PageSize="_pageSize"
+       @bind-SelectedRows="selectedRows"
+       OnChange="OnChange">
+  <Selection Key="@(context.Id.ToString())" />
+    <PropertyColumn Property="c=>c.Id" Sortable />
+    <PropertyColumn Property="c=>c.Name" Sortable />
+    <ActionColumn>
+    <Space>
+      <SpaceItem><Button Danger OnClick="()=>Delete(context.Id)">Delete</Button></SpaceItem>
+    </Space>
+  </ActionColumn>
+</Table>
+
 
 @if (prizes == null)
 {
@@ -42,17 +65,42 @@ else
 }
 
 @code {
+    ITable? table;
     private Prize[]? prizes;
+    IEnumerable<Prize>? selectedRows;
+
+    int _pageIndex = 1;
+    int _pageSize = 10;
+    int _total = 0;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             prizes = await Http.GetFromJsonAsync<Prize[]>("Prize/List");
+            _total = prizes == null ? 0 : prizes.Length;
         }
         catch (Exception exp)
         {
             System.Diagnostics.Debug.WriteLine(exp);
+        }
+    }
+
+    public async Task OnChange(AntDesign.TableModels.QueryModel<Prize> queryModel)
+    {
+        //Console.WriteLine(JsonSerializer.Serialize(queryModel));
+    }
+
+    private void Delete(int id)
+    {
+        if(prizes != null)
+        {
+            prizes = prizes.Where(x => x.Id != id).ToArray();
+            _total = prizes.Length;
+        }
+        else
+        {
+            _total = 0;
         }
     }
 }
