@@ -59,9 +59,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caviar.SharedKernel", "Cavi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Architecture", "Architecture", "{A1DB8F58-D4F7-4568-AAB5-F8627009AE07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Architecture.Web", "Architecture.Web\Architecture.Web.csproj", "{1C87642D-7D1A-4DF2-9D08-255ED253D0C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Architecture.Web", "Architecture.Web\Architecture.Web.csproj", "{1C87642D-7D1A-4DF2-9D08-255ED253D0C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Architecture.Web.Wasm", "Architecture.Web.Wasm\Architecture.Web.Wasm.csproj", "{CA946A5C-8282-4603-9267-3C75912E3D73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Architecture.Web.Wasm", "Architecture.Web.Wasm\Architecture.Web.Wasm.csproj", "{CA946A5C-8282-4603-9267-3C75912E3D73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Architecture.Models\Architecture.Models.csproj" />
     <ProjectReference Include="..\Caviar.AntDesignUI\Caviar.AntDesignUI.csproj" />
     <ProjectReference Include="..\Caviar.SharedKernel\Caviar.SharedKernel.csproj" />
   </ItemGroup>

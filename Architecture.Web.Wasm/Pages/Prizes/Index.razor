@@ -1,0 +1,58 @@
+﻿@page "/prizes/index"
+@using Architecture.Models
+@inject HttpClient Http
+
+@attribute [ReuseTabsPageTitle("奖项列表")]
+
+<PageTitle>奖项列表</PageTitle>
+
+<h1>奖项列表</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (prizes == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+@*                <th>Temp. (F)</th>
+                <th>Summary</th>
+*@            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in prizes)
+            {
+                <tr>
+                    <td>@forecast.Id</td>
+                    <td>@forecast.Name</td>
+                    @*                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+*@                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Prize[]? prizes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            prizes = await Http.GetFromJsonAsync<Prize[]>("Prize/List");
+        }
+        catch (Exception exp)
+        {
+            System.Diagnostics.Debug.WriteLine(exp);
+        }
+    }
+}

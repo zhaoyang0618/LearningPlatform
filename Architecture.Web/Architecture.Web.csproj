@@ -42,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Architecture.Models\Architecture.Models.csproj" />
     <ProjectReference Include="..\Architecture.Web.Wasm\Architecture.Web.Wasm.csproj" />
     <ProjectReference Include="..\Caviar.Infrastructure\Caviar.Infrastructure.csproj" />
   </ItemGroup>
