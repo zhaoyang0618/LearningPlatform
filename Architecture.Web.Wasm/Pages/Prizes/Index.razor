@@ -4,7 +4,7 @@
 @using AntDesign.TableModels
 
 @inject HttpClient Http
-
+@inject ModalService ModalService
 
 @attribute [ReuseTabsPageTitle("奖项列表")]
 
@@ -13,6 +13,7 @@
 <h1>奖项列表</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
+<Button OnClick="OnNewPrize" Type="primary">添加</Button>
 
 <Table @ref="table"
        TItem="Prize"
@@ -102,5 +103,83 @@ else
         {
             _total = 0;
         }
+    }
+
+    private ModalRef _modalRef;
+    private string value = "blazor";
+    private async Task OnNewPrize()
+    {
+
+        var options = new ConfirmOptions()
+            {
+                Title = "Component",
+            };
+
+        var confirmRef = await ModalService.CreateConfirmAsync<DataTemplate, string, string>(options, value);
+
+        confirmRef.OnOpen = () =>
+        {
+            Console.WriteLine("Open Confirm");
+            return Task.CompletedTask;
+        };
+
+        confirmRef.OnClose = () =>
+        {
+            Console.WriteLine("Close Confirm");
+            return Task.CompletedTask;
+        };
+
+        confirmRef.OnOk = (result) =>
+        {
+            Console.WriteLine($"OnOk:{result}");
+            return Task.CompletedTask;
+        };
+
+        //var templateOptions = new DataTemplate();
+        ////templateOptions.Username = value;
+
+        //var modalConfig = new ModalOptions();
+        //modalConfig.Title = "Basic Form";
+        //modalConfig.OnCancel = async (e) =>
+        //{
+        //    Console.WriteLine("OnCancel");
+        //    await _modalRef.CloseAsync();
+        //};
+
+        //modalConfig.AfterClose = () =>
+        //{
+        //    Console.WriteLine("AfterClose");
+        //    //value = templateOptions.Username;
+        //    InvokeAsync(StateHasChanged);
+        //    return Task.CompletedTask;
+        //};
+
+        //_modalRef = await ModalService
+        //    .CreateModalAsync<Index, DataTemplate>
+        //    (modalConfig, templateOptions);
+
+        //_modalRef.OnOpen = () =>
+        //{
+        //    Console.WriteLine("ModalRef OnOpen");
+        //    return Task.CompletedTask;
+        //};
+
+        //_modalRef.OnOk = () =>
+        //{
+        //    Console.WriteLine("ModalRef OnOk");
+        //    return Task.CompletedTask;
+        //};
+
+        //_modalRef.OnCancel = () =>
+        //{
+        //    Console.WriteLine("ModalRef OnCancel");
+        //    return Task.CompletedTask;
+        //};
+
+        //_modalRef.OnClose = () =>
+        //{
+        //    Console.WriteLine("ModalRef OnClose");
+        //    return Task.CompletedTask;
+        //};
     }
 }
