@@ -110,76 +110,76 @@ else
     private async Task OnNewPrize()
     {
 
-        var options = new ConfirmOptions()
-            {
-                Title = "Component",
-            };
+        //var options = new ConfirmOptions()
+        //    {
+        //        Title = "Component",
+        //    };
 
-        var confirmRef = await ModalService.CreateConfirmAsync<DataTemplate, string, string>(options, value);
+        //var confirmRef = await ModalService.CreateConfirmAsync<DataTemplate, string, string>(options, value);
 
-        confirmRef.OnOpen = () =>
-        {
-            Console.WriteLine("Open Confirm");
-            return Task.CompletedTask;
-        };
+        //confirmRef.OnOpen = () =>
+        //{
+        //    Console.WriteLine("Open Confirm");
+        //    return Task.CompletedTask;
+        //};
 
-        confirmRef.OnClose = () =>
-        {
-            Console.WriteLine("Close Confirm");
-            return Task.CompletedTask;
-        };
+        //confirmRef.OnClose = () =>
+        //{
+        //    Console.WriteLine("Close Confirm");
+        //    return Task.CompletedTask;
+        //};
 
-        confirmRef.OnOk = (result) =>
-        {
-            Console.WriteLine($"OnOk:{result}");
-            return Task.CompletedTask;
-        };
+        //confirmRef.OnOk = (result) =>
+        //{
+        //    Console.WriteLine($"OnOk:{result}");
+        //    return Task.CompletedTask;
+        //};
 
         //var templateOptions = new DataTemplate();
-        ////templateOptions.Username = value;
+        //templateOptions.Username = value;
 
-        //var modalConfig = new ModalOptions();
-        //modalConfig.Title = "Basic Form";
-        //modalConfig.OnCancel = async (e) =>
-        //{
-        //    Console.WriteLine("OnCancel");
-        //    await _modalRef.CloseAsync();
-        //};
+        var modalConfig = new ModalOptions();
+        modalConfig.Title = "Basic Form";
+        modalConfig.OnCancel = async (e) =>
+        {
+            Console.WriteLine("OnCancel");
+            await _modalRef.CloseAsync();
+        };
 
-        //modalConfig.AfterClose = () =>
-        //{
-        //    Console.WriteLine("AfterClose");
-        //    //value = templateOptions.Username;
-        //    InvokeAsync(StateHasChanged);
-        //    return Task.CompletedTask;
-        //};
+        modalConfig.AfterClose = () =>
+        {
+            Console.WriteLine("AfterClose");
+            //value = templateOptions.Username;
+            InvokeAsync(StateHasChanged);
+            return Task.CompletedTask;
+        };
 
-        //_modalRef = await ModalService
-        //    .CreateModalAsync<Index, DataTemplate>
-        //    (modalConfig, templateOptions);
+        _modalRef = await ModalService
+            .CreateModalAsync<DataTemplate, string, string>
+            (modalConfig, value);
 
-        //_modalRef.OnOpen = () =>
-        //{
-        //    Console.WriteLine("ModalRef OnOpen");
-        //    return Task.CompletedTask;
-        //};
+        _modalRef.OnOpen = () =>
+        {
+            Console.WriteLine("ModalRef OnOpen");
+            return Task.CompletedTask;
+        };
 
-        //_modalRef.OnOk = () =>
-        //{
-        //    Console.WriteLine("ModalRef OnOk");
-        //    return Task.CompletedTask;
-        //};
+        _modalRef.OnOk = () =>
+        {
+            Console.WriteLine("ModalRef OnOk");
+            return Task.CompletedTask;
+        };
 
-        //_modalRef.OnCancel = () =>
-        //{
-        //    Console.WriteLine("ModalRef OnCancel");
-        //    return Task.CompletedTask;
-        //};
+        _modalRef.OnCancel = () =>
+        {
+            Console.WriteLine("ModalRef OnCancel");
+            return Task.CompletedTask;
+        };
 
-        //_modalRef.OnClose = () =>
-        //{
-        //    Console.WriteLine("ModalRef OnClose");
-        //    return Task.CompletedTask;
-        //};
+        _modalRef.OnClose = () =>
+        {
+            Console.WriteLine("ModalRef OnClose");
+            return Task.CompletedTask;
+        };
     }
 }
