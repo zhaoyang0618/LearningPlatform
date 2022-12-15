@@ -103,6 +103,25 @@ int main(int argc, char* argv[])
 	//testAtomicWait();
 	//testAtomicTicket();
 	testAsyncStream();
+
+	std::cout << "²éÕÒÊý×Ö" << std::endl;
+	for (int a = 1; a < 10; a++)
+	{
+		for (int b = 0; b < 10; b++)
+		{
+			for (int c = 0; c < 10; c++)
+			{
+				int A = a * a * a;
+				int B = b * b * b;
+				int C = c * c * c;
+				int val = 100 * a + 10 * b + c;
+				if ((A + B + C) == val)
+				{
+					std::cout << val << std::endl;
+				}
+			}
+		}
+	}
 	system("pause");
 	return 0;
 }
