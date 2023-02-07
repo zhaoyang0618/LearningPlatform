@@ -150,6 +150,9 @@
     <ClCompile Include="testFormat.cpp">
       <Filter>lang</Filter>
     </ClCompile>
+    <ClCompile Include="NumberTheoryAlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LearningCpp.h">
@@ -223,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="print.h">
       <Filter>lang</Filter>
+    </ClInclude>
+    <ClInclude Include="NumberTheoryAlg.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

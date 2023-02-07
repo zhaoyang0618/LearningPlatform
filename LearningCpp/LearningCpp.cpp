@@ -12,6 +12,7 @@
 #include "inlinethreadlocal.h"
 #include "trie.h"
 #include "testlang.h"
+#include "NumberTheoryAlg.h"
 
 //使用模块
 import Square;
@@ -122,6 +123,37 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
+
+	std::cout << "找到连续的四个整数，它们的素因子数量相同" << std::endl;
+	auto ret = NumberTheoryAlg::FindFourConsecutiveIntegers();
+	std::cout << ret << "; " << ret + 1 << "; " << ret + 2 << "; " << ret + 3 << std::endl;
+
+	std::cout << "找到10000以内的素数，其逆序数也是素数" << std::endl;
+	auto vec1 = NumberTheoryAlg::FindAllPrimeAndReverseIntegerIsPrime();
+	for (auto i : vec1)
+	{
+		std::cout << i << "; ";
+	}
+	std::cout << std::endl;
+
+
+	std::cout << "找到10000以内的素数，其逆序数是完全平方数" << std::endl;
+	auto vec2 = NumberTheoryAlg::FindAllPrimeAndReverseIntegerIsSquare();
+	for (auto i : vec2)
+	{
+		std::cout << i << "; ";
+	}
+	std::cout << std::endl;
+
+	std::cout << "找到10000以内的素数p，使得P+2,p+6也是素数" << std::endl;
+	auto cond = [](unsigned int p) { return NumberTheoryAlg::IsPrime(p + 2) && NumberTheoryAlg::IsPrime(p + 6); };
+	auto vec3 = NumberTheoryAlg::FindAllPrimeSatisfyCondition(cond);
+	for (auto i : vec3)
+	{
+		std::cout << i << "; ";
+	}
+	std::cout << std::endl;
+
 	system("pause");
 	return 0;
 }
