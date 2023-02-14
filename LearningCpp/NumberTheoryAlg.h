@@ -93,10 +93,10 @@ public:
 	/// <param name="n"></param>
 	/// <returns></returns>
 	template<typename FUNC>
-	static std::vector<unsigned int> FindAllPrimeSatisfyCondition(FUNC func, unsigned int max = 10000)
+	static std::vector<unsigned int> FindAllPrimeSatisfyCondition(FUNC func, unsigned int min = 2, unsigned int max = 10000)
 	{
 		std::vector<unsigned int> vec;
-		for (unsigned int i = 2; i < max; i++)
+		for (unsigned int i = min; i < max; i++)
 		{
 			auto p = IsPrime(i);
 			if (p)

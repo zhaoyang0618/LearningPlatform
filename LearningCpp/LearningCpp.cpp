@@ -154,6 +154,44 @@ int main(int argc, char* argv[])
 	}
 	std::cout << std::endl;
 
+	std::cout << "找到25以内的正整数p，使得2500-99p是完全平方数" << std::endl;
+	for (int i = 1; i < 26; i++)
+	{
+		auto n = 2500 - 99 * i;
+		if (NumberTheoryAlg::IsSquare(n))
+		{
+			std::cout << i << "; ";
+		}
+	}
+	std::cout << std::endl;
+
+	std::cout << "找到10000以内的素数p，使得P-6,p+6也是素数" << std::endl;
+	auto cond2 = [](unsigned int p) { return NumberTheoryAlg::IsPrime(p - 6) && NumberTheoryAlg::IsPrime(p + 6); };
+	auto vec4 = NumberTheoryAlg::FindAllPrimeSatisfyCondition(cond2, 6);
+	for (auto i : vec4)
+	{
+		std::cout << i << "; ";
+	}
+	std::cout << std::endl;
+
+	std::cout << "找到10000以内的素数p，使得P-12,p+12也是素数" << std::endl;
+	auto cond3 = [](unsigned int p) { return NumberTheoryAlg::IsPrime(p - 12) && NumberTheoryAlg::IsPrime(p + 12); };
+	auto vec5 = NumberTheoryAlg::FindAllPrimeSatisfyCondition(cond3, 6);
+	for (auto i : vec5)
+	{
+		std::cout << i << "; ";
+	}
+	std::cout << std::endl;
+
+	std::cout << "找到10000以内的素数p，使得P-18,p+18也是素数" << std::endl;
+	auto cond4 = [](unsigned int p) { return NumberTheoryAlg::IsPrime(p - 18) && NumberTheoryAlg::IsPrime(p + 18); };
+	auto vec6 = NumberTheoryAlg::FindAllPrimeSatisfyCondition(cond4, 6);
+	for (auto i : vec6)
+	{
+		std::cout << i << "; ";
+	}
+	std::cout << std::endl;
+
 	system("pause");
 	return 0;
 }

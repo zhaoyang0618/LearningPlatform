@@ -5,7 +5,8 @@
 
 bool NumberTheoryAlg::IsPrime(unsigned int n)
 {
-	assert(n > 1);
+	//assert(n > 1);
+	if (n <= 1) return false;
 
 	//前面几个素数直接判断
 	if (n == 2 || n == 3 || n == 5 || n == 7) return true;
