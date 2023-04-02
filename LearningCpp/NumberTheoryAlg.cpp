@@ -2,6 +2,9 @@
 #include <assert.h>
 #include <iostream>
 #include <cmath>
+#include <algorithm>
+
+std::vector<unsigned int> NumberTheoryAlg::PrimeNumbers;
 
 bool NumberTheoryAlg::IsPrime(unsigned int n)
 {
@@ -20,6 +23,148 @@ bool NumberTheoryAlg::IsPrime(unsigned int n)
 	}
 
 	return true;
+}
+
+bool NumberTheoryAlg::IsPrime(unsigned int n, const std::vector<unsigned int>& primes)
+{
+	if (primes.size() == 0) return IsPrime(n);
+	//std::sort(primes.begin(), primes.end());
+	//要求primes数组里面的素数从小到大排列
+	if (n <= 1) return false;
+
+	//前面几个素数直接判断
+	if (n == 2 || n == 3 || n == 5 || n == 7) return true;
+	if (n == 4 || n == 6 || n == 8 || n == 9) return false;
+
+	auto up = (unsigned int)std::sqrt(n);
+	unsigned int max = 2;
+	for (auto p : primes)
+	{
+		if (p == n)
+			return true;
+
+		if ((p < n) && ((n % p) == 0))
+			return false;
+
+		if (p > up)
+			return true;
+
+		if (max < p)
+			max = p;
+	}
+
+	for (unsigned int i = max; i <= up; i++)
+	{
+		if ((n % i) == 0)
+			return false;
+	}
+
+	return true;
+}
+
+unsigned int NumberTheoryAlg::PrimePi(unsigned int n)
+{
+	if (n <= 1) return 0;
+
+	//前面几个素数直接判断
+	if (n == 2) return 1;
+
+	///步长为2，可以直接把偶数全部排除，因为它们不可能是素数
+	std::vector<unsigned int> primes;
+	unsigned int num = 1;
+	for (unsigned int i = 3; i <= n; i+=2)
+	{
+		if (IsPrime(i,  primes))
+		{
+			num++;
+			if (primes.size() < 1000)
+			{
+				primes.push_back(i);
+			}
+		}
+	}
+
+	return num;
+}
+
+unsigned int NumberTheoryAlg::PrimePi(unsigned int n, std::vector<unsigned int>& primes, int max)
+{
+	if (n <= 1) return 0;
+
+	//前面几个素数直接判断
+	if (n == 2) return 1;
+
+	///步长为2，可以直接把偶数全部排除，因为它们不可能是素数
+	unsigned int num = 1;
+	for (unsigned int i = 3; i <= n; i += 2)
+	{
+		if (IsPrime(i, primes))
+		{
+			num++;
+			if (primes.size() < max)
+			{
+				primes.push_back(i);
+			}
+		}
+	}
+
+	return num;
+}
+
+unsigned int NumberTheoryAlg::PrimePi(unsigned int n, unsigned int min, unsigned int pi_min)
+{
+	if (n <= 1) return 0;
+
+	//前面几个素数直接判断
+	if (n == 2) return 1;
+
+	if (n == min) return pi_min;
+
+	unsigned int num = pi_min;
+	if (min % 2 != 0)
+	{
+		//保证为偶数
+		min = min + 1;
+	}
+
+	//排除掉偶数
+	for (unsigned int i = min+1; i <= n; i+=2)
+	{
+		if (IsPrime(i))
+		{
+			num++;
+		}
+	}
+
+	return num;
+}
+
+unsigned int NumberTheoryAlg::PrimePi(unsigned int n, unsigned int min, unsigned int pi_min, const std::vector<unsigned int>& primes)
+{
+	if (n <= 1) return 0;
+
+	//前面几个素数直接判断
+	if (n == 2) return 1;
+
+	if (n == min) return pi_min;
+
+	unsigned int num = pi_min;
+	if (min % 2 != 0)
+	{
+		//保证为偶数
+		min = min + 1;
+	}
+
+	//排除掉偶数
+	for (unsigned int i = min + 1; i <= n; i += 2)
+	{
+		if (IsPrime(i, primes))
+		{
+			num++;
+		}
+	}
+
+	return num;
 }
 
 bool NumberTheoryAlg::IsSquare(unsigned int n)

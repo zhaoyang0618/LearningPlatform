@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cstdio>
 #include <format>
+#include <algorithm>
 #include "LearningCpp.h"
 #include "CppGrammer.h"
 #include "inlinethreadlocal.h"
@@ -17,6 +18,172 @@
 //使用模块
 import Square;
 
+bool IsValid(unsigned int p, unsigned int k)
+{
+
+	for (unsigned int i = 1; i < k; i++)
+	{
+		if (NumberTheoryAlg::IsPrime(p - 2 * i))
+		{
+			return false;
+		}
+		if (NumberTheoryAlg::IsPrime(p + 2 * i))
+		{
+			return false;
+		}
+	}
+
+	if (!NumberTheoryAlg::IsPrime(p - 2 * k))
+	{
+		return false;
+	}
+
+	if (!NumberTheoryAlg::IsPrime(p + 2 * k))
+	{
+		return false;
+	}
+
+	return true;
+}
+
+/// <summary>
+/// 近似值
+/// </summary>
+/// <param name="k"></param>
+/// <returns></returns>
+unsigned int ApproximationKthCompositeNumber(unsigned int k)
+{
+	double a = 1.0 / log(k);
+	double b = 1.0 - a - a * a;
+	double c = k * 1.0 / b;
+	unsigned int n = ceil(c);
+	std::cout << "第[" << k << "]个合数(近似值)：" << n << std::endl;
+	return n; //floor(c);
+}
+
+/// <summary>
+/// 输出第k个合数
+/// n_k = 1 + \pi(n_k) + k
+/// n_k - \pi(n_k) = 1+k
+/// </summary>
+/// <param name="k"></param>
+/// <returns></returns>
+unsigned int TheKthCompositeNumber(unsigned int k, unsigned int max, unsigned int min = 1)
+{
+	unsigned int ret = 0;
+	for (unsigned int n = min; n < max; n++)
+	{
+		if (NumberTheoryAlg::PrimePi(n) == n - k - 1)
+		{
+			ret = n;
+			std::cout << "第[" << k << "]个合数：" << n << std::endl;
+			break;
+		}
+	}
+
+	return ret;
+}
+
+/// <summary>
+/// 输出第k个合数
+/// n_k = 1 + \pi(n_k) + k
+/// n_k - \pi(n_k) = 1+k
+/// </summary>
+/// <param name="k"></param>
+/// <returns></returns>
+unsigned int TheKthCompositeNumber(unsigned int k)
+{
+	unsigned int ret = 0;
+	auto min = ApproximationKthCompositeNumber(k);
+	auto max = min + 1000;
+	unsigned int prev = min;
+	unsigned int pi_prev = NumberTheoryAlg::PrimePi(min);
+	for (unsigned int n = min; n < max; n++)
+	{
+		auto now = NumberTheoryAlg::PrimePi(n, prev, pi_prev);
+		prev = n;
+		pi_prev = now;
+		if (now == n - k - 1)
+		{
+			ret = n;
+			std::cout << "第[" << k << "]个合数：" << n << std::endl;
+			break;
+		}
+	}
+
+	return ret;
+}
+
+/// <summary>
+/// 输出第k个合数: k包含在veck数组里面，要求veck中数据是从小到大排列的
+/// n_k = 1 + \pi(n_k) + k
+/// n_k - \pi(n_k) = 1+k
+/// </summary>
+/// <param name="k"></param>
+/// <returns></returns>
+std::vector<unsigned int> TheKthCompositeNumber(std::vector<unsigned int> veck)
+{
+	std::vector<unsigned int> retV;
+	auto size = veck.size();
+	if (size == 0) return retV;
+	//排序
+	std::sort(veck.begin(), veck.end());
+
+	unsigned int k = veck[0];
+	auto first = ApproximationKthCompositeNumber(k);
+	std::vector<unsigned int> primes;
+	unsigned int maxPrimeIndex = 1024 * 128;
+	unsigned int pi_first = NumberTheoryAlg::PrimePi(first, primes, maxPrimeIndex);
+	auto sizeP = primes.size();
+	std::cout << "第[" << sizeP << "]个素数：" << primes[sizeP -1] << std::endl;
+
+	////找到前面1000个素数
+	//std::vector<unsigned int> primes(1000);
+	//primes.push_back(2);
+	unsigned nn = primes[sizeP - 1] + 2;
+	while (true)
+	{
+		sizeP = primes.size();
+		if (sizeP == maxPrimeIndex)
+		{
+			std::cout << "第[" << sizeP << "]个素数：" << primes[sizeP - 1] << std::endl;
+			break;
+		}
+
+		if (NumberTheoryAlg::IsPrime(nn, primes))
+		{
+			primes.push_back(nn);
+		}
+
+		nn += 2;
+	}
+
+	for (auto kk : veck)
+	{
+		auto min = ApproximationKthCompositeNumber(kk);
+		auto max = min + 300000;// *2;
+		unsigned int prev = min;
+		unsigned int pi_prev = NumberTheoryAlg::PrimePi(min, first, pi_first, primes);
+		first = prev;
+		pi_first = pi_prev;
+		for (unsigned int n = min; n < max; n++)
+		{
+			auto now = NumberTheoryAlg::PrimePi(n, prev, pi_prev, primes);
+			prev = n;
+			pi_prev = now;
+			if (now == n - kk - 1)
+			{
+				retV.push_back(n);
+				std::cout << "第[" << kk << "]个合数：" << n << std::endl;
+				break;
+			}
+		}
+
+	}
+
+
+	return retV;
+}
 
 int main(int argc, char* argv[])
 {
@@ -166,7 +333,11 @@ int main(int argc, char* argv[])
 	std::cout << std::endl;
 
 	std::cout << "找到10000以内的素数p，使得P-6,p+6也是素数" << std::endl;
-	auto cond2 = [](unsigned int p) { return NumberTheoryAlg::IsPrime(p - 6) && NumberTheoryAlg::IsPrime(p + 6); };
+	//auto cond2 = [](unsigned int p) { return NumberTheoryAlg::IsPrime(p - 6) && 
+	//	(!NumberTheoryAlg::IsPrime(p - 4)) && (!NumberTheoryAlg::IsPrime(p - 2)) &&
+	//	(!NumberTheoryAlg::IsPrime(p + 2)) && (!NumberTheoryAlg::IsPrime(p + 4)) &&
+	//	NumberTheoryAlg::IsPrime(p + 6); };
+	auto cond2 = [](unsigned int p) { return IsValid(p, 3); };
 	auto vec4 = NumberTheoryAlg::FindAllPrimeSatisfyCondition(cond2, 6);
 	for (auto i : vec4)
 	{
@@ -175,7 +346,8 @@ int main(int argc, char* argv[])
 	std::cout << std::endl;
 
 	std::cout << "找到10000以内的素数p，使得P-12,p+12也是素数" << std::endl;
-	auto cond3 = [](unsigned int p) { return NumberTheoryAlg::IsPrime(p - 12) && NumberTheoryAlg::IsPrime(p + 12); };
+	//auto cond3 = [](unsigned int p) { return NumberTheoryAlg::IsPrime(p - 12) && NumberTheoryAlg::IsPrime(p + 12); };
+	auto cond3 = [](unsigned int p) { return IsValid(p, 6); };
 	auto vec5 = NumberTheoryAlg::FindAllPrimeSatisfyCondition(cond3, 6);
 	for (auto i : vec5)
 	{
@@ -183,15 +355,42 @@ int main(int argc, char* argv[])
 	}
 	std::cout << std::endl;
 
-	std::cout << "找到10000以内的素数p，使得P-18,p+18也是素数" << std::endl;
-	auto cond4 = [](unsigned int p) { return NumberTheoryAlg::IsPrime(p - 18) && NumberTheoryAlg::IsPrime(p + 18); };
-	auto vec6 = NumberTheoryAlg::FindAllPrimeSatisfyCondition(cond4, 6);
+	std::cout << "找到50000以内的素数p，使得P-18,p+18也是素数" << std::endl;
+	//auto cond4 = [](unsigned int p) { return NumberTheoryAlg::IsPrime(p - 18) && NumberTheoryAlg::IsPrime(p + 18); };
+	auto cond4 = [](unsigned int p) { return IsValid(p, 9); };
+	auto vec6 = NumberTheoryAlg::FindAllPrimeSatisfyCondition(cond4, 6, 50000);
 	for (auto i : vec6)
 	{
 		std::cout << i << "; ";
 	}
 	std::cout << std::endl;
 
+	std::cout << "因数分解(2107): " << std::endl;
+	auto vec7 = NumberTheoryAlg::Factor(2107);
+	for (auto i : vec7)
+	{
+		std::cout << i << "; ";
+	}
+	std::cout << std::endl;
+
+	std::cout << "查找第K个合数" << std::endl;
+	auto idxC = TheKthCompositeNumber(1, 1000);
+	idxC = TheKthCompositeNumber(10, 4294967295, idxC);
+	idxC = TheKthCompositeNumber(100, 4294967295, idxC);
+	idxC = TheKthCompositeNumber(1000, 4294967295, idxC);
+	//auto n_10000 = ApproximationKthCompositeNumber(10000);
+	//auto n_100000 = ApproximationKthCompositeNumber(100000);
+	//auto n_1000000 = ApproximationKthCompositeNumber(1000000);
+	//auto n_10000000 = ApproximationKthCompositeNumber(10000000);
+	//auto n_100000000 = ApproximationKthCompositeNumber(100000000);
+	//auto n_1000000000 = ApproximationKthCompositeNumber(1000000000);
+	//idxC = TheKthCompositeNumber(10000);
+	//idxC = TheKthCompositeNumber(100000);
+	//idxC = TheKthCompositeNumber(1000000);
+	//idxC = TheKthCompositeNumber(10000000);
+	//idxC = TheKthCompositeNumber(100000000);
+	//idxC = TheKthCompositeNumber(1000000000);
+	auto r = TheKthCompositeNumber({ 10000, 100000, 1000000, 10000000, 100000000, 1000000000});
 	system("pause");
 	return 0;
 }

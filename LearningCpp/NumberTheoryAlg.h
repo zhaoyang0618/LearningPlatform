@@ -5,6 +5,8 @@
 class NumberTheoryAlg
 {
 public:
+	static std::vector<unsigned int> PrimeNumbers;
+
 	/// <summary>
 	/// 判断一个整数是否为素数
 	/// 最简单的方法，但是也是比较慢的方法。
@@ -13,6 +15,30 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	static bool IsPrime(unsigned int n);
+	/// <summary>
+	/// 使用一个素数的辅助数组
+	/// </summary>
+	/// <param name="n"></param>
+	/// <param name="primes"></param>
+	/// <returns></returns>
+	static bool IsPrime(unsigned int n, const std::vector<unsigned int>& primes);
+
+	/// <summary>
+	/// 统计小于等于n的素数的个数
+	/// </summary>
+	/// <param name="n"></param>
+	/// <returns></returns>
+	static unsigned int PrimePi(unsigned int n);
+	static unsigned int PrimePi(unsigned int n, std::vector<unsigned int>& primes, int max = 1000);
+
+	/// <summary>
+	/// 统计小于等于n的素数的个数
+	/// 已经知道min以内的素数个数,这样只需要从min+1开始即可
+	/// </summary>
+	/// <param name="n"></param>
+	/// <returns></returns>
+	static unsigned int PrimePi(unsigned int n, unsigned int min, unsigned int pi_min);
+	static unsigned int PrimePi(unsigned int n, unsigned int min, unsigned int pi_min, const std::vector<unsigned int>& primes);
 
 	/// <summary>
 	/// 判断一个整数是否为完全平方数
@@ -108,6 +134,49 @@ public:
 			}
 		}
 
+		return vec;
+	}
+
+	/// <summary>
+	/// 因子分解
+	/// </summary>
+	/// <param name="max"></param>
+	/// <returns></returns>
+	static std::vector<unsigned int> Factor(unsigned int num)
+	{
+		std::vector<unsigned int> vec;
+		if (num > 0)
+		{
+			if (num == 1)
+			{
+				vec.push_back(1);
+			}
+			else if (IsPrime(num))
+			{
+				vec.push_back(num);
+			}
+			else
+			{
+				//找到一个素因子
+				auto h = num / 2 + 1;
+				unsigned int next = 0;
+				for (int i = 2;i < h; i++)
+				{
+					if (IsPrime(i) && num % i == 0)
+					{
+						vec.push_back(i);
+						next = num / i;
+						break;
+					}
+				}
+
+				auto ret = Factor(next);
+				if (ret.size() > 0)
+				{
+					vec.insert(vec.end(), ret.begin(), ret.end());
+				}
+			}
+		}
 		return vec;
 	}
 };
