@@ -39,8 +39,8 @@ namespace StockTraceApp.UI
         private void OnButtonAddClick(object sender, RoutedEventArgs e)
         {
             //添加
-            var stock = new Stock();
-            var wnd = new StockEditWnd(stock);
+            var sale = new Sale();
+            var wnd = new SaleEditWnd(sale);
             wnd.OnOK += () => {
                 ListStocks();
                 gridContainer.Children.Clear();

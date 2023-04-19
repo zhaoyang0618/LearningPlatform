@@ -21,6 +21,7 @@ namespace StockTraceApp.Models
         /// </summary>
         public int Direction{ get; set; }
         public double OpeningPrice { get; set; }
+        public double ClosingPrice { get; set; }
         public double LowestPrice { get; set; }
         public double HighestPrice { get; set; }
         /// <summary>
@@ -33,5 +34,10 @@ namespace StockTraceApp.Models
         /// </summary>
         public double ShenzhenLowestPrice { get; set; }
         public double ShenzhenHighestPrice { get; set; }
+
+        /// <summary>
+        /// 标记一下，是否已经买卖之间相互抵消
+        /// </summary>
+        public int Flag { get; set; }
     }
 }
