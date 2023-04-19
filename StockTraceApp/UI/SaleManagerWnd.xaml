@@ -4,9 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StockTraceApp.UI"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock Margin="2" VerticalAlignment="Center">股票</TextBlock>
+            <ComboBox Width="128" VerticalAlignment="Center" Margin="2" DisplayMemberPath="Name" x:Name="cboStocks"></ComboBox>
+            <Button Margin="2" VerticalAlignment="Center" x:Name="btnAdd">添加</Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <TextBlock Margin="8" FontSize="18" Foreground="Red" x:Name="textName"></TextBlock>
+            <TextBlock Margin="8" FontSize="18" Foreground="Red" x:Name="textCode"></TextBlock>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <lvc:CartesianChart Margin="2"></lvc:CartesianChart>
+        </Grid>
+        <Grid Grid.Row="0" Grid.RowSpan="2" x:Name="gridSub" Visibility="Collapsed">
+            <Border Background="Gray" Opacity="0.75"></Border>
+            <Grid x:Name="gridContainer"></Grid>
+        </Grid>
     </Grid>
 </UserControl>

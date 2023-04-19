@@ -9,7 +9,7 @@ namespace StockTraceApp.Models
     /// <summary>
     /// 股票信息
     /// </summary>
-    internal class Stock
+    public class Stock
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using StockTraceApp.DB;
 using StockTraceApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,18 @@ namespace StockTraceApp
         }
 
         #region 事件处理
+        private void OnWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            try
+            { 
+                _context.Database.EnsureCreated();
+            }
+            catch(Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+        }
+
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //工具栏按钮
@@ -60,6 +73,7 @@ namespace StockTraceApp
         #endregion
 
         #region 辅助函数
+        private readonly StockDbContext _context = new StockDbContext();
         void InitUI()
         {
             //左侧工具栏
@@ -84,6 +98,7 @@ namespace StockTraceApp
 
         void BindEvents()
         {
+            this.Loaded += OnWindowLoaded;
             listitemToolbar.SelectionChanged += OnSelectionChanged;
             listitemToolbar.SelectedIndex = 0;
         }
