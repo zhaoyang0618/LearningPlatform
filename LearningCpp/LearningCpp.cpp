@@ -373,24 +373,40 @@ int main(int argc, char* argv[])
 	}
 	std::cout << std::endl;
 
-	std::cout << "查找第K个合数" << std::endl;
-	auto idxC = TheKthCompositeNumber(1, 1000);
-	idxC = TheKthCompositeNumber(10, 4294967295, idxC);
-	idxC = TheKthCompositeNumber(100, 4294967295, idxC);
-	idxC = TheKthCompositeNumber(1000, 4294967295, idxC);
-	//auto n_10000 = ApproximationKthCompositeNumber(10000);
-	//auto n_100000 = ApproximationKthCompositeNumber(100000);
-	//auto n_1000000 = ApproximationKthCompositeNumber(1000000);
-	//auto n_10000000 = ApproximationKthCompositeNumber(10000000);
-	//auto n_100000000 = ApproximationKthCompositeNumber(100000000);
-	//auto n_1000000000 = ApproximationKthCompositeNumber(1000000000);
-	//idxC = TheKthCompositeNumber(10000);
-	//idxC = TheKthCompositeNumber(100000);
-	//idxC = TheKthCompositeNumber(1000000);
-	//idxC = TheKthCompositeNumber(10000000);
-	//idxC = TheKthCompositeNumber(100000000);
-	//idxC = TheKthCompositeNumber(1000000000);
-	auto r = TheKthCompositeNumber({ 10000, 100000, 1000000, 10000000, 100000000, 1000000000});
+	unsigned int sum = 1001;
+	if (NumberTheoryAlg::IsPrime(sum))
+	{
+		std::cout << sum << "是素数" << std::endl;
+	}
+	else
+	{
+		std::cout << sum << "是合数" << std::endl;
+		auto ret = NumberTheoryAlg::Factor(sum);
+		for (auto f : ret)
+		{
+			std::cout << f << "; ";
+		}
+		std::cout << std::endl;
+	}
+
+	//std::cout << "查找第K个合数" << std::endl;
+	//auto idxC = TheKthCompositeNumber(1, 1000);
+	//idxC = TheKthCompositeNumber(10, 4294967295, idxC);
+	//idxC = TheKthCompositeNumber(100, 4294967295, idxC);
+	//idxC = TheKthCompositeNumber(1000, 4294967295, idxC);
+	////auto n_10000 = ApproximationKthCompositeNumber(10000);
+	////auto n_100000 = ApproximationKthCompositeNumber(100000);
+	////auto n_1000000 = ApproximationKthCompositeNumber(1000000);
+	////auto n_10000000 = ApproximationKthCompositeNumber(10000000);
+	////auto n_100000000 = ApproximationKthCompositeNumber(100000000);
+	////auto n_1000000000 = ApproximationKthCompositeNumber(1000000000);
+	////idxC = TheKthCompositeNumber(10000);
+	////idxC = TheKthCompositeNumber(100000);
+	////idxC = TheKthCompositeNumber(1000000);
+	////idxC = TheKthCompositeNumber(10000000);
+	////idxC = TheKthCompositeNumber(100000000);
+	////idxC = TheKthCompositeNumber(1000000000);
+	//auto r = TheKthCompositeNumber({ 10000, 100000, 1000000, 10000000, 100000000, 1000000000});
 	system("pause");
 	return 0;
 }
