@@ -56,6 +56,48 @@ namespace StockTraceApp.UI
             gridContainer.Children.Add(wnd);
             gridSub.Visibility = Visibility.Visible;
         }
+
+        private void OnItemEditClick(object sender, RoutedEventArgs e)
+        {
+            //编辑
+            var btn = sender as Button;
+            if (btn != null)
+            {
+                var item = btn.DataContext as Stock;
+                if(item != null)
+                {
+                    var wnd = new StockEditWnd(item);
+                    wnd.OnOK += () => {
+                        ListStocks();
+                        gridContainer.Children.Clear();
+                        gridSub.Visibility = Visibility.Collapsed;
+                    };
+                    wnd.OnCancel += () => {
+                        gridContainer.Children.Clear();
+                        gridSub.Visibility = Visibility.Collapsed;
+                    };
+
+                    gridContainer.Children.Clear();
+                    gridContainer.Children.Add(wnd);
+                    gridSub.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private void OnItemDeleteClick(object sender, RoutedEventArgs e)
+        {
+            //删除
+            var btn = sender as Button;
+            if (btn != null)
+            {
+                var item = btn.DataContext as Stock;
+                if (item != null)
+                {
+                    //确认删除
+                    //同时删除交易数据
+                }
+            }
+        }
         #endregion
 
         #region 辅助函数

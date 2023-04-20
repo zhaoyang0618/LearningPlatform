@@ -26,13 +26,13 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button Margin="2 0" Padding="0" Width="24" Height="24" Style="{DynamicResource MaterialDesignToolForegroundButton}" ToolTip="编辑">
+                                    <Button Margin="2 0" Padding="0" Width="24" Height="24" Style="{DynamicResource MaterialDesignToolForegroundButton}" ToolTip="编辑" Click="OnItemEditClick">
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                             <materialDesign:PackIcon Width="16" Height="16" Kind="Edit" />
                                             <TextBlock FontSize="12" Visibility="Collapsed">编辑</TextBlock>
                                         </StackPanel>
                                     </Button>
-                                    <Button Margin="2 0" Padding="0" Width="16" Height="16" Style="{DynamicResource MaterialDesignToolForegroundButton}" ToolTip="删除">
+                                    <Button Margin="2 0" Padding="0" Width="24" Height="24" Style="{DynamicResource MaterialDesignToolForegroundButton}" ToolTip="删除" Click="OnItemDeleteClick">
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                             <materialDesign:PackIcon Width="16" Height="16" Kind="Delete" />
                                             <TextBlock FontSize="12" Visibility="Collapsed">删除</TextBlock>

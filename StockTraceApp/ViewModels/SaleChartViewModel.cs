@@ -35,9 +35,9 @@ namespace StockTraceApp.ViewModels
                 Name = "买入",
                 Values = _observablePoints,
                 TooltipLabelFormatter = point => $"{point.Model?.Name}: {point.Model?.Count}",
-                DataLabelsPaint = new SolidColorPaint(new SKColor(30, 30, 30)),
-                DataLabelsFormatter = point => $"{point.Model?.Count} {point.Model?.Name}",
-                DataLabelsPosition = DataLabelsPosition.End,
+                DataLabelsPaint = new SolidColorPaint(new SKColor(255, 255, 255)),
+                DataLabelsFormatter = point => $"{point.Model?.Name}",
+                DataLabelsPosition = DataLabelsPosition.Bottom,
                 Mapping = (fruit, point) =>
                 {
                     point.PrimaryValue = fruit.Value??0; // use the SalesPerDay property in this series // mark
