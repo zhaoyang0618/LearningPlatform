@@ -22,7 +22,7 @@
             <TextBlock Margin="8" FontSize="18" Foreground="Red" x:Name="textCode"></TextBlock>
         </StackPanel>
         <Grid Grid.Row="1">
-            <lvc:CartesianChart Margin="2"></lvc:CartesianChart>
+            <lvc:CartesianChart Margin="2" LegendPosition="Top" Foreground="White" FontFamily="宋体" x:Name="charts"></lvc:CartesianChart>
         </Grid>
         <Grid Grid.Row="0" Grid.RowSpan="2" x:Name="gridSub" Visibility="Collapsed">
             <Border Background="Gray" Opacity="0.95"></Border>

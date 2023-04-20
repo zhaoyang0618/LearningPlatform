@@ -74,6 +74,7 @@ namespace StockTraceApp.UI
 
         void ListStocks()
         {
+            _stocks.Clear();
             Task.Run(() => {
                 try
                 {

@@ -1,5 +1,7 @@
-﻿using MahApps.Metro.Controls;
+﻿using LiveChartsCore;
+using MahApps.Metro.Controls;
 using StockTraceApp.DB;
+using StockTraceApp.Models;
 using StockTraceApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -76,6 +78,28 @@ namespace StockTraceApp
         private readonly StockDbContext _context = new StockDbContext();
         void InitUI()
         {
+            //配置数据
+            //LiveCharts.Configure(config => config.HasMap<Sale>((sale, point) =>
+            //    {
+            //        // in this lambda function we take an instance of the City class (see city parameter)
+            //        // and the point in the chart for that instance (see point parameter)
+            //        // LiveCharts will call this method for every instance of our City class array,
+            //        // now we need to populate the point coordinates from our City instance to our point
+
+            //        // in this case we will use the Population property as our primary value (normally the Y coordinate)
+            //        point.PrimaryValue = (float)sale.Price;
+
+            //        // then the secondary value (normally the X coordinate)
+            //        // will be the index of city in our cities array
+            //        point.SecondaryValue = sale.Date.Ticks;
+
+            //        // but you can use another property of the city class as the X coordinate
+            //        // for example lets use the LandArea property to create a plot that compares
+            //        // Population and LandArea in chart:
+
+            //        // point.SecondaryValue = (float)city.LandArea;
+            //    })
+            //);
             //左侧工具栏
             var tools = new List<ItemMenu>();
             var cmd1 = new Microsoft.Xaml.Behaviors.Core.ActionCommand(() => {
