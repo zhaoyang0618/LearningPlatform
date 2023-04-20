@@ -47,7 +47,7 @@
 
         </Grid>
         <Grid Grid.Row="0" Grid.RowSpan="2" x:Name="gridSub" Visibility="Collapsed">
-            <Border Background="Gray" Opacity="0.75"></Border>
+            <Border Background="DarkGreen" Opacity="0.9"></Border>
             <Grid x:Name="gridContainer"></Grid>
         </Grid>
     </Grid>

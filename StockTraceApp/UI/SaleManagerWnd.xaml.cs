@@ -5,6 +5,7 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using StockTraceApp.Models;
+using StockTraceApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,8 +34,8 @@ namespace StockTraceApp.UI
         public SaleManagerWnd()
         {
             InitializeComponent();
-            _observablePoints = new ObservableCollection<DateTimePoint>();
-            _observableSalePoints = new ObservableCollection<DateTimePoint>();
+            //_observablePoints = new ObservableCollection<DateTimePoint>();
+            //_observableSalePoints = new ObservableCollection<DateTimePoint>();
             InitUI();
             BindEvents();
         }
@@ -102,6 +103,26 @@ namespace StockTraceApp.UI
             //chart.Invalidate(); // <- ensures the canvas is redrawn after we set the fill
             //Trace.WriteLine($"Clicked on {point.Model?.Name}, {point.Model?.SalesPerDay} items sold per day");
         }
+
+        private void OnChartPointClicked(SaleViewModel? obj)
+        {
+            if(obj == null) return;
+            if(_currentStock == null) return;
+            var wnd = new SaleEditWnd(_currentStock, obj.Model);
+            wnd.OnOK += () => {
+                ListSales(_currentStock.Id);
+                gridContainer.Children.Clear();
+                gridSub.Visibility = Visibility.Collapsed;
+            };
+            wnd.OnCancel += () => {
+                gridContainer.Children.Clear();
+                gridSub.Visibility = Visibility.Collapsed;
+            };
+
+            gridContainer.Children.Clear();
+            gridContainer.Children.Add(wnd);
+            gridSub.Visibility = Visibility.Visible;
+        }
         #endregion
 
         #region 辅助函数
@@ -110,29 +131,29 @@ namespace StockTraceApp.UI
         DB.StockDbContext _db = new DB.StockDbContext();
         void InitUI()
         {
-            var buySeries = new LineSeries<DateTimePoint>
-            {
-                Name = "Buy",
-                //TooltipLabelFormatter =
-                //    chartPoint => $"{new DateTime((long)chartPoint.SecondaryValue):HH:mm:ss}: {chartPoint.PrimaryValue}",
-                Values = _observablePoints,
-                //Fill = null
-            };
-            buySeries.ChartPointPointerDown += SaleSeries_ChartPointPointerDown;
-            var saleSeries = new LineSeries<DateTimePoint>
-            {
-                Name = "Sale",
-                //TooltipLabelFormatter =
-                //    chartPoint => $"{new DateTime((long)chartPoint.SecondaryValue):HH:mm:ss}: {chartPoint.PrimaryValue}",
-                Values = _observableSalePoints,
-                //Fill = null
-            };
-            saleSeries.ChartPointPointerDown += SaleSeries_ChartPointPointerDown;
-            Series = new ObservableCollection<ISeries>
-            {
-                buySeries,
-                saleSeries
-            };
+            //var buySeries = new LineSeries<DateTimePoint>
+            //{
+            //    Name = "Buy",
+            //    //TooltipLabelFormatter =
+            //    //    chartPoint => $"{new DateTime((long)chartPoint.SecondaryValue):HH:mm:ss}: {chartPoint.PrimaryValue}",
+            //    Values = _observablePoints,
+            //    //Fill = null
+            //};
+            //buySeries.ChartPointPointerDown += SaleSeries_ChartPointPointerDown;
+            //var saleSeries = new LineSeries<DateTimePoint>
+            //{
+            //    Name = "Sale",
+            //    //TooltipLabelFormatter =
+            //    //    chartPoint => $"{new DateTime((long)chartPoint.SecondaryValue):HH:mm:ss}: {chartPoint.PrimaryValue}",
+            //    Values = _observableSalePoints,
+            //    //Fill = null
+            //};
+            //saleSeries.ChartPointPointerDown += SaleSeries_ChartPointPointerDown;
+            //Series = new ObservableCollection<ISeries>
+            //{
+            //    buySeries,
+            //    saleSeries
+            //};
             //
             XAxes = new LiveChartsCore.SkiaSharpView.Axis[]
                 {
@@ -140,6 +161,7 @@ namespace StockTraceApp.UI
                         {
                             Labeler = value => { try{return new DateTime((long) value).ToString("yyyy-MM-dd"); }catch{ return string.Empty; }  },
                             LabelsRotation = 15,
+                            LabelsPaint = new SolidColorPaint(SKColors.White),
 
                             // when using a date time type, let the library know your unit // mark
                             UnitWidth = TimeSpan.FromDays(1).Ticks, // mark
@@ -159,8 +181,11 @@ namespace StockTraceApp.UI
                 };
 
             //
-            charts.Series = this.Series;
+            //charts.Series = this.Series;
+            charts.Series = _saleChart.Series;
             charts.XAxes = this.XAxes;
+            charts.LegendTextPaint = new SolidColorPaint(SKColors.White) { FontFamily = "微软雅黑" };
+            _saleChart.OnPointClicked += OnChartPointClicked;
 
             cboStocks.ItemsSource = _stocks;
         }
@@ -201,15 +226,17 @@ namespace StockTraceApp.UI
             });
         }
 
-        private readonly ObservableCollection<DateTimePoint> _observablePoints;
-        private readonly ObservableCollection<DateTimePoint> _observableSalePoints;
+        SaleChartViewModel _saleChart = new SaleChartViewModel();
+        //private readonly ObservableCollection<DateTimePoint> _observablePoints;
+        //private readonly ObservableCollection<DateTimePoint> _observableSalePoints;
 
-        public ObservableCollection<ISeries> Series { get; set; }
+        //public ObservableCollection<ISeries> Series { get; set; }
         public IEnumerable<ICartesianAxis> XAxes { get; set; }
 
         void ListSales(int stockId)
         {
-            _observablePoints.Clear();
+            _saleChart.Clear();
+            //_observablePoints.Clear();
             Task.Run(() => {
                 try
                 {
@@ -220,17 +247,18 @@ namespace StockTraceApp.UI
                         this.Dispatcher.Invoke(() => {
                             foreach (var item in list)
                             {
-                                var date = new DateTime(item.Date.Year, item.Date.Month, item.Date.Day, item.Time.Hour, item.Time.Minute, item.Time.Second);
-                                if (item.Direction == 0)
-                                {
-                                    //买入
-                                    _observablePoints.Add(new DateTimePoint(date, item.Price));
-                                }
-                                else
-                                {
-                                    //卖出
-                                    _observableSalePoints.Add(new DateTimePoint(date, item.Price));
-                                }
+                                _saleChart.AddSale(item);
+                                //var date = new DateTime(item.Date.Year, item.Date.Month, item.Date.Day, item.Time.Hour, item.Time.Minute, item.Time.Second);
+                                //if (item.Direction == 0)
+                                //{
+                                //    //买入
+                                //    _observablePoints.Add(new DateTimePoint(date, item.Price));
+                                //}
+                                //else
+                                //{
+                                //    //卖出
+                                //    _observableSalePoints.Add(new DateTimePoint(date, item.Price));
+                                //}
                             }
                         });
                     }

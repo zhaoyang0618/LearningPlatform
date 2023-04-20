@@ -24,8 +24,8 @@ namespace StockTraceApp.UI
     /// </summary>
     public partial class SaleEditWnd : UserControl
     {
-        public event Action OnOK;
-        public event Action OnCancel;
+        public event Action? OnOK;
+        public event Action? OnCancel;
         public SaleEditWnd(Stock stock, Sale sale)
         {
             InitializeComponent();
@@ -83,6 +83,11 @@ namespace StockTraceApp.UI
         Stock _stock = null;
         void InitUI()
         {
+            if(_stock != null)
+            {
+                textName.Text = _stock.Name;
+            }
+
             this.DataContext = _sale;
             var directions = new List<SaleDirection>();
             directions.Add(new SaleDirection() { Id = 0, Name = "买入" });
