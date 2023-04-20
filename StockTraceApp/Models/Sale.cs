@@ -15,6 +15,7 @@ namespace StockTraceApp.Models
         public int StockId { get; set; }
         public DateTime Date { get; set; }
         public DateTime Time { get; set; }
+        public int SaleCount { get; set; }
         public double Price { get; set; }
         /// <summary>
         /// 买入(0)还是卖出(1)
@@ -39,5 +40,8 @@ namespace StockTraceApp.Models
         /// 标记一下，是否已经买卖之间相互抵消
         /// </summary>
         public int Flag { get; set; }
+        public int SaleId { get; set; }
+
+        public int OffsetCount { get; set; }
     }
 }

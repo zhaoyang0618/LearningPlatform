@@ -42,7 +42,14 @@ namespace StockTraceApp.UI
             try
             {
                 var rep = new DB.StockRepository(_context);
-                rep.Insert(_stock);
+                if(_stock.Id == 0)
+                {
+                    rep.Insert(_stock);
+                }
+                else
+                {
+                    rep.Update(_stock);
+                }
                 _context.SaveChanges();
                 OnOK?.Invoke();
             }

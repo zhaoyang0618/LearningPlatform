@@ -39,10 +39,18 @@ namespace StockTraceApp.UI
         private void OnButtonAddClick(object sender, RoutedEventArgs e)
         {
             //添加
-            var sale = new Sale();
-            var wnd = new SaleEditWnd(sale);
+            if(_currentStock == null)
+                return;
+
+            var sale = new Sale()
+            {
+                StockId = _currentStock.Id,
+                Date = DateTime.Now,
+                Time = DateTime.Now,
+            };
+            var wnd = new SaleEditWnd(_currentStock, sale);
             wnd.OnOK += () => {
-                ListStocks();
+                ListSales(_currentStock.Id);
                 gridContainer.Children.Clear();
                 gridSub.Visibility = Visibility.Collapsed;
             };
@@ -61,10 +69,17 @@ namespace StockTraceApp.UI
             if(e.AddedItems.Count > 0)
             {
                 var stock = e.AddedItems[0] as Stock;
-                if(stock != null)
+                if (stock != null)
                 {
                     textCode.Text = stock.Code;
                     textName.Text = stock.Name;
+                    _currentStock = stock;
+                    ListSales(_currentStock.Id);
+                }
+                else
+                {
+                    _currentStock = null;
+                    //清空数据
                 }
             }
         }
@@ -72,6 +87,7 @@ namespace StockTraceApp.UI
 
         #region 辅助函数
         ObservableCollection<Stock> _stocks = new ObservableCollection<Stock>();
+        Stock? _currentStock = null;
         DB.StockDbContext _db = new DB.StockDbContext();
         void InitUI()
         {
@@ -100,6 +116,34 @@ namespace StockTraceApp.UI
                                 _stocks.Add(item);
                             }
                             if(_stocks.Count > 0)
+                            {
+                                cboStocks.SelectedIndex = 0;
+                            }
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex);
+                }
+            });
+        }
+
+        void ListSales(int stockId)
+        {
+            Task.Run(() => {
+                try
+                {
+                    var rep = new DB.StockRepository(_db);
+                    var list = rep.Get();
+                    if (list != null)
+                    {
+                        this.Dispatcher.Invoke(() => {
+                            foreach (var item in list)
+                            {
+                                _stocks.Add(item);
+                            }
+                            if (_stocks.Count > 0)
                             {
                                 cboStocks.SelectedIndex = 0;
                             }

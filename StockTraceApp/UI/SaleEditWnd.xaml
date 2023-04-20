@@ -4,10 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StockTraceApp.UI"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid VerticalAlignment="Center" Width="512">
         <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -23,33 +25,32 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Margin="4">日期</TextBlock>
-        <DatePicker Grid.Row="0" Grid.Column="1" Margin="4" Text="{Binding Name}"></DatePicker>
+        <DatePicker Grid.Row="0" Grid.Column="1" Margin="4" SelectedDate="{Binding Date}"></DatePicker>
         <TextBlock Grid.Row="0" Grid.Column="2" Margin="4">时间</TextBlock>
-        <TextBox Grid.Row="0" Grid.Column="3" Margin="4" Text="{Binding Code}"></TextBox>
-        <TextBlock Grid.Row="1" Grid.Column="0" Margin="4">买卖价格</TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="4" Text="{Binding Description}"></TextBox>
-        <TextBlock Grid.Row="1" Grid.Column="2" Margin="4">买卖</TextBlock>
-        <ComboBox Grid.Row="1" Grid.Column="3" Margin="4" SelectedValuePath="Type" Text="{Binding Type}">
-            <ComboBoxItem>买入</ComboBoxItem>
-            <ComboBoxItem>卖出</ComboBoxItem>
-        </ComboBox>
-        <TextBlock Grid.Row="2" Grid.Column="0" Margin="4">开盘价</TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="1" Margin="4" Text="{Binding Name}"></TextBox>
-        <TextBlock Grid.Row="2" Grid.Column="2" Margin="4">收盘价</TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="3" Margin="4" Text="{Binding Name}"></TextBox>
-        <TextBlock Grid.Row="3" Grid.Column="0" Margin="4">最低价</TextBlock>
-        <TextBox Grid.Row="3" Grid.Column="1" Margin="4" Text="{Binding Code}"></TextBox>
-        <TextBlock Grid.Row="3" Grid.Column="2" Margin="4">最高价</TextBlock>
-        <TextBox Grid.Row="3" Grid.Column="3" Margin="4" Text="{Binding Description}"></TextBox>
-        <TextBlock Grid.Row="4" Grid.Column="0" Margin="4">上证最低</TextBlock>
-        <TextBox Grid.Row="4" Grid.Column="1" Margin="4" Text="{Binding Name}"></TextBox>
-        <TextBlock Grid.Row="4" Grid.Column="2" Margin="4">上证最高</TextBlock>
-        <TextBox Grid.Row="4" Grid.Column="3" Margin="4" Text="{Binding Name}"></TextBox>
-        <TextBlock Grid.Row="5" Grid.Column="0" Margin="4">深证最低</TextBlock>
-        <TextBox Grid.Row="5" Grid.Column="1" Margin="4" Text="{Binding Code}"></TextBox>
-        <TextBlock Grid.Row="5" Grid.Column="2" Margin="4">深证最高</TextBlock>
-        <TextBox Grid.Row="5" Grid.Column="3" Margin="4" Text="{Binding Description}"></TextBox>
-        <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center">
+        <materialDesign:TimePicker Grid.Row="0" Grid.Column="3" Margin="4" SelectedTime="{Binding Time}" x:Name="PresetTimePicker" Is24Hours="True" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Margin="4">买卖方向</TextBlock>
+        <ComboBox Grid.Row="1" Grid.Column="1" Margin="4" SelectedValuePath="Id" DisplayMemberPath="Name" SelectedValue="{Binding Direction}" x:Name="cboDirection"></ComboBox>
+        <TextBlock Grid.Row="2" Grid.Column="0" Margin="4">买卖价格</TextBlock>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="4" Text="{Binding Price}"></TextBox>
+        <TextBlock Grid.Row="2" Grid.Column="2" Margin="4">买卖数量</TextBlock>
+        <TextBox Grid.Row="2" Grid.Column="3" Margin="4" Text="{Binding SaleCount}"></TextBox>
+        <TextBlock Grid.Row="3" Grid.Column="0" Margin="4">开盘价</TextBlock>
+        <TextBox Grid.Row="3" Grid.Column="1" Margin="4" Text="{Binding OpeningPrice}"></TextBox>
+        <TextBlock Grid.Row="3" Grid.Column="2" Margin="4">收盘价</TextBlock>
+        <TextBox Grid.Row="3" Grid.Column="3" Margin="4" Text="{Binding ClosingPrice}"></TextBox>
+        <TextBlock Grid.Row="4" Grid.Column="0" Margin="4">最低价</TextBlock>
+        <TextBox Grid.Row="4" Grid.Column="1" Margin="4" Text="{Binding LowestPrice}"></TextBox>
+        <TextBlock Grid.Row="4" Grid.Column="2" Margin="4">最高价</TextBlock>
+        <TextBox Grid.Row="4" Grid.Column="3" Margin="4" Text="{Binding HighestPrice}"></TextBox>
+        <TextBlock Grid.Row="5" Grid.Column="0" Margin="4">上证最低</TextBlock>
+        <TextBox Grid.Row="5" Grid.Column="1" Margin="4" Text="{Binding ShanghaiLowestPrice}"></TextBox>
+        <TextBlock Grid.Row="5" Grid.Column="2" Margin="4">上证最高</TextBlock>
+        <TextBox Grid.Row="5" Grid.Column="3" Margin="4" Text="{Binding ShanghaiHighestPrice}"></TextBox>
+        <TextBlock Grid.Row="6" Grid.Column="0" Margin="4">深证最低</TextBlock>
+        <TextBox Grid.Row="6" Grid.Column="1" Margin="4" Text="{Binding ShenzhenLowestPrice}"></TextBox>
+        <TextBlock Grid.Row="6" Grid.Column="2" Margin="4">深证最高</TextBlock>
+        <TextBox Grid.Row="6" Grid.Column="3" Margin="4" Text="{Binding ShenzhenHighestPrice}"></TextBox>
+        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Margin="4" x:Name="btnOK">确定</Button>
             <Button Margin="4" x:Name="btnCancel">取消</Button>
         </StackPanel>

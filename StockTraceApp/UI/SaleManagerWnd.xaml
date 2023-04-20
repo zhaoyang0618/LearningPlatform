@@ -25,7 +25,7 @@
             <lvc:CartesianChart Margin="2"></lvc:CartesianChart>
         </Grid>
         <Grid Grid.Row="0" Grid.RowSpan="2" x:Name="gridSub" Visibility="Collapsed">
-            <Border Background="Gray" Opacity="0.75"></Border>
+            <Border Background="Gray" Opacity="0.95"></Border>
             <Grid x:Name="gridContainer"></Grid>
         </Grid>
     </Grid>
