@@ -179,5 +179,12 @@ public:
 		}
 		return vec;
 	}
+
+	/// <summary>
+	/// 计算最小非负剩余 二次剩余
+	/// 这里要求divisor为素数
+	/// 这里暂时不作验证了
+	/// </summary>
+	static std::vector<unsigned int> MinNonNegativeQuadraticRemainder(unsigned int divisor);
 };
 

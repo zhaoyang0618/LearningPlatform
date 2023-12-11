@@ -272,6 +272,21 @@ int main(int argc, char* argv[])
 	//testAtomicTicket();
 	testAsyncStream();
 
+	num = 319;
+
+	auto bPrime = NumberTheoryAlg::IsPrime(num);
+	if (bPrime)
+	{
+		std::cout << num << "是素数" << std::endl;
+	}
+	else
+	{
+		std::cout << num << "不是素数" << std::endl;
+		std::cout << num << "有因子：" << NumberTheoryAlg::FindPrimeFactor(num) << std::endl;
+	}
+
+
+
 	std::cout << "查找数字" << std::endl;
 	for (int a = 1; a < 10; a++)
 	{
@@ -388,6 +403,109 @@ int main(int argc, char* argv[])
 		}
 		std::cout << std::endl;
 	}
+
+	std::cout << "计算ln(2)" << std::endl;
+	double sum1 = 0.0;
+	int flag = 1;
+	for (int i = 1; i <= 90; i++)
+	{
+		sum1 += flag * 1.0 / i;
+		flag *= -1;
+	}
+	std::cout << sum1 << "; " << std::endl;
+
+	std::cout << "比较调和级数和根号n的大小" << std::endl;
+	double sum2 = 0.0;
+	for (int i = 1; i <= 10; i++)
+	{
+		sum2 += 1.0 / i;
+		auto delta = sum2 - sqrt(i);
+		std::cout << "两者的差(n=" << i << "): " << delta << std::endl;
+	}
+
+	//
+	std::cout << "二分法求方程的根" << std::endl;
+	int cntIterate = 0;
+	double leftI = 0.001;
+	double rightI = 1;
+	double mid = (leftI + rightI) / 2.0;
+	double delta = rightI - leftI;
+	//auto G = [](double x) {return x*x+cos(2*x)-1; };
+	auto G = [](double x) {return x * x * exp(x) + log(x); };
+	//注意这里默认函数在两个端点的函数值异号
+	while (delta > 0.0001)
+	{
+		if (cntIterate > 1000) break;
+
+		cntIterate++;
+		double l = G(leftI);
+		double m = G(mid);
+		//double r = G(right);
+		if (abs(m) < 0.0000001)
+		{
+			break;
+		}
+
+		if (l * m > 0)
+		{
+			//在右侧
+			leftI = mid;
+		}
+		else if (l * m < 0)
+		{
+			//在左侧
+			rightI = mid;
+		}
+		mid = (leftI + rightI) / 2.0;
+		delta = rightI - leftI;
+	}
+
+	std::cout << "迭代了" << cntIterate << "次，得到方程的根: " << mid << "误差：0.0001" << std::endl;
+
+
+	std::cout << "牛顿法求方程的根" << std::endl;
+	cntIterate = 0;
+	double left = 0.001;
+	double right = 1;
+	double x0 = (left + right) / 2.0;
+	double x1 = right;
+	//auto DG = [](double x) {return 2 * x - 2 * sin(2 * x); };
+	auto DG = [](double x) {return 2 * x * exp(x) + x * x * exp(x) + 1.0 / x; };
+	delta = 1;
+	//注意这里默认函数在两个端点的函数值异号
+	while (delta > 0.0001)
+	{
+		if (cntIterate > 1000) break;
+
+		cntIterate++;
+		x1 = x0 - G(x0) / DG(x0);
+		delta = abs(x1 - x0);
+		x0 = x1;
+	}
+
+	std::cout << "迭代了" << cntIterate << "次，得到方程的根: " << x0 << "误差：0.0001" << std::endl;
+
+	//std::cout << sin(1.39159)/1.39159 << "约等于" << sqrt(2.0)/2.0 << std::endl;
+	std::cout << G(mid) << "约等于" << G(x0) << std::endl;
+
+	//(x*exp(x)-log(x)-1)/x
+	auto FX = [](double x) {return (x * exp(x) - log(x) - 1) / x; };
+	std::cout << FX(mid) << "或者" << FX(x0) << std::endl;
+
+	auto FX2 = [](double x) {return x * exp(x); };
+	std::cout << FX2(mid) << "或者" << FX2(x0) << std::endl;
+
+	auto FX3 = [](double x) {return x * exp(x) - log(x) - 1; };
+	std::cout << FX3(mid) << "或者" << FX3(x0) << std::endl;
+
+	unsigned int divisor = 109;
+	std::cout << "模p的二次剩余: " << divisor << std::endl;
+	auto ret3 = NumberTheoryAlg::MinNonNegativeQuadraticRemainder(divisor);
+	for (auto i : ret3)
+	{
+		std::cout << i << "; ";
+	}
+	std::cout << std::endl;
 
 	//std::cout << "查找第K个合数" << std::endl;
 	//auto idxC = TheKthCompositeNumber(1, 1000);

@@ -274,7 +274,6 @@ std::vector<unsigned int> NumberTheoryAlg::FindAllPrimeAndReverseIntegerIsPrime(
 	return vec;
 }
 
-
 std::vector<unsigned int> NumberTheoryAlg::FindAllPrimeAndReverseIntegerIsSquare(unsigned int max)
 {
 	std::vector<unsigned int> vec;
@@ -291,5 +290,23 @@ std::vector<unsigned int> NumberTheoryAlg::FindAllPrimeAndReverseIntegerIsSquare
 		}
 	}
 
+	return vec;
+}
+
+std::vector<unsigned int> NumberTheoryAlg::MinNonNegativeQuadraticRemainder(unsigned int divisor)
+{
+	assert(divisor > 2);
+
+	std::vector<unsigned int> vec;
+	if (!IsPrime(divisor)) return vec;
+	auto max = (divisor - 1) / 2;
+	for (unsigned int i = 1; i <= max; i++)
+	{
+		auto r = (i * i) % divisor;
+		vec.push_back(r);
+	}
+
+	//ÅÅÐò
+	std::sort(vec.begin(), vec.end());
 	return vec;
 }
