@@ -186,5 +186,12 @@ public:
 	/// 这里暂时不作验证了
 	/// </summary>
 	static std::vector<unsigned int> MinNonNegativeQuadraticRemainder(unsigned int divisor);
+
+	/// <summary>
+	/// K次剩余
+	/// x^k \equiv a (\bmod{m})
+	/// 输出所有的x
+	/// </summary>
+	static std::vector<unsigned int> KTimesRemainder(unsigned int a, unsigned int k, unsigned int m);
 };
 

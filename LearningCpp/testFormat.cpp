@@ -22,6 +22,6 @@ struct std::formatter<Frac>
 
 void testFormat()
 {
-    Frac f{ 5, 3 };
-    print("Frac: {}\n", f);
+    //Frac f{ 5, 3 };
+    //print("Frac: {}\n", f);
 }

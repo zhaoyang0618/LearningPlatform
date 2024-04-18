@@ -507,6 +507,28 @@ int main(int argc, char* argv[])
 	}
 	std::cout << std::endl;
 
+	//
+	long long mm = 143;
+	std::cout << "模p的8次剩余: " << mm << std::endl;
+	long long max = (mm + 1) / 2;
+	for (long long i = 1; i <= max; i++)
+	{
+		//auto r = (long)pow(i, 8);
+		long long r = i * i;
+		r = r * r;
+		r = r * r;
+		if (r % mm == 3)
+		{
+			std::cout << i << "; ";
+		}
+	}
+	//auto ret4 = NumberTheoryAlg::KTimesRemainder(3, 8, mm);
+	//for (auto i : ret4)
+	//{
+	//	std::cout << i << "; ";
+	//}
+	std::cout << std::endl;
+
 	//std::cout << "查找第K个合数" << std::endl;
 	//auto idxC = TheKthCompositeNumber(1, 1000);
 	//idxC = TheKthCompositeNumber(10, 4294967295, idxC);

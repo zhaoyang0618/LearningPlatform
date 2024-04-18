@@ -310,3 +310,24 @@ std::vector<unsigned int> NumberTheoryAlg::MinNonNegativeQuadraticRemainder(unsi
 	std::sort(vec.begin(), vec.end());
 	return vec;
 }
+
+std::vector<unsigned int> NumberTheoryAlg::KTimesRemainder(unsigned int a, unsigned int k, unsigned int m)
+{
+	assert(m > 2);
+
+	std::vector<unsigned int> vec;
+	unsigned int max = (m + 1) / 2;
+	for (unsigned int i = 1; i <= max; i++)
+	{
+		auto r = (long)pow(i, k);
+		if (r % m == 0)
+		{
+			vec.push_back(r);
+		}
+	}
+
+	//ÅÅÐò
+	std::sort(vec.begin(), vec.end());
+	return vec;
+}
+
