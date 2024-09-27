@@ -6,3 +6,5 @@
 #include "STLContainersDemo.h"
 #include "ThreadDemo.h"
 
+
+extern void testPtrDelete();

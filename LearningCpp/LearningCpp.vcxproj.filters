@@ -153,6 +153,9 @@
     <ClCompile Include="NumberTheoryAlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OtherTechnique.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LearningCpp.h">

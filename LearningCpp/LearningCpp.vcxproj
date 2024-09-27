@@ -175,6 +175,7 @@
     <ClCompile Include="ModReach.ixx" />
     <ClCompile Include="ModReachTest.cpp" />
     <ClCompile Include="NumberTheoryAlg.cpp" />
+    <ClCompile Include="OtherTechnique.cpp" />
     <ClCompile Include="semaphore.cpp" />
     <ClCompile Include="semaphorenotify.cpp" />
     <ClCompile Include="SmartPointerDemo.cpp" />

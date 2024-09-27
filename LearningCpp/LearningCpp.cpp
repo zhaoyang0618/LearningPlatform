@@ -380,13 +380,31 @@ int main(int argc, char* argv[])
 	}
 	std::cout << std::endl;
 
-	std::cout << "因数分解(2107): " << std::endl;
-	auto vec7 = NumberTheoryAlg::Factor(2107);
+	std::cout << "因数分解(282): " << std::endl;
+	auto vec7 = NumberTheoryAlg::Factor(282);
 	for (auto i : vec7)
 	{
 		std::cout << i << "; ";
 	}
 	std::cout << std::endl;
+
+	int data = 282;
+	int z = sqrt(data);
+	bool bflag = false;
+	for (int i = 0; i <= z; i++)
+	{
+		auto w = data - i * i;
+		if (NumberTheoryAlg::IsSquare(w))
+		{
+			std::cout << data << ":" << i << "*" << i << "+" << w << std::endl;
+			bflag = true;
+			break;
+		}
+	}
+	if (!bflag)
+	{
+		std::cout << data << " no" << std::endl;
+	}
 
 	unsigned int sum = 1001;
 	if (NumberTheoryAlg::IsPrime(sum))
@@ -528,6 +546,37 @@ int main(int argc, char* argv[])
 	//	std::cout << i << "; ";
 	//}
 	std::cout << std::endl;
+
+	testPtrDelete();
+
+	//
+	for (int i = 0; i < 20; i++)
+	{
+		unsigned int n = 2 * i + 1;
+		for (int k = 3; k < 20000; k++)
+		{
+			//要求k和k+n+1都是素数,然后k和k+n+1之间没有素数
+			int start = k;
+			int end = k + n + 1;
+			if (NumberTheoryAlg::IsPrime(start) && NumberTheoryAlg::IsPrime(end))
+			{
+				bool hasPrime = false;
+				for (unsigned v = start + 1; v < end; v++)
+				{
+					if (NumberTheoryAlg::IsPrime(v))
+					{
+						hasPrime = true;
+						break;
+					}
+				}
+				if (!hasPrime)
+				{
+					std::cout << "恰好有" << n << "个连续的合数，位于（" << start << ", " << end << "）之间" << std::endl;
+					break;
+				}
+			}
+		}
+	}
 
 	//std::cout << "查找第K个合数" << std::endl;
 	//auto idxC = TheKthCompositeNumber(1, 1000);
